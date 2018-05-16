@@ -45,8 +45,8 @@ public class CategoriaController {
   }
 
   /**
-   * 
-   * @return
+   * Modelo con el que se realizara el formulario
+   * @return Un objeto para ser llenado desde el archivo .JSP
    */
   @ModelAttribute("categoria")
   public Categoria setUpUserForm() {

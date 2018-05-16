@@ -74,7 +74,7 @@ public class SubCategoriaDao {
    * @param categoria Objeto con todos los datos de la categoria a registrar.
    * @return El resultado de la acción.
    */
-  public String registrarCategoria(Categoria categoria) {
+  public String registrarSubCategoria(SubCategoria categoria) {
     SpringDbMgr springDbMgr = new SpringDbMgr();
 
     // Agrego los datos del registro (nombreColumna/Valor)
@@ -82,11 +82,12 @@ public class SubCategoriaDao {
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("nombre", categoria.getNombre());
     map.addValue("descripcion", categoria.getDescripcion());
-    map.addValue("orden", getUltimoNumeroDeOrden() + 1);
+    map.addValue("idCategoria", categoria.getCategoria().getId());
+    map.addValue("orden", getUltimoNumeroDeOrden(categoria.getCategoria().getId()) + 1);
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "INSERT INTO CATEGORIA(nombre,descripcion,orden) VALUES(:nombre,:descripcion,:orden)";
+        "INSERT INTO SUBCATEGORIA(nombre,descripcion,orden,Categoria_id) VALUES(:nombre,:descripcion,:orden,:idCategoria)";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -105,13 +106,16 @@ public class SubCategoriaDao {
   /**
    * Metodo que consulta en la base de datos cual es el ultimo de numero de ordenamiento que hay
    * entre todas las categorias
+   * @param idCategoria 
    * 
    * @return El último numero de orden de categoria.
    */
-  public int getUltimoNumeroDeOrden() {
+  public int getUltimoNumeroDeOrden(long idCategoria) {
 
     // Consulta en base de datos el ultimo numero de ordenamiento
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CATEGORIA ORDER BY ORDEN DESC ");
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", idCategoria);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM SUBCATEGORIA WHERE Categoria_id = :id ORDER BY ORDEN DESC",map);
 
     // Si existe al menos una categoria retorna el numero
     if (sqlRowSet.next()) {
@@ -281,6 +285,23 @@ public class SubCategoriaDao {
     // de error.
     return (result == 1) ? "Eliminacion exitosa"
         : "La categoria tiene contenido asociado. Debe eliminar el contenido y las subcategorias asociadas a esta categoria para poder realizar el eliminado.";
+  }
+
+  public boolean esNombreValido(long id, String nombre) {
+
+    // Consulta en base de datos el ultimo numero de ordenamiento
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", id);
+    map.addValue("nombre", nombre);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM SUBCATEGORIA WHERE Categoria_id = :id AND NOMBRE = :nombre",map);
+
+    // Si existe al menos una categoria retorna el numero
+    if (sqlRowSet.next()) {
+      return false;
+      // Si no existen categorias retorna el 0
+    } else {
+      return true;
+    }
   }
 
 }

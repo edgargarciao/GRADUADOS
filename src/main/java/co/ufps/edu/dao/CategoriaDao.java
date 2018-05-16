@@ -1,7 +1,9 @@
 package co.ufps.edu.dao;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
@@ -256,6 +258,22 @@ public class CategoriaDao {
     // de error.
     return (result == 1) ? "Eliminacion exitosa"
         : "La categoria tiene contenido asociado. Debe eliminar el contenido y las subcategorias asociadas a esta categoria para poder realizar el eliminado.";
+  }
+
+  public Map<Long,String> getMapaDeCategorias() {
+ // Lista para retornar con los datos
+    Map<Long,String> categorias = new HashMap();
+
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CATEGORIA ORDER BY ORDEN ASC ");
+
+    // Recorre cada registro obtenido de base de datos
+    while (sqlRowSet.next()) {
+      categorias.put(sqlRowSet.getLong("id"), sqlRowSet.getString("nombre"));
+    }
+
+    // Retorna todos las categorias desde base de datos
+    return categorias;
   }
 
 }

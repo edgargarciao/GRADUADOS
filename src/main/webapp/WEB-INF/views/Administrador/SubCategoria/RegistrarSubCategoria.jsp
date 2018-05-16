@@ -32,8 +32,8 @@
                         	<div class="page-title">
                                 <ol class="breadcrumb text-right">
                                 	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
-                                    <li><a href="${contextPath}/categorias">Categorias / </li>
-                                    <li class="active"><a href="#"> Registrar Categoria</li>
+                                    <li><a href="${contextPath}/subcategorias">Subcategorias / </li>
+                                    <li class="active"><a href="#"> Registrar Subcategoria</li>
                             	</ol>
                             </div>
 						</div>    
@@ -65,7 +65,7 @@
                     	<div class="card">
                     		<!-- Titulo de la ventana -->
                         	<div class="card-header">
-                            	<strong class="card-title">Registrar categoria</strong>
+                            	<strong class="card-title">Registrar subcategoria</strong>
                         	</div>
                         	<div class="card-body">
                         		<!-- Si hubo un error en el registro muestra el mensaje-->						
@@ -79,16 +79,23 @@
 							    </c:if>
                         	
                         		<!-- Formulario -->
-                        		<form:form id="formCategoria" action="guardarCategoria" method="post" modelAttribute="categoria">
+                        		<form:form id="formCategoria" action="guardarSubCategoria" method="post" modelAttribute="subcategoria">
+                                    <!-- Campo para escoger la categoria -->
+                                	<div class="form-group">         			
+                        			  <form:select path="categoria.id" id="idCategoria" class="form-control">
+				                        <form:option value="0" label="Seleccione la categoria" />
+				                        <form:options items="${categorias}"/>
+				                      </form:select>  
+                        			</div> 
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
                                     	<label for="text-input" class=" form-control-label">Nombre</label>
-                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Servicios" aria-invalid="false" required = "true"/>
+                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Médico" aria-invalid="false" required = "true"/>
                                 	</div> 
                                 	<!-- Campo para digitar la descripción -->
                                 	<div class="form-group">
                                         <label for="textarea-input" class=" form-control-label">Descripción</label>
-                                		<form:textarea id="descripcion" name="descripcion" class="form-control" path="descripcion" rows="5" cols="130" required = "true" placeholder="Esta categoria es para ofrecer informacion acerca de..." /> 
+                                		<form:textarea id="descripcion" name="descripcion" class="form-control" path="descripcion" rows="5" cols="130" required = "true" placeholder="Esta subcategoria es para ofrecer informacion acerca de..." /> 
                                 	</div>   
                                 	
                                 	<!-- Boton para registrar los datos -->

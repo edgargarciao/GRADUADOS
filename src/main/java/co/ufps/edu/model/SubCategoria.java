@@ -43,7 +43,7 @@ public class SubCategoria {
   }
 
   public boolean isValidoParaRegistrar() {
-    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.descripcion));
+    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.descripcion)  && (this.categoria.getId()>0));
   }
   
   
