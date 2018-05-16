@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import co.ufps.edu.config.SessionManager;
+import co.ufps.edu.dao.CategoriaDao;
 import co.ufps.edu.dao.LoginDao;
 import co.ufps.edu.model.Login;
 import co.ufps.edu.util.JwtUtil;
@@ -21,11 +22,20 @@ public class AdminController {
 	@Autowired
 	private SessionManager sessionManager;
 	
-	private JwtUtil jwtUtil = new JwtUtil();
-	private LoginDao loginDao = new LoginDao();
+	private JwtUtil jwtUtil;
+	private LoginDao loginDao;
+	private CategoriaDao categoriaDao;
 
+	public AdminController() {
+	  jwtUtil = new JwtUtil();
+	  loginDao = new LoginDao();
+	  categoriaDao = new CategoriaDao();
+    }
+	
 	@GetMapping("/") // Base
-	public String main() {
+	public String main(Model model) {
+	    model.addAttribute("categorias",categoriaDao.getCategorias());
+	    
 		return "index"; // Nombre del archivo jsp
 	}
 
