@@ -222,7 +222,6 @@
 							<li class="dropdown"><a href="javascript:;"
 								class="dropdown-toggle" data-toggle="dropdown">${categoria.nombre}</a>
 							</li>
-						
 						</c:forEach>
 					
 						<!-- <li class="dropdown"><a href="javascript:;"

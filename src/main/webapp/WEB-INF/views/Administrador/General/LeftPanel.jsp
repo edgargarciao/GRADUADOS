@@ -38,7 +38,7 @@
 				<li><a href="${contextPath}/categorias"> <i
 						class="menu-icon ti-list"></i>Categorias
 				</a></li>
-				<li><a href="widgets.html"> <i class="menu-icon ti-list-ol"></i>Subcategorias
+				<li><a href="${contextPath}/subcategorias"> <i class="menu-icon ti-list-ol"></i>Subcategorias
 				</a></li>
 				<li><a href="widgets.html"> <i class="menu-icon fa fa-edit"></i>Contenido
 				</a></li>

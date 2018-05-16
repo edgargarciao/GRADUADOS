@@ -1,4 +1,12 @@
+--
+-- Base de datos: `graduados`
+--
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categoria`
+--
 
 CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
@@ -163,6 +171,17 @@ CREATE TABLE `subcategoria` (
   `Categoria_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `subcategoria`
+--
+
+INSERT INTO `subcategoria` (`id`, `nombre`, `descripcion`, `orden`, `Categoria_id`) VALUES
+(1, 'Biblioteca', 'Esta sub test', 1, 1),
+(2, 't', 'd', 2, 1),
+(3, 'S', 'R', 3, 1),
+(4, 'Q', 'A', 1, 2),
+(5, 'C', 'V', 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -290,8 +309,6 @@ ALTER TABLE `redsocial`
 --
 ALTER TABLE `subcategoria`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nombre_UNIQUE` (`nombre`),
-  ADD UNIQUE KEY `orden_UNIQUE` (`orden`),
   ADD KEY `fk_Subcategoria_Categoria_idx` (`Categoria_id`);
 
 --
@@ -375,7 +392,7 @@ ALTER TABLE `redsocial`
 -- AUTO_INCREMENT de la tabla `subcategoria`
 --
 ALTER TABLE `subcategoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `tipocontenido`
 --
@@ -411,4 +428,3 @@ ALTER TABLE `foto`
 --
 ALTER TABLE `subcategoria`
   ADD CONSTRAINT `fk_Subcategoria_Categoria` FOREIGN KEY (`Categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
