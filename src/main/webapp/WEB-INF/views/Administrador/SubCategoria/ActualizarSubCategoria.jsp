@@ -32,8 +32,8 @@
                         	<div class="page-title">
                                 <ol class="breadcrumb text-right">
                                 	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
-                                    <li><a href="${contextPath}/categorias">Categorias / </li>
-                                    <li class="active"><a href="#"> Actualizar Categoria</li>
+                                    <li><a href="${contextPath}/subcategorias">Subcategorias / </li>
+                                    <li class="active"><a href="#"> Actualizar Subcategoria</li>
                             	</ol>
                             </div>
 						</div>    
@@ -65,7 +65,7 @@
                     	<div class="card">
                     		<!-- Titulo de la ventana -->
                         	<div class="card-header">
-                            	<strong class="card-title">Actualizar categoria</strong>
+                            	<strong class="card-title">Actualizar subcategoria</strong>
                         	</div>
                         	<div class="card-body">
                         		<!-- Si hubo un error en el registro muestra el mensaje-->						
@@ -78,19 +78,27 @@
 				                   </div>
 							    </c:if>
                         		<!-- Formulario -->
-                        		<form:form id="formCategoria" action="editarCategoria" method="post" modelAttribute="categoria">
+                        		<form:form id="formCategoria" action="editarSubCategoria" method="post" modelAttribute="subcategoria">
                         		                 			
-                        		    <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${categoria.id}"/>
+                        		    <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${subcategoria.id}"/>
+                            		
+                            		<!-- Campo para escoger la categoria -->
+                                	<div class="form-group">         			
+                        			  <form:select path="categoria.id" id="idCategoria" class="form-control">
+				                        <form:option value="${idCategoriaSeleccionada}" label="${nombreCategoriaSeleccionada}" />
+				                        <form:options items="${categorias}"/>
+				                      </form:select>  
+                        			</div> 
                             		
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
                                     	<label for="text-input" class=" form-control-label">Nombre</label>
-                                		<form:input id="nombre" path="nombre" class="form-control" aria-invalid="false" required = "true" value="${categoria.nombre}"/>
+                                		<form:input id="nombre" path="nombre" class="form-control" aria-invalid="false" required = "true" value="${subcategoria.nombre}"/>
                                 	</div> 
                                 	<!-- Campo para digitar la descripción -->
                                 	<div class="form-group">
                                         <label for="textarea-input" class=" form-control-label">Descripción</label>
-                                		<form:textarea id="descripcion" name="descripcion" class="form-control" path="descripcion" rows="5" cols="130" required = "true" value="${categoria.descripcion}"  /> 
+                                		<form:textarea id="descripcion" name="descripcion" class="form-control" path="descripcion" rows="5" cols="130" required = "true" value="${subcategoria.descripcion}"  /> 
                                 	</div>   
                                 	
                                 	<!-- Boton para Actualizar los datos -->

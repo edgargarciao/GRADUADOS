@@ -33,7 +33,7 @@
                                 <ol class="breadcrumb text-right">
                                 	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
                                     <li><a href="${contextPath}/categorias">Categorias / </li>
-                                    <li class="active"><a href="#"> Actualizar Categoria</li>
+                                    <li class="active"><a href="#"> Eliminar Categoria</li>
                             	</ol>
                             </div>
 						</div>    
@@ -65,7 +65,7 @@
                     	<div class="card">
                     		<!-- Titulo de la ventana -->
                         	<div class="card-header">
-                            	<strong class="card-title">Actualizar categoria</strong>
+                            	<strong class="card-title">Eliminar categoria</strong>
                         	</div>
                         	<div class="card-body">
                         	                  
@@ -90,7 +90,7 @@
                                     	<label for="text-input" class=" form-control-label">¿Estás seguro de eliminar la categoría "${categoria.nombre}"?</label>                                		
                                 	</div> 
                                 	
-                                	<!-- Boton para Actualizar los datos -->
+                                	<!-- Boton para Eliminar los datos -->
                                 	<button type="submit" class="btn btn-danger">Eliminar</button>                                 
                             	 </form:form>                          
                         	</div>

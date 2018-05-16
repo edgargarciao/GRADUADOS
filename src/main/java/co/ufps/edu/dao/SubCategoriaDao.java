@@ -99,7 +99,7 @@ public class SubCategoriaDao {
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
     return (result == 1) ? "Registro exitoso"
-        : "El nombre de la categoria ya se encuentra en el sistema.";
+        : "El nombre de la subcategoria ya se encuentra en el sistema.";
 
   }
 
@@ -138,13 +138,13 @@ public class SubCategoriaDao {
     long idSubCategoriaSiguiente = getIdSubCategoriaPorOrden(idCategoria,orden + 1);
 
     // Modificamos el orden actual
-    cambiarOrdenDeCategoria(idCategoria,idSubCategoria, -1);
+    cambiarOrdenDeSubCategoria(idCategoria,idSubCategoria, -1);
 
     // Modificamos el orden de la siguiente categoria
-    cambiarOrdenDeCategoria(idCategoria,idSubCategoriaSiguiente, orden);
+    cambiarOrdenDeSubCategoria(idCategoria,idSubCategoriaSiguiente, orden);
 
     // Modificamos el orden de la categoria actual
-    cambiarOrdenDeCategoria(idCategoria, idSubCategoria,orden + 1);
+    cambiarOrdenDeSubCategoria(idCategoria, idSubCategoria,orden + 1);
   }
 
   /**
@@ -177,7 +177,7 @@ public class SubCategoriaDao {
    * @param id de la categoria.
    * @param orden para actualizar a la categoria.
    */
-  public void cambiarOrdenDeCategoria(long idCategoria,long idSubCategoria, int orden) {
+  public void cambiarOrdenDeSubCategoria(long idCategoria,long idSubCategoria, int orden) {
     SpringDbMgr springDbMgr = new SpringDbMgr();
 
     // Agrego los datos del registro (nombreColumna/Valor)
@@ -201,13 +201,13 @@ public class SubCategoriaDao {
     long idCategoriaAnterior = getIdSubCategoriaPorOrden(idCategoria,orden - 1);
 
     // Modificamos el orden actual
-    cambiarOrdenDeCategoria(idCategoria,idSubCategoria, -1);
+    cambiarOrdenDeSubCategoria(idCategoria,idSubCategoria, -1);
 
     // Modificamos el orden de la anterior categoria
-    cambiarOrdenDeCategoria(idCategoria,idCategoriaAnterior, orden);
+    cambiarOrdenDeSubCategoria(idCategoria,idCategoriaAnterior, orden);
 
     // Modificamos el orden de la categoria actual
-    cambiarOrdenDeCategoria(idCategoria,idSubCategoria, orden - 1);
+    cambiarOrdenDeSubCategoria(idCategoria,idSubCategoria, orden - 1);
 
   }
 
@@ -217,41 +217,60 @@ public class SubCategoriaDao {
    * @param idCategoria Identificador de la categoria.
    * @return La informacion de una categoria en un objeto.
    */
-  public Categoria obtenerCategoriaPorId(long idCategoria) {
+  public SubCategoria obtenerSubCategoriaPorId(long idSubCategoria) {
     // Lista para retornar con los datos
-    Categoria categoria = new Categoria();
+    SubCategoria subCategoria = new SubCategoria();
 
     // Consulta para realizar en base de datos
     MapSqlParameterSource map = new MapSqlParameterSource();
-    map.addValue("id", idCategoria);
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CATEGORIA WHERE id = :id", map);
+    map.addValue("id", idSubCategoria);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    CATEGORIA.ID                    idCategoria,            "
+                                                  + "           CATEGORIA.NOMBRE                nombreCategoria,        "
+                                                  + "           CATEGORIA.DESCRIPCION           descripcionCategoria,   "
+                                                  + "           CATEGORIA.ORDEN                 ordenCategoria,         "
+                                                  + "           SUBCATEGORIA.ID                 idSubcategoria,         "
+                                                  + "           SUBCATEGORIA.NOMBRE             nombreSubCategoria,     "
+                                                  + "           SUBCATEGORIA.DESCRIPCION        descripcionSubCategoria,"
+                                                  + "           SUBCATEGORIA.ORDEN              ordenSubCategoria       "
+                                                  + "   FROM    SUBCATEGORIA                                            "
+                                                  + "INNER JOIN CATEGORIA  ON CATEGORIA.id = SUBCATEGORIA.Categoria_id  "
+                                                  + "WHERE      SUBCATEGORIA.ID = :id                                   "
+                                                  + "ORDER BY   CATEGORIA.ID ASC,SUBCATEGORIA.ORDEN ASC                 ", map);
 
     // Consulto si la categoria existe
     if (sqlRowSet.next()) {
-      // Almaceno los datos de la categoria
-      categoria.setId(sqlRowSet.getLong("id"));
-      categoria.setNombre(sqlRowSet.getString("nombre"));
-      categoria.setDescripcion(sqlRowSet.getString("descripcion"));
-      categoria.setOrden(sqlRowSet.getInt("orden"));
+
+      subCategoria.setId(sqlRowSet.getLong("idSubcategoria"));
+      subCategoria.setNombre(sqlRowSet.getString("nombreSubCategoria"));
+      subCategoria.setDescripcion(sqlRowSet.getString("descripcionSubCategoria"));
+      subCategoria.setOrden(sqlRowSet.getInt("ordenSubCategoria"));
+      
+      Categoria categoria = new Categoria();
+      categoria.setId(sqlRowSet.getLong("idCategoria"));
+      categoria.setNombre(sqlRowSet.getString("nombreCategoria"));
+      categoria.setDescripcion(sqlRowSet.getString("descripcionCategoria"));
+      categoria.setOrden(sqlRowSet.getInt("ordenCategoria"));
+      subCategoria.setCategoria(categoria);
+      
     }
 
     // Retorna la categoria desde base de datos
-    return categoria;
+    return subCategoria;
   }
 
-  public String editarCategoria(Categoria categoria) {
+  public String editarSubCategoria(SubCategoria subcategoria) {
     SpringDbMgr springDbMgr = new SpringDbMgr();
 
     // Agrego los datos del registro (nombreColumna/Valor)
 
     MapSqlParameterSource map = new MapSqlParameterSource();
-    map.addValue("id", categoria.getId());
-    map.addValue("nombre", categoria.getNombre());
-    map.addValue("descripcion", categoria.getDescripcion());
+    map.addValue("id", subcategoria.getId());
+    map.addValue("nombre", subcategoria.getNombre());
+    map.addValue("descripcion", subcategoria.getDescripcion());
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "UPDATE CATEGORIA SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";
+        "UPDATE SUBCATEGORIA SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -263,10 +282,10 @@ public class SubCategoriaDao {
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
     return (result == 1) ? "Actualizacion exitosa"
-        : "El nombre de la categoria ya se encuentra en el sistema.";
+        : "La categoria tiene contenido asociado. Debe eliminar el contenido y las subcategorias asociadas a esta categoria para poder realizar el eliminado.";
   }
 
-  public String eliminarCategoria(Categoria categoria) {
+  public String eliminarSubCategoria(SubCategoria categoria) {
     SpringDbMgr springDbMgr = new SpringDbMgr();
 
     // Agrego los datos de la eliminación (nombreColumna/Valor)
@@ -274,7 +293,7 @@ public class SubCategoriaDao {
     map.addValue("id", categoria.getId());
 
     // Armar la sentencia de actualización debase de datos
-    String query = "DELETE FROM CATEGORIA WHERE id = :id";
+    String query = "DELETE FROM SUBCATEGORIA WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -286,7 +305,7 @@ public class SubCategoriaDao {
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
     return (result == 1) ? "Eliminacion exitosa"
-        : "La categoria tiene contenido asociado. Debe eliminar el contenido y las subcategorias asociadas a esta categoria para poder realizar el eliminado.";
+        : "La subcategoria tiene contenido asociado. Debe eliminar el contenido y las subcategorias asociadas a esta categoria para poder realizar el eliminado.";
   }
 
   public boolean esNombreValido(long id, String nombre) {
@@ -305,5 +324,22 @@ public class SubCategoriaDao {
       return true;
     }
   }
+  
+    public boolean esNombreValidoParaActualizar(long id,long sub, String nombre) {
 
+    // Consulta en base de datos el ultimo numero de ordenamiento
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", id);
+    map.addValue("nombre", nombre);
+    map.addValue("sub", sub);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM SUBCATEGORIA WHERE Categoria_id = :id AND NOMBRE = :nombre AND NOT id=:sub",map);
+
+    // Si existe al menos una categoria retorna el numero
+    if (sqlRowSet.next()) {
+      return false;
+      // Si no existen categorias retorna el 0
+    } else {
+      return true;
+    }
+  }
 }

@@ -40,7 +40,7 @@
 				</a></li>
 				<li><a href="${contextPath}/subcategorias"> <i class="menu-icon ti-list-ol"></i>Subcategorias
 				</a></li>
-				<li><a href="widgets.html"> <i class="menu-icon fa fa-edit"></i>Contenido
+				<li><a href="${contextPath}/contenidos"> <i class="menu-icon fa fa-edit"></i>Contenido
 				</a></li>
 				<li><a href="widgets.html"> <i
 						class="menu-icon fa fa-newspaper-o"></i>Noticias

@@ -279,4 +279,6 @@ public class CategoriaController {
       categoriaDao.cambiarOrdenDeCategoria(idCategoria, i);
     }
   }
+  
+  
 }
