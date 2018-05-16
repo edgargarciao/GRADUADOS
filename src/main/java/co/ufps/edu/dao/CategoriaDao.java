@@ -262,7 +262,7 @@ public class CategoriaDao {
 
   public Map<Long,String> getMapaDeCategorias() {
  // Lista para retornar con los datos
-    Map<Long,String> categorias = new HashMap();
+    Map<Long,String> categorias = new HashMap<Long, String>();
 
     // Consulta para realizar en base de datos
     SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CATEGORIA ORDER BY ORDEN ASC ");

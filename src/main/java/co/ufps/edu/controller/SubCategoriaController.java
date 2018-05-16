@@ -1,6 +1,5 @@
 package co.ufps.edu.controller;
 
-import java.util.Arrays;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.dao.CategoriaDao;
 import co.ufps.edu.dao.SubCategoriaDao;
-import co.ufps.edu.model.Categoria;
 import co.ufps.edu.model.SubCategoria;
 
 /**
@@ -70,9 +68,9 @@ public class SubCategoriaController {
   }
 
   /**
-   * Servicio que permite guardar una categoria
+   * Servicio que permite guardar una subcategoria
    * 
-   * @param categoria Objeto con la información a guardar
+   * @param subCategoria Objeto con la información a guardar
    * @param model Modelo con la información necesaria para transportar a los archivos .JSP
    * @return La página a donde debe redireccionar después de la acción.
    */
@@ -102,6 +100,92 @@ public class SubCategoriaController {
       model.addAttribute("wrong", "Debes llenar todos los campos.");
       model.addAttribute("categorias",categoriaDao.getMapaDeCategorias());
       return "Administrador/SubCategoria/RegistrarSubCategoria"; // Nombre del archivo jsp
+    }
+  }
+  
+  /**
+   * Servicio que permite bajar el numero de orden de una categoria
+   * 
+   * @param idCategoria Idenrificador de la categoria
+   * @param orden Numero de orden actual
+   * @param model Donde se cargaran las categorias actualizadas
+   * @return El redireccionamiento a la pagina de categorias
+   */
+  @GetMapping(value = "/bajarOrdenSubCategoria")
+  public String bajarOrdenDeCategoria(@RequestParam("idCat") long idCategoria,@RequestParam("id") long idSubCategoria,
+      @RequestParam("orden") int orden, Model model) {
+    // Cambiar orden
+    bajarOrden(idCategoria,idSubCategoria, orden);
+
+    // Cargar categorias en model
+    model.addAttribute("subcategorias", subCategoriaDao.getSubCategorias());
+    return "Administrador/SubCategoria/SubCategorias"; // Nombre del archivo jsp
+  }
+
+/**
+ * Metodo que baja de orden una subcategoria.
+ * @param idCategoria Id de la categoria
+ * @param idSubCategoria Id de la subcategoria
+ * @param orden Numero de ordenamiento
+ */
+  private void bajarOrden(long idCategoria,long idSubCategoria, int orden) {
+
+    // Consulto que el Id sea mayor a 0.
+    if (idCategoria <= 0 || idSubCategoria <= 0) {
+      return;
+    }
+
+    // Obtengo el menor número de ordenamiento
+    int ordenMaximo = subCategoriaDao.getUltimoNumeroDeOrden(idCategoria);
+
+    // Si el numero de orden es el máximo es por que ya es el ultimo y no se debe hacer nada.
+    if (orden == ordenMaximo) {
+      return;
+      // Cambio el orden
+    } else {
+      subCategoriaDao.descenderOrden(idCategoria,idSubCategoria, orden);
+    }
+  }
+
+  /**
+   * Servicio que permite subir el numero de orden de una subcategoria
+   * 
+   * @param idCategoria Idenrificador de la categoria
+   * @param orden Numero de orden actual
+   * @param model Donde se cargaran las categorias actualizadas
+   * @return El redireccionamiento a la pagina de categorias
+   */
+  @GetMapping(value = "/subirOrdenSubCategoria")
+  public String subirOrdenDeSubCategoria(@RequestParam("idCat") long idCategoria,@RequestParam("id") long idSubCategoria,
+      @RequestParam("orden") int orden, Model model) {
+    // Cambiar orden
+    subirOrden(idCategoria,idSubCategoria, orden);
+
+    // Cargar categorias en model para ser leidas por los archivos .JSP
+    model.addAttribute("subcategorias", subCategoriaDao.getSubCategorias());
+    return "Administrador/SubCategoria/SubCategorias"; // Nombre del archivo jsp
+  }
+
+  /**
+   * Metodo que permite subir una categoria de orden
+   * 
+   * @param idCategoria Identificador de la categoria.
+   * @param idSubCategoria 
+   * @param orden Orden de la categoria.
+   */
+  private void subirOrden(long idCategoria, long idSubCategoria, int orden) {
+
+    // Consulto que el Id sea mayor a 0.
+    if (idCategoria <= 0 || idSubCategoria <= 0) {
+      return;
+    }
+
+    // Si el numero de orden es el minimo es por que ya es el primero y no se debe hacer nada.
+    if (orden == 1) {
+      return;
+      // Cambio el orden
+    } else {
+      subCategoriaDao.ascenderOrden(idCategoria,idSubCategoria, orden);
     }
   }
 }

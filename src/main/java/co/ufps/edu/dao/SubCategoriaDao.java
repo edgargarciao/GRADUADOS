@@ -132,33 +132,35 @@ public class SubCategoriaDao {
    * @param idCategoria Identificador de la categoria.
    * @param orden
    */
-  public void descenderOrden(long idCategoria, int orden) {
+  public void descenderOrden(long idCategoria,long idSubCategoria, int orden) {
 
     // Extraemos el id de la siguiente
-    long idCategoriaSiguiente = getIdCategoriaPorOrden(orden + 1);
+    long idSubCategoriaSiguiente = getIdSubCategoriaPorOrden(idCategoria,orden + 1);
 
     // Modificamos el orden actual
-    cambiarOrdenDeCategoria(idCategoria, -1);
+    cambiarOrdenDeCategoria(idCategoria,idSubCategoria, -1);
 
     // Modificamos el orden de la siguiente categoria
-    cambiarOrdenDeCategoria(idCategoriaSiguiente, orden);
+    cambiarOrdenDeCategoria(idCategoria,idSubCategoriaSiguiente, orden);
 
     // Modificamos el orden de la categoria actual
-    cambiarOrdenDeCategoria(idCategoria, orden + 1);
+    cambiarOrdenDeCategoria(idCategoria, idSubCategoria,orden + 1);
   }
 
   /**
    * Metodo que consulta en base de datos el ID de una categoria dado un numero de orden.
+   * @param idCategoria 
    * 
    * @param orden Numero de orden por el cual se filtrara la busqueda.
    * @return El ID de la categoria.
    */
-  public long getIdCategoriaPorOrden(int orden) {
+  public long getIdSubCategoriaPorOrden(long idCategoria, int orden) {
     // Consulta en base de datos el ultimo numero de ordenamiento
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("orden", orden);
+    map.addValue("cat", idCategoria);
     SqlRowSet sqlRowSet =
-        springDbMgr.executeQuery(" SELECT * FROM CATEGORIA WHERE orden = :orden ", map);
+        springDbMgr.executeQuery(" SELECT * FROM SUBCATEGORIA WHERE orden = :orden AND Categoria_id = :cat", map);
 
     // Si existe al menos una categoria retorna el numero
     if (sqlRowSet.next()) {
@@ -175,16 +177,16 @@ public class SubCategoriaDao {
    * @param id de la categoria.
    * @param orden para actualizar a la categoria.
    */
-  public void cambiarOrdenDeCategoria(long id, int orden) {
+  public void cambiarOrdenDeCategoria(long idCategoria,long idSubCategoria, int orden) {
     SpringDbMgr springDbMgr = new SpringDbMgr();
 
     // Agrego los datos del registro (nombreColumna/Valor)
     MapSqlParameterSource map = new MapSqlParameterSource();
-    map.addValue("id", id);
+    map.addValue("id", idSubCategoria);
     map.addValue("orden", orden);
-
+    map.addValue("cat", idCategoria);
     // Armar la sentencia de actualización debase de datos
-    String query = "UPDATE CATEGORIA SET orden = :orden WHERE id = :id";
+    String query = "UPDATE SUBCATEGORIA SET orden = :orden WHERE id = :id AND Categoria_id = :cat";
 
     // Ejecutar la sentencia
     try {
@@ -194,18 +196,18 @@ public class SubCategoriaDao {
     }
   }
 
-  public void ascenderOrden(long idCategoria, int orden) {
+  public void ascenderOrden(long idCategoria,long idSubCategoria, int orden) {
     // Extraemos el id de la categoria anterior
-    long idCategoriaAnterior = getIdCategoriaPorOrden(orden - 1);
+    long idCategoriaAnterior = getIdSubCategoriaPorOrden(idCategoria,orden - 1);
 
     // Modificamos el orden actual
-    cambiarOrdenDeCategoria(idCategoria, -1);
+    cambiarOrdenDeCategoria(idCategoria,idSubCategoria, -1);
 
     // Modificamos el orden de la anterior categoria
-    cambiarOrdenDeCategoria(idCategoriaAnterior, orden);
+    cambiarOrdenDeCategoria(idCategoria,idCategoriaAnterior, orden);
 
     // Modificamos el orden de la categoria actual
-    cambiarOrdenDeCategoria(idCategoria, orden - 1);
+    cambiarOrdenDeCategoria(idCategoria,idSubCategoria, orden - 1);
 
   }
 

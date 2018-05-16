@@ -123,12 +123,12 @@
 												<td>${subcategoria.nombre}</td>
 												<td>${subcategoria.descripcion}</td>											
 												<td><a
-													href="${contextPath}/bajarOrdenCategoria?id=${subcategoria.id}&orden=${subcategoria.orden}">
+													href="${contextPath}/bajarOrdenSubCategoria?idCat=${subcategoria.categoria.id}&id=${subcategoria.id}&orden=${subcategoria.orden}">
 														<button class="btn btn-outline-info">
 															<i class="fa fa-sort-desc" aria-hidden="true"></i>
 														</button>
 												</a> <a
-													href="${contextPath}/subirOrdenCategoria?id=${subcategoria.id}&orden=${subcategoria.orden}">
+													href="${contextPath}/subirOrdenSubCategoria?idCat=${subcategoria.categoria.id}&id=${subcategoria.id}&orden=${subcategoria.orden}">
 														<button class="btn btn-outline-info">
 															<i class="fa fa-sort-asc" aria-hidden="true"></i>
 														</button>
