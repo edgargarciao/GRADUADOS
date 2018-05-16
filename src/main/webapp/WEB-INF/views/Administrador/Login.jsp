@@ -33,6 +33,12 @@
 
 
 <body class="bg-white">
+
+   <%
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    %>
+
  	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
     <div class="sufee-login d-flex align-content-center flex-wrap">
@@ -44,11 +50,16 @@
                     </a>
                 </div>
                <c:if test="${not empty wrong}">
-                <!--   <div class="alert alert-warning alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-warning"></i> Error</h4>
-                    <c:out value='${wrong}' />
-                  </div> -->
+                  
+                   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                   	<span class="badge badge-pill badge-danger">Error</span>
+                    	<c:out value='${wrong}' />
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+                    </button>
+                   </div>
+                  
+				
               </c:if>
                 
                 <div class="login-form">

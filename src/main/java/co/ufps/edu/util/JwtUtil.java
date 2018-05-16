@@ -25,15 +25,15 @@ public class JwtUtil {
 	 *         invalid.
 	 */
 
-	public int parseToken(String token) {
+	public String parseToken(String token) {
 		try {
 			Claims body = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-			int codigo = Integer.parseInt(body.get("correo").toString());
+			String codigo = body.get("correo").toString();
 			return codigo;
 		} catch (JwtException | ClassCastException e) {
-			return 0;
+			return "";
 		} catch(Exception ex) {
-			return 0;
+			return "";
 		}
 		
 	}
