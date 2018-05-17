@@ -10,12 +10,6 @@ import co.ufps.edu.model.Categoria;
 import co.ufps.edu.model.SubCategoria;
 
 public class SubCategoriaDao {
-
-  public static void main(String[] args) {
-    SubCategoriaDao c = new SubCategoriaDao();
-    System.out.println(Arrays.asList(c.getSubCategorias()));
-        
-  }
   
   SpringDbMgr springDbMgr = new SpringDbMgr();
 

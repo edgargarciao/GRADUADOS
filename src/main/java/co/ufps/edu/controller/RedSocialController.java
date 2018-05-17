@@ -16,15 +16,15 @@ import co.ufps.edu.dao.ContenidoDao;
  *
  */
 @Controller
-public class ContenidoController {
+public class RedSocialController {
 
-  private ContenidoDao contenidoDao;
+  //private ContenidoDao contenidoDao;
 
   /**
    * Constructor de la clase en donde se inicializan las variables
    */
-  public ContenidoController() {
-    contenidoDao = new ContenidoDao();
+  public RedSocialController() {
+    //contenidoDao = new ContenidoDao();
   }
 
   /**
@@ -32,11 +32,11 @@ public class ContenidoController {
    * 
    * @return La página principal de contenidos.
    */
-  @GetMapping("/contenidos") // Base
+  @GetMapping("/redes") // Base
   public String index(Model model) {
     // Cargamos los contenidos para poder mostrarlas en el cuadro.
     //model.addAttribute("contenidos", contenidoDao.getContenidos());
-    return "Administrador/Contenido/contenidos"; // Nombre del archivo jsp
+    return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
   }
 
  

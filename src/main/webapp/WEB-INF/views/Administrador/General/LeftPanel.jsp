@@ -42,27 +42,27 @@
 				</a></li>
 				<li><a href="${contextPath}/contenidos"> <i class="menu-icon fa fa-edit"></i>Contenido
 				</a></li>
-				<li><a href="widgets.html"> <i
+				<li><a href="${contextPath}/noticias"> <i
 						class="menu-icon fa fa-newspaper-o"></i>Noticias
 				</a></li>
-				<li><a href="widgets.html"> <i
+				<li><a href="${contextPath}/actividades"> <i
 						class="menu-icon fa fa-tasks"></i>Próximas actividades
 				</a></li>
-				<li><a href="widgets.html"> <i
+				<li><a href="${contextPath}/novedades"> <i
 						class="menu-icon fa fa-bullhorn"></i>Novedades
 				</a></li>
-				<li><a href="widgets.html"> <i
+				<li><a href="${contextPath}/logos"> <i
 						class="menu-icon fa fa-university"></i>Logos
 				</a></li>
-				<li><a href="widgets.html"> <i class="menu-icon ti-link"></i>Enlaces
+				<li><a href="${contextPath}/enlacesDeInteres"> <i class="menu-icon ti-link"></i>Enlaces
 						de interés
 				</a></li>
-				<li><a href="widgets.html"> <i
+				<li><a href="${contextPath}/galerias"> <i
 						class="menu-icon fa fa-picture-o"></i>Galería
 				</a></li>
-				<li><a href="widgets.html"> <i class="menu-icon ti-email"></i>Contactos
+				<li><a href="${contextPath}/contactos"> <i class="menu-icon ti-email"></i>Contactos
 				</a></li>
-				<li><a href="widgets.html"> <i
+				<li><a href="${contextPath}/redes"> <i
 						class="menu-icon fa fa-facebook"></i>Redes sociales
 				</a></li>
 
