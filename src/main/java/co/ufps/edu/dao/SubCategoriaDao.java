@@ -340,7 +340,7 @@ public class SubCategoriaDao {
     /*
 	 *  Método que obtiene la cantidad de subCategorias registradas
 	 */
-	public int getCntSubCategorias() {
+	public int getCantidadSubCategorias() {
 	 	int cant = 0;
 	   // Consulta para realizar en base de datos
 	   SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM SUBCATEGORIA "); 

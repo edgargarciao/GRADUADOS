@@ -12,7 +12,7 @@ public class GaleriaDao {
 	  /*
 	   *  Método que obtiene la cantidad de galerias registradas
 	   */
-	  public int getCntGalerias() {
+	  public int getCantidadGalerias() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
 		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM GALERIA "); 

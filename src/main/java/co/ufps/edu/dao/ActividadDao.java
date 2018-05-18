@@ -12,7 +12,7 @@ public class ActividadDao {
 	  /*
 	   *  Método que obtiene la cantidad de actividades registradas
 	   */
-	  public int getCntActividades() {
+	  public int getCantidadActividades() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
 		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM PROXIMAACTIVIDAD "); 

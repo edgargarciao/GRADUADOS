@@ -279,7 +279,7 @@ public class CategoriaDao {
   /*
    * Método que obtiene la cantidad de categorias registradas
    */
-  public int getCntCategorias() {
+  public int getCantidadCategorias() {
 
 	  	int cant = 0;
 	    // Consulta para realizar en base de datos

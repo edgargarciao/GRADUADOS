@@ -12,7 +12,7 @@ public class NovedadDao {
 	  /*
 	   *  Método que obtiene la cantidad de novedades registradas
 	   */
-	  public int getCntNovedades() {
+	  public int getCantidadNovedades() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
 		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM NOVEDAD "); 

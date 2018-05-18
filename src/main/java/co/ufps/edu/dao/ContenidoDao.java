@@ -63,7 +63,7 @@ public class ContenidoDao {
   /*
    *  Método que obtiene la cantidad de contenidos registrados
    */
-  public int getCntContenidos() {
+  public int getCantidadContenidos() {
 	  	int cant = 0;
 	    // Consulta para realizar en base de datos
 	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM CONTENIDO "); 

@@ -12,7 +12,7 @@ public class NoticiaDao {
 	  /*
 	   *  Método que obtiene la cantidad de noticias registrados
 	   */
-	  public int getCntNoticias() {
+	  public int getCantidadNoticias() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
 		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM NOTICIA "); 

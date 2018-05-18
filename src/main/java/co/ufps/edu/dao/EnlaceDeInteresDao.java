@@ -12,7 +12,7 @@ public class EnlaceDeInteresDao {
 	  /*
 	   *  Método que obtiene la cantidad de enlaces de interes registrados
 	   */
-	  public int getCntEnlacesDeInteres() {
+	  public int getCantidadEnlacesDeInteres() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
 		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM ENLACEINTERES "); 

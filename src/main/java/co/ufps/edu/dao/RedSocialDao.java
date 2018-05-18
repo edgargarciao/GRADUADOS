@@ -12,7 +12,7 @@ public class RedSocialDao {
 	  /*
 	   *  Método que obtiene la cantidad de redes sociales registradas
 	   */
-	  public int getCntRedesSociales() {
+	  public int getCantidadRedesSociales() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
 		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM REDSOCIAL"); 

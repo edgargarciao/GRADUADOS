@@ -12,7 +12,7 @@ public class ContactoDao {
 	  /*
 	   *  Método que obtiene la cantidad de contactos registrados
 	   */
-	  public int getCntContactos() {
+	  public int getCantidadContactos() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
 		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM CONTACTO "); 

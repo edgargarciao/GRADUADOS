@@ -165,17 +165,17 @@ public class AdminController {
 	}	
 	
 	private void getCantidadRegistros(Model model){
-		model.addAttribute("catidadCat",this.categoriaDao.getCntCategorias());
-		model.addAttribute("catidadSubCat",this.subCategoriaDao.getCntSubCategorias());
-		model.addAttribute("catidadCon",this.contenidoDao.getCntContenidos());
-		model.addAttribute("catidadNot",this.noticiaDao.getCntNoticias());
-		model.addAttribute("catidadAct",this.actividadDao.getCntActividades());
-		model.addAttribute("catidadNov",this.novedadDao.getCntNovedades());
-		model.addAttribute("catidadLog",this.logoDao.getCntLogos());
-		model.addAttribute("catidadEnl",this.enlaceDeInteresDao.getCntEnlacesDeInteres());
-		model.addAttribute("catidadGal",this.galeriaDao.getCntGalerias());
-		model.addAttribute("catidadCon",this.contactoDao.getCntContactos());
-		model.addAttribute("catidadRed",this.redSocialDao.getCntRedesSociales());
+		model.addAttribute("catidadCategorias",this.categoriaDao.getCantidadCategorias());
+		model.addAttribute("catidadSubCategorias",this.subCategoriaDao.getCantidadSubCategorias());
+		model.addAttribute("catidadContenidos",this.contenidoDao.getCantidadContenidos());
+		model.addAttribute("catidadNoticias",this.noticiaDao.getCantidadNoticias());
+		model.addAttribute("catidadActividades",this.actividadDao.getCantidadActividades());
+		model.addAttribute("catidadNovedades",this.novedadDao.getCantidadNovedades());
+		model.addAttribute("catidadLogos",this.logoDao.getCantidadLogos());
+		model.addAttribute("catidadEnlaces",this.enlaceDeInteresDao.getCantidadEnlacesDeInteres());
+		model.addAttribute("catidadGalerias",this.galeriaDao.getCantidadGalerias());
+		model.addAttribute("catidadContactos",this.contactoDao.getCantidadContactos());
+		model.addAttribute("catidadRedesSociales",this.redSocialDao.getCantidadRedesSociales());
 	}
 
 }
