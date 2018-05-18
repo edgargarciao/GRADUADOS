@@ -85,7 +85,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="social-box google-plus">
                     <i class="fa fa-list"></i>
-                            <strong><span class="count">7</span></strong>
+                            <strong><span class="count">${catidadCat}</span></strong>
                             <span>Categorias</span>
                     </div>
                 <!--/social-box-->
@@ -95,7 +95,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="social-box google-plus">
                     <i class="fa fa-list-ol"></i>
-                            <strong><span class="count">34</span></strong>
+                            <strong><span class="count">${catidadSubCat}</span></strong>
                             <span>Subcategorias</span>
                     </div>
                 <!--/social-box-->
@@ -105,7 +105,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="social-box google-plus">
                     <i class="fa fa-edit"></i>
-                            <strong><span class="count">1200</span></strong>
+                            <strong><span class="count">${catidadCon}</span></strong>
                             <span>Contenido</span>
                     </div>
                 <!--/social-box-->
@@ -115,7 +115,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="social-box google-plus">
                     <i class="fa fa-newspaper-o"></i>
-                            <strong><span class="count">100</span></strong>
+                            <strong><span class="count">${catidadNot}</span></strong>
                             <span>Noticias</span>
                     </div>
                 <!--/social-box-->
@@ -124,7 +124,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="social-box google-plus">
                     <i class="fa fa-tasks"></i>
-                            <strong><span class="count">7</span></strong>
+                            <strong><span class="count">${catidadAct}</span></strong>
                             <span>Próximas actividades</span>
                     </div>
                 <!--/social-box-->
@@ -133,7 +133,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="social-box google-plus">
                     <i class="fa fa-bullhorn"></i>
-                            <strong><span class="count">7</span></strong>
+                            <strong><span class="count">${catidadNov}</span></strong>
                             <span>Novedades</span>
                     </div>
                 <!--/social-box-->
@@ -143,7 +143,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="social-box google-plus">
                     <i class="fa fa-university"></i>
-                            <strong><span class="count">2</span></strong>
+                            <strong><span class="count">${catidadLog}</span></strong>
                             <span>Logos</span>
                     </div>
                 <!--/social-box-->
@@ -152,7 +152,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="social-box google-plus">
                     <i class="fa fa-link"></i>
-                            <strong><span class="count">10</span></strong>
+                            <strong><span class="count">${catidadEnl}</span></strong>
                             <span>Enlaces de interés</span>
                     </div>
                 <!--/social-box-->
@@ -161,7 +161,7 @@
             <div class="col-lg-3 col-md-6">
                     <div class="social-box google-plus">
                         <i class="fa fa-picture-o"></i>
-                                <strong><span class="count">150</span></strong>
+                                <strong><span class="count">${catidadGal}</span></strong>
                                 <span>Galería</span>
                         </div>
                     <!--/social-box-->
@@ -170,7 +170,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="social-box google-plus">
                     <i class="ti-email"></i>
-                            <strong><span class="count">8</span></strong>
+                            <strong><span class="count">${catidadCon}</span></strong>
                             <span>Contactos</span>
                     </div>
                 <!--/social-box-->
@@ -179,7 +179,7 @@
             <div class="col-lg-3 col-md-6">
                     <div class="social-box google-plus">
                         <i class="fa fa-google-plus"></i>
-                                <strong><span class="count">4</span></strong>
+                                <strong><span class="count">${catidadRed}</span></strong>
                                 <span>Redes sociales</span>
                         </div>
                     <!--/social-box-->
