@@ -59,5 +59,19 @@ public class ContenidoDao {
     // Retorna todos las categorias desde base de datos
     return subCategorias;
   }
+  
+  /*
+   *  Método que obtiene la cantidad de contenidos registrados
+   */
+  public int getCantidadContenidos() {
+	  	int cant = 0;
+	    // Consulta para realizar en base de datos
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM CONTENIDO "); 
+	    
+	    if (sqlRowSet.next()) {
+	    	cant = sqlRowSet.getInt("cantidad");
+	    }
+	    return cant;
+  }
 
 }

@@ -275,5 +275,20 @@ public class CategoriaDao {
     // Retorna todos las categorias desde base de datos
     return categorias;
   }
+  
+  /*
+   * Método que obtiene la cantidad de categorias registradas
+   */
+  public int getCantidadCategorias() {
+
+	  	int cant = 0;
+	    // Consulta para realizar en base de datos
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM CATEGORIA "); 
+	    
+	    if (sqlRowSet.next()) {
+	    	cant = sqlRowSet.getInt("cantidad");
+	    }
+	    return cant;
+  }
 
 }

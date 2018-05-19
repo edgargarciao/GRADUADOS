@@ -11,8 +11,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import co.ufps.edu.config.SessionManager;
+import co.ufps.edu.dao.ActividadDao;
 import co.ufps.edu.dao.CategoriaDao;
+import co.ufps.edu.dao.ContactoDao;
+import co.ufps.edu.dao.ContenidoDao;
+import co.ufps.edu.dao.EnlaceDeInteresDao;
+import co.ufps.edu.dao.GaleriaDao;
 import co.ufps.edu.dao.LoginDao;
+import co.ufps.edu.dao.LogoDao;
+import co.ufps.edu.dao.NoticiaDao;
+import co.ufps.edu.dao.NovedadDao;
+import co.ufps.edu.dao.RedSocialDao;
+import co.ufps.edu.dao.SubCategoriaDao;
 import co.ufps.edu.model.Login;
 import co.ufps.edu.util.JwtUtil;
 
@@ -25,11 +35,31 @@ public class AdminController {
 	private JwtUtil jwtUtil;
 	private LoginDao loginDao;
 	private CategoriaDao categoriaDao;
+	private SubCategoriaDao subCategoriaDao;
+	private	ContenidoDao contenidoDao;
+	private NoticiaDao	noticiaDao;
+	private ActividadDao actividadDao;
+	private NovedadDao novedadDao;
+	private LogoDao logoDao;
+	private EnlaceDeInteresDao enlaceDeInteresDao;
+	private GaleriaDao galeriaDao;
+	private ContactoDao contactoDao;
+	private RedSocialDao redSocialDao;
 
 	public AdminController() {
 	  jwtUtil = new JwtUtil();
 	  loginDao = new LoginDao();
 	  categoriaDao = new CategoriaDao();
+	  subCategoriaDao = new SubCategoriaDao();
+	  contenidoDao = new ContenidoDao();
+	  noticiaDao = new NoticiaDao();
+	  actividadDao = new ActividadDao();
+	  novedadDao = new NovedadDao();
+	  logoDao = new LogoDao();
+	  enlaceDeInteresDao = new EnlaceDeInteresDao();
+	  galeriaDao = new GaleriaDao();
+	  contactoDao = new ContactoDao();
+	  redSocialDao = new RedSocialDao();
     }
 	
 	@GetMapping("/") // Base
@@ -45,7 +75,8 @@ public class AdminController {
 	}
 
 	@GetMapping("/indexAdmin") // Base
-	public String indexAdmin() {
+	public String indexAdmin(Model model) {
+		this.getCantidadRegistros(model);
 		return "Administrador/indexAdmin"; // Nombre del archivo jsp
 	}
 	/**
@@ -97,6 +128,8 @@ public class AdminController {
 				// Guarda la sesion en el manejador de sesiones
 				sessionManager.guardarSession("SESSION:" + login.getCorreoInstitucional(), jwt);
 				
+				this.getCantidadRegistros(model);
+				
 				// Redirijo al index debido a que el usuario ya fue autenticado con exito
 				return "Administrador/indexAdmin";
 				
@@ -130,5 +163,19 @@ public class AdminController {
 		sessionManager.eliminarSesion("SESSION:" + codigo);
 		return "Administrador/Login"; // Nombre del archivo jsp
 	}	
+	
+	private void getCantidadRegistros(Model model){
+		model.addAttribute("catidadCategorias",this.categoriaDao.getCantidadCategorias());
+		model.addAttribute("catidadSubCategorias",this.subCategoriaDao.getCantidadSubCategorias());
+		model.addAttribute("catidadContenidos",this.contenidoDao.getCantidadContenidos());
+		model.addAttribute("catidadNoticias",this.noticiaDao.getCantidadNoticias());
+		model.addAttribute("catidadActividades",this.actividadDao.getCantidadActividades());
+		model.addAttribute("catidadNovedades",this.novedadDao.getCantidadNovedades());
+		model.addAttribute("catidadLogos",this.logoDao.getCantidadLogos());
+		model.addAttribute("catidadEnlaces",this.enlaceDeInteresDao.getCantidadEnlacesDeInteres());
+		model.addAttribute("catidadGalerias",this.galeriaDao.getCantidadGalerias());
+		model.addAttribute("catidadContactos",this.contactoDao.getCantidadContactos());
+		model.addAttribute("catidadRedesSociales",this.redSocialDao.getCantidadRedesSociales());
+	}
 
 }

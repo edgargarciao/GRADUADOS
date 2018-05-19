@@ -4,18 +4,18 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import co.ufps.edu.bd.SpringDbMgr;
 
-public class ActividadDao {
+public class RedSocialDao {
 
 	SpringDbMgr springDbMgr = new SpringDbMgr();
 	
 
 	  /*
-	   *  Método que obtiene la cantidad de actividades registradas
+	   *  Método que obtiene la cantidad de redes sociales registradas
 	   */
-	  public int getCantidadActividades() {
+	  public int getCantidadRedesSociales() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
-		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM PROXIMAACTIVIDAD "); 
+		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM REDSOCIAL"); 
 		    
 		    if (sqlRowSet.next()) {
 		    	cant = sqlRowSet.getInt("cantidad");
