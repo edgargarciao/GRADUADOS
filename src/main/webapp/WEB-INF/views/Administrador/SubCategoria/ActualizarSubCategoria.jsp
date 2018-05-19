@@ -81,6 +81,7 @@
                         		<form:form id="formCategoria" action="editarSubCategoria" method="post" modelAttribute="subcategoria">
                         		                 			
                         		    <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${subcategoria.id}"/>
+                            		<form:hidden id="orden" path="orden" class="form-control" aria-invalid="false" required = "true" value="${categoria.orden}"/>
                             		
                             		<!-- Campo para escoger la categoria -->
                                 	<div class="form-group">         			

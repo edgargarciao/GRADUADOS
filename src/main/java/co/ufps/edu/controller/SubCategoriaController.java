@@ -343,10 +343,8 @@ public class SubCategoriaController {
     int ordenMaximo = subCategoriaDao.getUltimoNumeroDeOrden(subcategoria.getCategoria().getId());
 
     for (int i = subcategoria.getOrden(); i < ordenMaximo; i++) {
-      long idSubCategoria =
-          subCategoriaDao.getIdSubCategoriaPorOrden(subcategoria.getCategoria().getId(), i + 1);
-      subCategoriaDao.cambiarOrdenDeSubCategoria(subcategoria.getCategoria().getId(),
-          idSubCategoria, i);
+      long idSubCategoria = subCategoriaDao.getIdSubCategoriaPorOrden(subcategoria.getCategoria().getId(), i + 1);
+      subCategoriaDao.cambiarOrdenDeSubCategoria(subcategoria.getCategoria().getId(),idSubCategoria, i);
     }
   }
 
