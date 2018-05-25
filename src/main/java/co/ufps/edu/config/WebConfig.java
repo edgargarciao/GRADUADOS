@@ -52,4 +52,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   public SessionManager getSessionManager() {
     return new SessionManager();
   }
+  
+  @Bean(name = "multipartResolver")
+  public StandardServletMultipartResolver resolvermu() {
+      return new StandardServletMultipartResolver();
+  }
+ 
 }
+

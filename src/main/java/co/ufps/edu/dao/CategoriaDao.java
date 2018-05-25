@@ -167,6 +167,11 @@ public class CategoriaDao {
     }
   }
 
+  /**
+   * Método que permite subir de orden una categoria en base de datos.
+   * @param idCategoria Identificador de la categoria
+   * @param orden Numero de orden
+   */
   public void ascenderOrden(long idCategoria, int orden) {
     // Extraemos el id de la categoria anterior
     long idCategoriaAnterior = getIdCategoriaPorOrden(orden - 1);
