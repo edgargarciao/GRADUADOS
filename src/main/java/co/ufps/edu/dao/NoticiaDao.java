@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
-import co.ufps.edu.model.Categoria;
 import co.ufps.edu.model.Noticia;
 import co.ufps.edu.util.ImagenUtil;
 
@@ -123,8 +122,6 @@ public class NoticiaDao {
   }
 
   public void cambiarOrden() {
-    // Lista para retornar con los datos
-    List<Long> identificadores = new LinkedList<>();
 
     // Consulta para realizar en base de datos
     SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOTICIA ORDER BY ORDEN DESC ");

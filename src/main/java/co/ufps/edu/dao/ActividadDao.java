@@ -15,7 +15,7 @@ import co.ufps.edu.util.ImagenUtil;
 
 public class ActividadDao {
 
-  SpringDbMgr springDbMgr;
+  private SpringDbMgr springDbMgr;
   private ImagenUtil imagenUtil;
 
   public ActividadDao() {
