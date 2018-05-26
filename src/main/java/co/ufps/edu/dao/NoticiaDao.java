@@ -338,7 +338,7 @@ public class NoticiaDao {
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
     return (result == 1) ? "Actualizacion exitosa"
-        : "Error al registrar la noticia. Contacte al administrador del sistema.";
+        : "Error al actualizar la noticia. Contacte al administrador del sistema.";
   }
 
   
@@ -361,7 +361,7 @@ public class NoticiaDao {
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
     return (result == 1) ? "Eliminacion exitosa"
-        : "La categoria tiene contenido asociado. Debe eliminar el contenido y las subcategorias asociadas a esta categoria para poder realizar el eliminado.";
+        : "Error al eliminar la noticia. Contacte al administrador del sistema.";
   }
 
 }

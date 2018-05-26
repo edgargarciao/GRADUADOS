@@ -1,8 +1,6 @@
 package co.ufps.edu.model;
 
-import java.io.IOException;
 import java.sql.Date;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 

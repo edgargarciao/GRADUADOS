@@ -1,7 +1,5 @@
 package co.ufps.edu.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -194,7 +192,7 @@ public class NoticiaController {
     // Consulto que el Id sea mayor a 0.
     if (idNoticia <= 0) {
       model.addAttribute("noticias", noticiaDao.getNoticias());
-      return "Administrador/noticia/noticias"; // Nombre del archivo jsp
+      return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
     }
     Noticia noticia = noticiaDao.obtenerNoticiaPorId(idNoticia);
     model.addAttribute("noticia", noticia);
@@ -293,8 +291,4 @@ public class NoticiaController {
       noticiaDao.cambiarOrdenDeNoticia(idnoticia, i);
     }
   }
-  
-
-  
-  
 }
