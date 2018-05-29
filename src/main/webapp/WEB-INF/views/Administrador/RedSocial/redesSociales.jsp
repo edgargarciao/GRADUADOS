@@ -18,13 +18,10 @@
 <body>
 
 	<!-- Left Panel -->
-
 	<%@ include file="../General/LeftPanel.jsp"%>
 
 	<!--/ Left Panel -->
-
 	<!-- Right Panel -->
-
 	<div id="right-panel" class="right-panel">
 
 		<!-- Header-->
@@ -41,7 +38,7 @@
 								<li class="active">
 								<li><a href="${contextPath}/indexAdmin">Panel de
 										control</a></li>
-								<li class="active" href="#">Contenidos</li>
+								<li class="active" href="#">Redes sociales</li>
 								</li>
 							</ol>
 						</div>
@@ -81,7 +78,7 @@
 						<!-- Card -->
 						<div class="card">
 							<div class="card-header">
-								<strong class="card-title">Contenidos</strong>
+								<strong class="card-title">Redes sociales</strong>
 							</div>
 							<div class="card-body">
 								<!-- /Card -->
@@ -97,44 +94,34 @@
 							    </c:if>
 
 								<!-- Boton que indica la accion para registrar una categoria -->
-								<a href="${contextPath}/registrarCategoria"
-									class="btn btn-success">Registrar contenido</a> <br> <br>
-								<!-- Tabla con las categorias -->
+								<a href="${contextPath}/registrarRedSocial"
+									class="btn btn-success">Registrar red social</a> <br> <br>
+								<!-- Tabla con las novedades -->
 								<table id="bootstrap-data-table"
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th scope="col" style="width: 2%">Órden</th>
 											<th scope="col" style="width: 2%;display:none">Id</th>
-											<th scope="col" style="width: 26%">Nombre categoria</th>
-											<th scope="col" style="width: 43%">Descripción</th>
+											<th scope="col" style="width: 26%">Nombre</th>
+											<th scope="col" style="width: 26%">URL</th>
+											<th scope="col" style="width: 26%">Tipo</th>
 											<th scope="col" style="width: 27%">Acción</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="categoria" items="${categorias}">
+										<c:forEach var="novedad" items="${redesSocciales}">
 											<tr>
-												<td scope="row">${categoria.orden}</td>
-												<th style="display:none">${categoria.id}</th>
-												<td>${categoria.nombre}</td>
-												<td>${categoria.descripcion}</td>											
+												<th style="display:none">${redesSociales.id}</th>
+												<td>${redesSociales.nombre}</td>
+												<td>${redesSociales.url}</td>
+												<td>${redesSociales.tipo}</td>												
 												<td><a
-													href="${contextPath}/bajarOrdenCategoria?id=${categoria.id}&orden=${categoria.orden}">
-														<button class="btn btn-outline-info">
-															<i class="fa fa-sort-desc" aria-hidden="true"></i>
-														</button>
-												</a> <a
-													href="${contextPath}/subirOrdenCategoria?id=${categoria.id}&orden=${categoria.orden}">
-														<button class="btn btn-outline-info">
-															<i class="fa fa-sort-asc" aria-hidden="true"></i>
-														</button>
-												</a> <a
-													href="${contextPath}/actualizarCategoria?id=${categoria.id}">
+													href="${contextPath}/actualizarRedSocial?id=${redSocial.id}">
 														<button class="btn btn-outline-primary">
 															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 														</button>
 												</a> <a
-													href="${contextPath}/eliminarCategoria?id=${categoria.id}">
+													href="${contextPath}/eliminarRedSocial?id=${redSocial.id}">
 														<button class="btn btn-outline-danger">
 															<i class="fa fa-trash" aria-hidden="true"></i>
 														</button>
