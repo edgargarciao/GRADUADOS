@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
-import co.ufps.edu.model.Categoria;
-import co.ufps.edu.model.SubCategoria;
+import co.ufps.edu.dto.Categoria;
+import co.ufps.edu.dto.SubCategoria;
 
 /**
  * Clase que permite acceder a la capa de datos en el entorno de sub-categorias.

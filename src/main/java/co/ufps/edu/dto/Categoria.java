@@ -1,14 +1,13 @@
-package co.ufps.edu.model;
+package co.ufps.edu.dto;
 
 import org.springframework.util.StringUtils;
 
-public class SubCategoria {
+public class Categoria {
 
   private long id;
   private String nombre;
   private String descripcion;
   private int orden;
-  private Categoria categoria;
 
   public long getId() {
     return id;
@@ -43,23 +42,15 @@ public class SubCategoria {
   }
 
   public boolean isValidoParaRegistrar() {
-    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.descripcion)  && (this.categoria.getId()>0));
-  }
-  
-  
-
-  public Categoria getCategoria() {
-    return categoria;
-  }
-
-  public void setCategoria(Categoria categoria) {
-    this.categoria = categoria;
+    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.descripcion));
   }
 
   @Override
   public String toString() {
-    return "SubCategoria [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion
-        + ", orden=" + orden + ", categoria=" + categoria + "]";
+    return "Categoria [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion
+        + ", orden=" + orden + "]";
   }
+  
+  
 
 }

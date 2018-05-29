@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
-import co.ufps.edu.model.Logo;
+import co.ufps.edu.dto.Logo;
 import co.ufps.edu.util.ImagenUtil;
 
 public class LogoDao {

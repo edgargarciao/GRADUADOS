@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import co.ufps.edu.dao.LogoDao;
-import co.ufps.edu.model.Logo;
+import co.ufps.edu.dto.Logo;
 
 /**
  * Controlador de contenidos. Los contenidos son las paginas que se abren cuando se da click a una

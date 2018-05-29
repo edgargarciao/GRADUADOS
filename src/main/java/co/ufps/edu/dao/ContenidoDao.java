@@ -4,74 +4,79 @@ import java.util.LinkedList;
 import java.util.List;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
-import co.ufps.edu.model.Categoria;
-import co.ufps.edu.model.SubCategoria;
+import co.ufps.edu.dto.Contenido;
 
 public class ContenidoDao {
-  
-  SpringDbMgr springDbMgr = new SpringDbMgr();
+
+  private SpringDbMgr springDbMgr;
+
+  public ContenidoDao() {
+    springDbMgr = new SpringDbMgr();
+  }
 
   /**
-   * Metodo que consulta en base de datos todas las subcategorias existentes y las devuelve
-   * ordenadamente
+   * Metodo que consulta en base de datos todas los contenidos existentes.
    * 
-   * @return Una lista con todas las categorias
+   * @return Una lista con todas los contenidos
    */
-  public List<SubCategoria> getContenidos() {
+  public List<Contenido> getContenidos() {
 
     // Lista para retornar con los datos
-    List<SubCategoria> subCategorias = new LinkedList<>();
+    List<Contenido> contenidos = new LinkedList<>();
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    CATEGORIA.ID                    idCategoria,            "
-                                                  + "           CATEGORIA.NOMBRE                nombreCategoria,        "
-                                                  + "           CATEGORIA.DESCRIPCION           descripcionCategoria,   "
-                                                  + "           CATEGORIA.ORDEN                 ordenCategoria,         "
-                                                  + "           SUBCATEGORIA.ID                 idSubcategoria,         "
-                                                  + "           SUBCATEGORIA.NOMBRE             nombreSubCategoria,     "
-                                                  + "           SUBCATEGORIA.DESCRIPCION        descripcionSubCategoria,"
-                                                  + "           SUBCATEGORIA.ORDEN              ordenSubCategoria       "
-                                                  + "   FROM    CONTENIDO                                               "
-                                                  + "INNER JOIN CATEGORIA  ON CATEGORIA.id = SUBCATEGORIA.Categoria_id  "
-                                                  + "ORDER BY   CATEGORIA.ID ASC,SUBCATEGORIA.ORDEN ASC                 ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    contenido.id            id, "
+                                                  + "           contenido.titulo        nombre,"
+                                                  + "           tipocontenido.nombre    tipo_con,"
+                                                  + "           contenido.asosiacion    asosiacion,"
+                                                  + "           CASE    WHEN contenido.tipoasociacion = 'Subcategoria' "
+                                                  + "                   THEN (SELECT subcategoria.nombre FROM subcategoria WHERE subcategoria.id = contenido.id)"
+                                                  + "                   WHEN contenido.tipoasociacion = 'Noticia' "
+                                                  + "                   THEN (SELECT noticia.nombre FROM noticia WHERE noticia.id = contenido.id)"
+                                                  + "                   WHEN contenido.tipoasociacion = 'Novedad' "
+                                                  + "                   THEN (SELECT novedad.nombre FROM novedad WHERE novedad.id = contenido.id) "
+                                                  + "                   WHEN contenido.tipoasociacion = 'Actividad' "
+                                                  + "                   THEN (SELECT proximaactividad.nombre FROM proximaactividad WHERE proximaactividad.id = contenido.id)"
+                                                  + "           END AS tipo_asoc " 
+                                                  + "  FROM     contenido, tipocontenido "
+                                                  + " WHERE     contenido.TipoContenido_id = tipocontenido.id ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
       // Objeto en el que sera guardada la informacion del registro
-      SubCategoria subCategoria = new SubCategoria();
+      Contenido contenido = new Contenido();
 
-      subCategoria.setId(sqlRowSet.getLong("idSubcategoria"));
-      subCategoria.setNombre(sqlRowSet.getString("nombreSubCategoria"));
-      subCategoria.setDescripcion(sqlRowSet.getString("descripcionSubCategoria"));
-      subCategoria.setOrden(sqlRowSet.getInt("ordenSubCategoria"));
-      
-      Categoria categoria = new Categoria();
-      categoria.setId(sqlRowSet.getLong("idCategoria"));
-      categoria.setNombre(sqlRowSet.getString("nombreCategoria"));
-      categoria.setDescripcion(sqlRowSet.getString("descripcionCategoria"));
-      categoria.setOrden(sqlRowSet.getInt("ordenCategoria"));
-      subCategoria.setCategoria(categoria);
-      
+      contenido.setId(sqlRowSet.getLong("id"));
+      contenido.setNombre(sqlRowSet.getString("nombre"));
+      contenido.setTipoContenido(sqlRowSet.getString("tipo_con"));
+      contenido.setTipoAsociacion(sqlRowSet.getString("tipo_asoc"));
+      contenido.setAsosiacion(sqlRowSet.getLong("asosiacion"));
+
       // Guarda el registro para ser retornado
-      subCategorias.add(subCategoria);
+      contenidos.add(contenido);
     }
 
     // Retorna todos las categorias desde base de datos
-    return subCategorias;
+    return contenidos;
   }
-  
+
   /*
-   *  Método que obtiene la cantidad de contenidos registrados
+   * Método que obtiene la cantidad de contenidos registrados
    */
   public int getCantidadContenidos() {
-	  	int cant = 0;
-	    // Consulta para realizar en base de datos
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM CONTENIDO "); 
-	    
-	    if (sqlRowSet.next()) {
-	    	cant = sqlRowSet.getInt("cantidad");
-	    }
-	    return cant;
+    int cant = 0;
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM CONTENIDO ");
+
+    if (sqlRowSet.next()) {
+      cant = sqlRowSet.getInt("cantidad");
+    }
+    return cant;
+  }
+
+  public String registrarContenido(Contenido contenido) {
+    // TODO Auto-generated method stub
+    return "Registro exitoso";
   }
 
 }

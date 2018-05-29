@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
-import co.ufps.edu.model.Actividad;
+import co.ufps.edu.dto.Actividad;
 import co.ufps.edu.util.ImagenUtil;
 
 /**

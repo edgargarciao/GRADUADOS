@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.dao.NoticiaDao;
-import co.ufps.edu.model.Noticia;
+import co.ufps.edu.dto.Noticia;
 
 /**
  * Controlador de noticias. Las noticias son publicaciones que permiten informar a las personas de los

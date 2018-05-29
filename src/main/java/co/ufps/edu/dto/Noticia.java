@@ -1,4 +1,4 @@
-package co.ufps.edu.model;
+package co.ufps.edu.dto;
 
 import java.sql.Date;
 import org.springframework.util.StringUtils;

@@ -23,7 +23,7 @@ import co.ufps.edu.dao.NoticiaDao;
 import co.ufps.edu.dao.NovedadDao;
 import co.ufps.edu.dao.RedSocialDao;
 import co.ufps.edu.dao.SubCategoriaDao;
-import co.ufps.edu.model.Login;
+import co.ufps.edu.dto.Login;
 import co.ufps.edu.util.JwtUtil;
 
 @Controller

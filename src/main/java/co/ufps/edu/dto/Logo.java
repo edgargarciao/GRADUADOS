@@ -1,4 +1,4 @@
-package co.ufps.edu.model;
+package co.ufps.edu.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.dao.ActividadDao;
-import co.ufps.edu.model.Actividad;
+import co.ufps.edu.dto.Actividad;
 
 /**
  * Controlador de actividades. Las actividades son los eventos programador y que seran realizados en una fecha especifica. 
