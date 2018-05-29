@@ -39,7 +39,7 @@ public class SpringDbMgr {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		  new Exception();
 		}
 
 		Properties p = new Properties();

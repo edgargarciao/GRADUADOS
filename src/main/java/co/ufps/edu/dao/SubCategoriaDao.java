@@ -1,6 +1,5 @@
 package co.ufps.edu.dao;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -88,7 +87,7 @@ public class SubCategoriaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -186,7 +185,7 @@ public class SubCategoriaDao {
     try {
       springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
   }
 
@@ -271,7 +270,7 @@ public class SubCategoriaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -294,7 +293,7 @@ public class SubCategoriaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.

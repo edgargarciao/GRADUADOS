@@ -86,8 +86,7 @@ public class ActividadDao {
               actividad.getImagen().getBytes().length, new DefaultLobHandler()),
           Types.BLOB);
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      new Exception();
     }
 
     // Armar la sentencia de actualización debase de datos
@@ -99,7 +98,7 @@ public class ActividadDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -158,7 +157,7 @@ public class ActividadDao {
         sqlImagen = ", imagen = :imagen";
       } catch (IOException e) {
         // TODO Auto-generated catch block
-        e.printStackTrace();
+        new Exception();
       }
     }
 
@@ -172,7 +171,7 @@ public class ActividadDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -194,7 +193,7 @@ public class ActividadDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.

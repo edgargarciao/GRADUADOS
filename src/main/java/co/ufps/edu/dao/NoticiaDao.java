@@ -97,8 +97,7 @@ public class NoticiaDao {
               noticia.getImagen2().getBytes().length, new DefaultLobHandler()),
           Types.BLOB);
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      new Exception();
     }
 
     map.addValue("orden", 1);
@@ -112,7 +111,7 @@ public class NoticiaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -180,7 +179,7 @@ public class NoticiaDao {
     try {
       springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
   }
 
@@ -303,7 +302,7 @@ public class NoticiaDao {
         sqlImagen1 = ", imagen1 = :imagen1";
       } catch (IOException e) {
         // TODO Auto-generated catch block
-        e.printStackTrace();
+        new Exception();
       }
     }
     String sqlImagen2 = "";
@@ -315,8 +314,7 @@ public class NoticiaDao {
             Types.BLOB);
         sqlImagen2 = ", imagen2 = :imagen2";
       } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        new Exception();
       }
     }
 
@@ -330,7 +328,7 @@ public class NoticiaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -353,7 +351,7 @@ public class NoticiaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.

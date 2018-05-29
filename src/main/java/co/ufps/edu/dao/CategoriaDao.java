@@ -70,7 +70,7 @@ public class CategoriaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -163,7 +163,7 @@ public class CategoriaDao {
     try {
       springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
   }
 
@@ -234,7 +234,7 @@ public class CategoriaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -257,7 +257,7 @@ public class CategoriaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
