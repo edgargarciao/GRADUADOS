@@ -59,7 +59,7 @@ public class NoticiaController {
    * @return La página de registro de noticias.
    */
   @GetMapping("/registrarNoticia") // Base
-  public String registrarNoticia(Model model) {
+  public String registrarNoticia() {
     return "Administrador/Noticia/RegistrarNoticia"; // Nombre del archivo jsp
   }
   

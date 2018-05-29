@@ -58,7 +58,7 @@ public class CategoriaController {
    * @return La página de registro de categorias.
    */
   @GetMapping("/registrarCategoria") // Base
-  public String registrarCategoria(Model model) {
+  public String registrarCategoria() {
     return "Administrador/Categoria/RegistrarCategoria"; // Nombre del archivo jsp
   }
 

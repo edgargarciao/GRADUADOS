@@ -3,7 +3,7 @@ package co.ufps.edu.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import co.ufps.edu.dao.ContenidoDao;
+import co.ufps.edu.dao.GaleriaDao;
 
 /**
  * Controlador de contenidos. Los contenidos son las paginas que se abren cuando se da click a una información. Todos los
@@ -18,13 +18,13 @@ import co.ufps.edu.dao.ContenidoDao;
 @Controller
 public class GaleriaController {
 
-  //private ContenidoDao contenidoDao;
+  private GaleriaDao galeriaDao;
 
   /**
    * Constructor de la clase en donde se inicializan las variables
    */
   public GaleriaController() {
-    //contenidoDao = new ContenidoDao();
+    galeriaDao = new GaleriaDao();
   }
 
   /**
@@ -35,7 +35,7 @@ public class GaleriaController {
   @GetMapping("/galerias") // Base
   public String index(Model model) {
     // Cargamos los contenidos para poder mostrarlas en el cuadro.
-    //model.addAttribute("contenidos", contenidoDao.getContenidos());
+    model.addAttribute("contenidos", galeriaDao.getCantidadGalerias());
     return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
   }
 

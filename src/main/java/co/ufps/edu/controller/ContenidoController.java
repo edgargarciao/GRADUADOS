@@ -35,7 +35,7 @@ public class ContenidoController {
   @GetMapping("/contenidos") // Base
   public String index(Model model) {
     // Cargamos los contenidos para poder mostrarlas en el cuadro.
-    //model.addAttribute("contenidos", contenidoDao.getContenidos());
+    model.addAttribute("contenidos", contenidoDao.getContenidos());
     return "Administrador/Contenido/contenidos"; // Nombre del archivo jsp
   }
 

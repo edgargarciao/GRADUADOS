@@ -1,13 +1,15 @@
 package co.ufps.edu.util;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Map.Entry;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+/**
+ * Clase que permite usar servicios para el manejo del JWT.
+ * @author ufps
+ *
+ */
 public class JwtUtil {
 
 	// @Value("${jwt.secret}")

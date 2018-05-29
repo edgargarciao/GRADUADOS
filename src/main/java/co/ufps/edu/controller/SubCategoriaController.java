@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.dao.CategoriaDao;
 import co.ufps.edu.dao.SubCategoriaDao;
-import co.ufps.edu.model.Categoria;
 import co.ufps.edu.model.SubCategoria;
 
 /**

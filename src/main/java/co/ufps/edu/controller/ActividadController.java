@@ -58,7 +58,7 @@ public class ActividadController {
    * @return La página de registro de actividades.
    */
   @GetMapping("/registrarActividad") // Base
-  public String registrarActividad(Model model) {
+  public String registrarActividad() {
     return "Administrador/Actividad/RegistrarActividad"; // Nombre del archivo jsp
   }
 

@@ -97,7 +97,7 @@
 							    </c:if>
 
 								<!-- Boton que indica la accion para registrar una categoria -->
-								<a href="${contextPath}/registrarCategoria"
+								<a href="${contextPath}/registrarContenido"
 									class="btn btn-success">Registrar contenido</a> <br> <br>
 								<!-- Tabla con las categorias -->
 								<table id="bootstrap-data-table"

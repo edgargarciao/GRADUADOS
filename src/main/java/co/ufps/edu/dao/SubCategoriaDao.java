@@ -8,6 +8,11 @@ import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.model.Categoria;
 import co.ufps.edu.model.SubCategoria;
 
+/**
+ * Clase que permite acceder a la capa de datos en el entorno de sub-categorias.
+ * @author ufps
+ *
+ */
 public class SubCategoriaDao {
   
   SpringDbMgr springDbMgr = new SpringDbMgr();

@@ -7,9 +7,15 @@ import javax.servlet.ServletRegistration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+/*
+ * Clase que permite inicializar la aplicación.
+ */
 public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-	private final long maxUploadSizeInMb = Long.MAX_VALUE; // 5 MB
+    /**
+     * El tamaño maximo que podra contener un archivo
+     */
+	private final long maxUploadSizeInMb = Long.MAX_VALUE;
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {

@@ -9,6 +9,11 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.model.Categoria;
 
+/**
+ * Clase que permite acceder a la capa de datos en el entorno de categorias.
+ * @author ufps
+ *
+ */
 public class CategoriaDao {
 
   SpringDbMgr springDbMgr = new SpringDbMgr();

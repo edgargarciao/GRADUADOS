@@ -13,6 +13,11 @@ import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.model.Actividad;
 import co.ufps.edu.util.ImagenUtil;
 
+/**
+ * Clase que permite acceder a la capa de datos en el entorno de actividades.
+ * @author ufps
+ *
+ */
 public class ActividadDao {
 
   private SpringDbMgr springDbMgr;
@@ -130,7 +135,7 @@ public class ActividadDao {
       actividad.setFechaInicial(sqlRowSet.getDate("fechaInicial"));
       actividad.setFechaFinal(sqlRowSet.getDate("fechaFinal"));
       
-      Object imagenBlob = (Object) sqlRowSet.getObject("imagen");
+      Object imagenBlob = sqlRowSet.getObject("imagen");
       actividad.setImBase64image(imagenUtil.convertirImagen((byte[]) imagenBlob));      
     }
     // Retorna la actividad desde base de datos

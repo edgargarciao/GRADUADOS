@@ -52,7 +52,7 @@ public class LogoDao {
       logo.setId(sqlRowSet.getLong("id"));
       logo.setTipo(sqlRowSet.getString("tipo"));
 
-      Object imagenBlob = (Object) sqlRowSet.getObject("contenido");
+      Object imagenBlob = sqlRowSet.getObject("contenido");
       logo.setImBase64image(imagenUtil.convertirImagen((byte[]) imagenBlob));
     }
 

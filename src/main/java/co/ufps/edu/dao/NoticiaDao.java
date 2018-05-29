@@ -13,6 +13,12 @@ import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.model.Noticia;
 import co.ufps.edu.util.ImagenUtil;
 
+/**
+ * Clase que permite acceder a la capa de datos en el entorno de noticias.
+ * 
+ * @author ufps
+ *
+ */
 public class NoticiaDao {
 
   private SpringDbMgr springDbMgr;
@@ -271,11 +277,10 @@ public class NoticiaDao {
       noticia.setOrden(sqlRowSet.getInt("orden"));
       noticia.setFecha(sqlRowSet.getDate("fecha"));
 
-
-      Object imagen1Blob = (Object) sqlRowSet.getObject("imagen1");
+      Object imagen1Blob = sqlRowSet.getObject("imagen1");
       noticia.setIm1Base64image(imagenUtil.convertirImagen((byte[]) imagen1Blob));
 
-      Object imagen2Blob = (Object) sqlRowSet.getObject("imagen2");
+      Object imagen2Blob = sqlRowSet.getObject("imagen2");
       noticia.setIm2Base64image(imagenUtil.convertirImagen((byte[]) imagen2Blob));
     }
 
@@ -336,7 +341,7 @@ public class NoticiaDao {
         : "Error al actualizar la noticia. Contacte al administrador del sistema.";
   }
 
-  
+
   public String eliminarNoticia(Noticia noticia) {
 
     // Agrego los datos de la eliminación (nombreColumna/Valor)
