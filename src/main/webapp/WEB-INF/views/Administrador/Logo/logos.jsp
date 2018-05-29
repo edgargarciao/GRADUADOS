@@ -109,9 +109,9 @@
 								<form:form id="formlogo" action="guardarLogo" method="post" modelAttribute="logo" enctype="multipart/form-data">
                                 	
                             		 <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${logoHorizontal.id}"/>
-                            		 <form:hidden id="tipo" path="tipo" class="form-control" aria-invalid="false" required = "true" value="${logoHorizontal.tipo}"/>
+                            		 <form:hidden id="tipo" path="tipo" class="form-control" aria-invalid="false" required = "true" value="LogoHorizontal"/>
                                 	<div class="form-group">
-	                                    <strong class="card-title">${logoHorizontal.tipo}</strong>                                    
+	                                    <strong class="card-title">Logo horizontal</strong>                                    
 	                                	</br>
 	                    
 	                                	<div class="form-group">
@@ -123,9 +123,31 @@
 	                            		</div>
 	    
 	                                	</div>
-                                	<button type="button" class="btn btn-success">Actualizar logo horizontal</button>                                 
+                                	<button type="submit" class="btn btn-success">Actualizar logo horizontal</button>                                 
                             	</form:form>        
-								
+		                        </br>
+		                        </br>
+		                        </br>		
+								<form:form id="formlogo" action="guardarLogo" method="post" modelAttribute="logo" enctype="multipart/form-data">
+                                	
+                            		 <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${logoVertical.id}"/>
+                            		 <form:hidden id="tipo" path="tipo" class="form-control" aria-invalid="false" required = "true" value="LogoVertical"/>
+                                	<div class="form-group">
+	                                    <strong class="card-title">Logo vertical</strong>                                    
+	                                	</br>
+	                    
+	                                	<div class="form-group">
+	                                    
+	                                    	<figure>
+	                                        	<img id = "img2" src="${logoVertical.imBase64image}" alt="Logo Vertical" width="500" height="500">                                        
+	                                    	</figure>                                    
+	                                    	<form:input type="file" path="contenido" id="Imagen2" name="Imagen2" onchange="revisarArchivos('2')" required = "true"/>
+	                            		</div>
+	    
+	                                	</div>
+                                	<button type="submit" class="btn btn-success">Actualizar logo Vertical</button>                                 
+                            	</form:form>  		                        
+		                        						
 							</div>
 							<!-- /card-body -->
 						</div>

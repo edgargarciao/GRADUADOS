@@ -155,7 +155,7 @@ public class ActividadDao {
             new SqlLobValue(new ByteArrayInputStream(actividad.getImagen().getBytes()),
                 actividad.getImagen().getBytes().length, new DefaultLobHandler()),
             Types.BLOB);
-        sqlImagen = ", imagen1 = :imagen1";
+        sqlImagen = ", imagen = :imagen";
       } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();

@@ -67,24 +67,21 @@ public class LogoController {
   public String guardarLogoHorizontal(@ModelAttribute("logo") Logo logo, Model model) {
 
       if(logo.getId() == 0) {
-        System.out.println("No existeeeee");
+        String mensaje = logoDao.insertarLogo(logo);
+        if (mensaje.equals("Registro exitoso")) {
+          model.addAttribute("result", "Logo registrado con éxito.");
+        } else {
+          model.addAttribute("wrong", mensaje);
+        }
       }else {
-        System.out.println("Ya existeeeee");
+        String mensaje = logoDao.actualizarLogo(logo);
+        if (mensaje.equals("Actualizacion exitosa")) {
+          model.addAttribute("result", "Logo actualizado con éxito.");
+        } else {
+          model.addAttribute("wrong", mensaje);
+        }
       }
-      
-      model.addAttribute("logoHorizontal", logoDao.getLogo("LogoHorizontal"));
-      model.addAttribute("logoVertical", logoDao.getLogo("LogoVertical"));
-      return "Administrador/Logo/logos"; // Nombre del archivo jsp
-      
-      /*String mensaje = logoDao.actualizarLogo(logoHorizontal);
-      if (mensaje.equals("Registro exitoso")) {
-        model.addAttribute("result", "Noticia registrada con éxito.");
-        model.addAttribute("noticias", noticiaDao.getNoticias());
-        return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
-      } else {
-        model.addAttribute("wrong", mensaje);
-        return "Administrador/Noticia/RegistrarNoticia"; // Nombre del archivo jsp
-      }*/
+      return index(model);
 
   }  
 
