@@ -51,7 +51,7 @@ public class RedSocialController {
   public String index(Model model) {
     // Cargamos las redes sociales para poder mostrarlas en el cuadro.
     model.addAttribute("redesociales", redSocialDao.getRedesSociales());
-    return "Administrador/RedSocial/redesSociales"; // Nombre del archivo jsp
+    return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
   }
   
   /**
@@ -81,7 +81,7 @@ public class RedSocialController {
       if (mensaje.equals("Registro exitoso")) {
         model.addAttribute("result", "Red social registrada con éxito.");
         model.addAttribute("redesociales", redSocialDao.getRedesSociales());
-        return "Administrador/RedSocial/redesSociales"; // Nombre del archivo jsp
+        return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         return "Administrador/RedSocial/RegistrarRedSocial";
@@ -106,7 +106,7 @@ public class RedSocialController {
     // Consulto que el Id sea mayor a 0.
     if (idRedSocial <= 0) {
     	model.addAttribute("redesociales", redSocialDao.getRedesSociales());
-    	return "Administrador/RedSocial/redesSociales"; // Nombre del archivo jsp
+    	return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
     }
     RedSocial redSocial = redSocialDao.obtenerRedSocialPorId(idRedSocial);
     model.addAttribute("redesSociales", redSocial);
@@ -129,7 +129,7 @@ public class RedSocialController {
       if (mensaje.equals("Actualizacion exitosa")) {
         model.addAttribute("result", "Información de red social actualizada con éxito.");
         model.addAttribute("redesociales", redSocialDao.getRedesSociales());
-        return "Administrador/RedSocial/redesSociales"; // Nombre del archivo jsp
+        return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         return "Administrador/RedSocial/ActualizarRedSocial";
@@ -153,7 +153,7 @@ public class RedSocialController {
     // Consulto que el Id sea mayor a 0.
     if (idRedSocial <= 0) {
     	model.addAttribute("redesociales", redSocialDao.getRedesSociales());
-      return "Administrador/RedSocial/redesSociales"; // Nombre del archivo jsp
+      return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
     }
     RedSocial redSocial = redSocialDao.obtenerRedSocialPorId(idRedSocial);
     model.addAttribute("redesSociales", redSocial);
@@ -175,7 +175,7 @@ public class RedSocialController {
     if (mensaje.equals("Eliminacion exitosa")) {
       model.addAttribute("result", "Red social eliminada con éxito.");
       model.addAttribute("redesociales", redSocialDao.getRedesSociales());
-      return "Administrador/RedSocial/redesSociales"; // Nombre del archivo jsp
+      return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
     } else {
       model.addAttribute("wrong", mensaje);
       return "Administrador/RedSocial/EliminarRedSocial";
