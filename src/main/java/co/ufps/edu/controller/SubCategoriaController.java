@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.dao.CategoriaDao;
 import co.ufps.edu.dao.SubCategoriaDao;
-import co.ufps.edu.model.Categoria;
-import co.ufps.edu.model.SubCategoria;
+import co.ufps.edu.dto.SubCategoria;
 
 /**
  * Controlador de subcategorias. Las subcategorias son las llamadas pestañas hijas de las categorias

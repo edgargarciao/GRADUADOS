@@ -7,9 +7,15 @@ import javax.servlet.ServletRegistration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+/*
+ * Clase que permite inicializar la aplicación.
+ */
 public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-	private int maxUploadSizeInMb = 5 * 1024 * 1024 * 1024; // 5 MB
+    /**
+     * El tamaño maximo que podra contener un archivo
+     */
+	private final long maxUploadSizeInMb = Long.MAX_VALUE;
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
@@ -29,14 +35,15 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 
 	@Override
 	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-
+	  
 		// temp file will be uploaded here
 		File uploadDirectory = new File(System.getProperty("java.io.tmpdir"));
 
 		// register a MultipartConfigElement
 		MultipartConfigElement multipartConfigElement = new MultipartConfigElement(uploadDirectory.getAbsolutePath(),
-				maxUploadSizeInMb, maxUploadSizeInMb * 2, maxUploadSizeInMb / 2);
-
+				maxUploadSizeInMb, maxUploadSizeInMb, (Integer.MAX_VALUE/2));
+		
+		
 		registration.setMultipartConfig(multipartConfigElement);
 
 	}

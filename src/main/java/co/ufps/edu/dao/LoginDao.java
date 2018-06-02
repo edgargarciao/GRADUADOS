@@ -5,6 +5,11 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import co.ufps.edu.bd.SpringDbMgr;
 
+/**
+ * Clase que permite acceder a la capa de datos en el entorno de acceso.
+ * @author ufps
+ *
+ */
 public class LoginDao {
 
 	SpringDbMgr springDbMgr = new SpringDbMgr();

@@ -32,8 +32,8 @@
                         	<div class="page-title">
                                 <ol class="breadcrumb text-right">
                                 	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
-                                    <li><a href="${contextPath}/categorias">Categorías / </li>
-                                    <li class="active"><a href="#"> Registrar Categoría</li>
+                                    <li><a href="${contextPath}/contenidos">Contenidos / </li>
+                                    <li class="active"><a href="#"> Registrar contenido</li>
                             	</ol>
                             </div>
 						</div>    
@@ -65,7 +65,7 @@
                     	<div class="card">
                     		<!-- Titulo de la ventana -->
                         	<div class="card-header">
-                            	<strong class="card-title">Registrar categoría</strong>
+                            	<strong class="card-title">Registrar contenido</strong>
                         	</div>
                         	<div class="card-body">
                         		<!-- Si hubo un error en el registro muestra el mensaje-->						
@@ -79,16 +79,32 @@
 							    </c:if>
                         	
                         		<!-- Formulario -->
-                        		<form:form id="formCategoria" action="guardarCategoria" method="post" modelAttribute="categoria">
+                        		<form:form id="formCategoria" action="guardarSubCategoria" method="post" modelAttribute="subcategoria">
+                                    <!-- Campo para escoger el tipo de asosiacion -->
+                                	<div class="form-group">         			
+                        			 <label for="text-input" class=" form-control-label">Tipo de asosiación</label>
+                        			  <form:select path="tipoAsociacion" id="tipoAsociacion" class="form-control" onchange="cambiarDeTipoDeAsosiacion();">
+				                        <form:option value="0" label="Seleccione el tipo de asosiacion" />
+				                        <form:options items="${tiposAsociacion}"/>
+				                      </form:select>  
+                        			</div> 
+                            		<!-- Campo para escoger la asosiacion -->
+                                	<div class="form-group">
+                                    	<label for="text-input" class=" form-control-label">ASosiación</label>
+                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Médico" aria-invalid="false" required = "true"/>
+                                	</div>                         			
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
                                     	<label for="text-input" class=" form-control-label">Nombre</label>
-                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Servicios" aria-invalid="false" required = "true"/>
+                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Médico" aria-invalid="false" required = "true"/>
                                 	</div> 
-                                	<!-- Campo para digitar la descripción -->
+                                	<!-- Campo para digitar el tipo de contenido -->
                                 	<div class="form-group">
-                                        <label for="textarea-input" class=" form-control-label">Descripción</label>
-                                		<form:textarea id="descripcion" name="descripcion" class="form-control" path="descripcion" rows="5" cols="130" required = "true" placeholder="Esta categoria es para ofrecer informacion acerca de..." /> 
+                                        <label for="textarea-input" class=" form-control-label">Tipo de contenido</label>
+                                		<form:select path="tipoContenido" id="tipoContenido" class="form-control" onchange="cambiarDeTipoDeContenido();">
+					                        <form:option value="0" label="Seleccione el tipo de contenido" />
+					                        <form:options items="${tiposContenido}"/>
+				                      	</form:select>   
                                 	</div>   
                                 	
                                 	<!-- Boton para registrar los datos -->
@@ -110,6 +126,15 @@
 	<!-- Carga de los archivos Javascript -->
 	<%@ include file = "../General/scripts.jsp" %>
 
+  <script type="text/javascript">
+
+   function changeFunc() {
+    var selectBox = document.getElementById("selectBox");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    alert(selectedValue);
+   }
+
+  </script>
 
 </body>
 </html>

@@ -41,7 +41,7 @@
 								<li class="active">
 								<li><a href="${contextPath}/indexAdmin">Panel de
 										control</a></li>
-								<li class="active" href="#">Contenidos</li>
+								<li class="active" href="#">Actividades</li>
 								</li>
 							</ol>
 						</div>
@@ -81,7 +81,7 @@
 						<!-- Card -->
 						<div class="card">
 							<div class="card-header">
-								<strong class="card-title">Contenidos</strong>
+								<strong class="card-title">Actividades</strong>
 							</div>
 							<div class="card-body">
 								<!-- /Card -->
@@ -96,45 +96,38 @@
                                     </div>
 							    </c:if>
 
-								<!-- Boton que indica la accion para registrar una categoria -->
-								<a href="${contextPath}/registrarCategoria"
-									class="btn btn-success">Registrar contenido</a> <br> <br>
-								<!-- Tabla con las categorias -->
+								<!-- Boton que indica la accion para registrar una actividad -->
+								<a href="${contextPath}/registrarActividad"
+									class="btn btn-success">Registrar actividad</a> <br> <br>
+								<!-- Tabla con las actividades -->
 								<table id="bootstrap-data-table"
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th scope="col" style="width: 2%">Órden</th>
+											<th scope="col" style="width: 14%">Fecha inicial</th>
+											<th scope="col" style="width: 14%">Fecha final</th>
 											<th scope="col" style="width: 2%;display:none">Id</th>
-											<th scope="col" style="width: 26%">Nombre categoria</th>
-											<th scope="col" style="width: 43%">Descripción</th>
-											<th scope="col" style="width: 27%">Acción</th>
+											<th scope="col" style="width: 26%">Nombre</th>
+											<th scope="col" style="width: 30%">Lugar</th>
+											<th scope="col" style="width: 14%">Acción</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="categoria" items="${categorias}">
+										<c:forEach var="actividad" items="${actividades}">
 											<tr>
-												<td scope="row">${categoria.orden}</td>
-												<th style="display:none">${categoria.id}</th>
-												<td>${categoria.nombre}</td>
-												<td>${categoria.descripcion}</td>											
-												<td><a
-													href="${contextPath}/bajarOrdenCategoria?id=${categoria.id}&orden=${categoria.orden}">
-														<button class="btn btn-outline-info">
-															<i class="fa fa-sort-desc" aria-hidden="true"></i>
-														</button>
-												</a> <a
-													href="${contextPath}/subirOrdenCategoria?id=${categoria.id}&orden=${categoria.orden}">
-														<button class="btn btn-outline-info">
-															<i class="fa fa-sort-asc" aria-hidden="true"></i>
-														</button>
-												</a> <a
-													href="${contextPath}/actualizarCategoria?id=${categoria.id}">
+												<td scope="row">${actividad.fechaInicial}</td>
+												<td scope="row">${actividad.fechaFinal}</td>
+												<th style="display:none">${actividad.id}</th>
+												<td>${actividad.nombre}</td>
+												<td>${actividad.lugar}</td>											
+												<td> 
+												<a
+													href="${contextPath}/actualizarActividad?id=${actividad.id}">
 														<button class="btn btn-outline-primary">
 															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 														</button>
 												</a> <a
-													href="${contextPath}/eliminarCategoria?id=${categoria.id}">
+													href="${contextPath}/eliminarActividad?id=${actividad.id}">
 														<button class="btn btn-outline-danger">
 															<i class="fa fa-trash" aria-hidden="true"></i>
 														</button>

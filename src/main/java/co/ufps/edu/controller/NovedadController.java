@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.ufps.edu.dao.NovedadDao;
-import co.ufps.edu.model.Categoria;
-import co.ufps.edu.model.Contacto;
-import co.ufps.edu.model.Novedad;
+import co.ufps.edu.dto.Categoria;
+import co.ufps.edu.dto.Contacto;
+import co.ufps.edu.dto.Novedad;
 
 
 

@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import co.ufps.edu.bd.SpringDbMgr;
-import co.ufps.edu.model.Novedad;
+import co.ufps.edu.dto.Novedad;
 
 public class NovedadDao {
 

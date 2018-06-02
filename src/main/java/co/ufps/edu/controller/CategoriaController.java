@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.dao.CategoriaDao;
-import co.ufps.edu.model.Categoria;
+import co.ufps.edu.dto.Categoria;
 
 /**
  * Controlador de categorias. Las categorias son las llamadas pestañas en el sitio web. Todos los
@@ -58,7 +58,7 @@ public class CategoriaController {
    * @return La página de registro de categorias.
    */
   @GetMapping("/registrarCategoria") // Base
-  public String registrarCategoria(Model model) {
+  public String registrarCategoria() {
     return "Administrador/Categoria/RegistrarCategoria"; // Nombre del archivo jsp
   }
 

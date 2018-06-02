@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.dao.RedSocialDao;
-import co.ufps.edu.model.RedSocial;
+import co.ufps.edu.dto.RedSocial;
 
 /**
  * Controlador de contenidos. Los contenidos son las paginas que se abren cuando se da click a una información. Todos los

@@ -7,8 +7,13 @@ import java.util.Map;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
-import co.ufps.edu.model.Categoria;
+import co.ufps.edu.dto.Categoria;
 
+/**
+ * Clase que permite acceder a la capa de datos en el entorno de categorias.
+ * @author ufps
+ *
+ */
 public class CategoriaDao {
 
   SpringDbMgr springDbMgr = new SpringDbMgr();
@@ -70,7 +75,7 @@ public class CategoriaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -163,10 +168,15 @@ public class CategoriaDao {
     try {
       springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
   }
 
+  /**
+   * Método que permite subir de orden una categoria en base de datos.
+   * @param idCategoria Identificador de la categoria
+   * @param orden Numero de orden
+   */
   public void ascenderOrden(long idCategoria, int orden) {
     // Extraemos el id de la categoria anterior
     long idCategoriaAnterior = getIdCategoriaPorOrden(orden - 1);
@@ -229,7 +239,7 @@ public class CategoriaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
@@ -252,7 +262,7 @@ public class CategoriaDao {
     try {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
-      e.printStackTrace();
+      new Exception();
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.

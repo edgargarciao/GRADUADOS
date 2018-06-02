@@ -12,12 +12,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+/**
+ * Clase que permite realizar la configuración web del sistema.
+ * @author edgar
+ *
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"co.ufps.edu.*"})
 public class WebConfig extends WebMvcConfigurerAdapter {
-  // Bean name must be "multipartResolver", by default Spring uses method name as
-  // bean name.
+
   @Bean
   public MultipartResolver multipartResolver() {
     return new StandardServletMultipartResolver();
@@ -26,7 +30,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   @Bean
   public InternalResourceViewResolver resolver() {
     // 2. Registra los jsp
-    System.out.println("Cargar clasee");
     InternalResourceViewResolver resolver = new InternalResourceViewResolver();
     resolver.setViewClass(JstlView.class);
     resolver.setPrefix("/WEB-INF/views/");
@@ -42,14 +45,20 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
+    // Mapea la clase para la seguridad
     registry.addInterceptor(getSessionManager()).addPathPatterns("/**")
         .excludePathPatterns("/resources/**", "/admin","/autenticar","/");
-    // assuming you put your serve your static files with /resources/ mapping
-    // and the pre login page is served with /login mapping
   }
 
   @Bean
   public SessionManager getSessionManager() {
     return new SessionManager();
   }
+  
+  @Bean(name = "multipartResolver")
+  public StandardServletMultipartResolver resolvermu() {
+      return new StandardServletMultipartResolver();
+  }
+ 
 }
+

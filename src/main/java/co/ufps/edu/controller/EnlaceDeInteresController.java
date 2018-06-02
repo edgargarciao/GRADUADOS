@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.dao.EnlaceDeInteresDao;
-import co.ufps.edu.model.EnlaceDeInteres;
+import co.ufps.edu.dto.EnlaceDeInteres;
 
 /**
  * Controlador de contenidos. Los contenidos son las paginas que se abren cuando se da click a una información. Todos los

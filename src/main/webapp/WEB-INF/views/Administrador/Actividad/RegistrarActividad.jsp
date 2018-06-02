@@ -32,8 +32,8 @@
                         	<div class="page-title">
                                 <ol class="breadcrumb text-right">
                                 	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
-                                    <li><a href="${contextPath}/categorias">Categorías / </li>
-                                    <li class="active"><a href="#"> Registrar Categoría</li>
+                                    <li><a href="${contextPath}/actividades">Actividades / </li>
+                                    <li class="active"><a href="#"> Registrar Actividad</li>
                             	</ol>
                             </div>
 						</div>    
@@ -65,7 +65,7 @@
                     	<div class="card">
                     		<!-- Titulo de la ventana -->
                         	<div class="card-header">
-                            	<strong class="card-title">Registrar categoría</strong>
+                            	<strong class="card-title">Registrar actividad</strong>
                         	</div>
                         	<div class="card-body">
                         		<!-- Si hubo un error en el registro muestra el mensaje-->						
@@ -79,17 +79,49 @@
 							    </c:if>
                         	
                         		<!-- Formulario -->
-                        		<form:form id="formCategoria" action="guardarCategoria" method="post" modelAttribute="categoria">
+                        		<form:form id="formActividad" action="guardarActividad" method="post" modelAttribute="actividad" enctype="multipart/form-data">
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
                                     	<label for="text-input" class=" form-control-label">Nombre</label>
-                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Servicios" aria-invalid="false" required = "true"/>
+                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Encuentro de egresados 2019" aria-invalid="false" required = "true"/>
                                 	</div> 
-                                	<!-- Campo para digitar la descripción -->
+                            		<!-- Campo para digitar el lugar -->
                                 	<div class="form-group">
-                                        <label for="textarea-input" class=" form-control-label">Descripción</label>
-                                		<form:textarea id="descripcion" name="descripcion" class="form-control" path="descripcion" rows="5" cols="130" required = "true" placeholder="Esta categoria es para ofrecer informacion acerca de..." /> 
-                                	</div>   
+                                    	<label for="text-input" class=" form-control-label">Lugar</label>
+                                		<form:input id="lugar" path="lugar" class="form-control" placeholder="Hotel tonchala" aria-invalid="false" required = "true"/>
+                                	</div> 
+									<!-- Campos de las fechas -->
+									<div class="row">
+										<!-- Fecha inicial -->
+										<div class="col-md-6" >
+											<div class="form-group"> <!-- Date input -->
+									        	<label class="control-label" for="date">Fecha inicial</label>
+									        	<form:input type="date" id="fechaInicial" path="fechaInicial" class="form-control" aria-invalid="false" required = "true"/>
+									      	</div>
+										</div>
+										<!--/ Fin de fecha inicial -->
+		
+										<!-- Fecha final -->
+										<div class="col-md-6" >
+									      	<div class="form-group"> <!-- Date input -->
+									        	<label class="control-label" for="date">Fecha final</label>
+									        	<form:input type="date" id="fechaFinal" path="fechaFinal" class="form-control" aria-invalid="false" required = "true"/>
+									      	</div>
+										</div>
+										<!--/ Fin de fecha final -->
+		                            </div>	           
+			                        </br>                                	
+                                	 <!-- Campo para digitar la imagen 1 -->
+                                	<div id ="divim1" class="form-group btn btn-danger btn-sm">
+                                    	<label for="text-input" class=" form-control-label">Imagen 1</label>
+                                		<form:input type="file" path="Imagen" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')" required = "true"/>
+                                	</div>
+                                	</br>
+                                	<div id = "divimagen1" class="form-group">
+                                		<img id = "img1" src="" height="200" alt="Imagen">
+                                	</div>
+                                	</br>
+                                	                                	                          	
                                 	
                                 	<!-- Boton para registrar los datos -->
                                 	<button type="submit" class="btn btn-success">Registrar</button>                                 
@@ -109,7 +141,42 @@
 
 	<!-- Carga de los archivos Javascript -->
 	<%@ include file = "../General/scripts.jsp" %>
+	
+	<!-- <script src="resources/assets/js/archivos.js"></script>  -->
+	<script type="text/javascript">
+		
+		
+		function revisarArchivos(id){
+			var el = document.getElementById("Imagen"+id).files;
+			if(el!=null && el.length==0){
+				document.getElementById("divim"+id).setAttribute('class', 'btn btn-danger btn-sm');
+				previewFile(id);
+			}else{
+				document.getElementById("divim"+id).setAttribute('class', 'btn btn-primary btn-sm');
+				//document.getElementById("divimagen1").removeAttribute('class');
+				previewFile(id);
+			}
+		}
+		
+		/*
+		* Metodo que permite pintar una imagen recien 
+		*/
+		function previewFile(id) {
+			  var preview = document.getElementById('img'+id);
+			  var file    = document.getElementById('Imagen'+id).files[0];
+			  var reader  = new FileReader();
 
+			  reader.onloadend = function () {
+			    preview.src = reader.result;
+			  }
+
+			  if (file) {
+			    reader.readAsDataURL(file);
+			  } else {
+			    preview.src = "";
+			  }
+			}		
+	</script>
 
 </body>
 </html>

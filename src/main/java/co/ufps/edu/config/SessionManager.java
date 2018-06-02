@@ -9,6 +9,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import co.ufps.edu.util.JwtUtil;
 
+/**
+ * Clase que permite manejar las sesiones del sistema.
+ * @author edgar
+ *
+ */
 public class SessionManager implements HandlerInterceptor {
 
   private JwtUtil jwtUtil;

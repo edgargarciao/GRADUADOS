@@ -1,4 +1,4 @@
-package co.ufps.edu.model;
+package co.ufps.edu.dto;
 
 public class ResultDB {
 
@@ -12,8 +12,8 @@ public class ResultDB {
 	
 	public ResultDB(int result, long key) {
 		super();
-		this.setResult(result);
-		this.setKey(key);
+		this.result = result;
+		this.key = key;
 	}
 
 	public int getResult() {

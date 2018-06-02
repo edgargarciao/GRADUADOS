@@ -41,7 +41,7 @@
 								<li class="active">
 								<li><a href="${contextPath}/indexAdmin">Panel de
 										control</a></li>
-								<li class="active" href="#">Contenidos</li>
+								<li class="active" href="#">Logos</li>
 								</li>
 							</ol>
 						</div>
@@ -81,7 +81,7 @@
 						<!-- Card -->
 						<div class="card">
 							<div class="card-header">
-								<strong class="card-title">Contenidos</strong>
+								<strong class="card-title">Logos</strong>
 							</div>
 							<div class="card-body">
 								<!-- /Card -->
@@ -95,55 +95,59 @@
                                         </button>
                                     </div>
 							    </c:if>
+							    
+                        		<!-- Si hubo un error en el registro muestra el mensaje-->						
+								<c:if test="${not empty wrong}">		            
+		                        	<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">				                   	
+				                    		<c:out value='${wrong}' />
+				                    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+				                    	</button>
+				                   </div>
+							    </c:if>							    
 
-								<!-- Boton que indica la accion para registrar una categoria -->
-								<a href="${contextPath}/registrarCategoria"
-									class="btn btn-success">Registrar contenido</a> <br> <br>
-								<!-- Tabla con las categorias -->
-								<table id="bootstrap-data-table"
-									class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th scope="col" style="width: 2%">Órden</th>
-											<th scope="col" style="width: 2%;display:none">Id</th>
-											<th scope="col" style="width: 26%">Nombre categoria</th>
-											<th scope="col" style="width: 43%">Descripción</th>
-											<th scope="col" style="width: 27%">Acción</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="categoria" items="${categorias}">
-											<tr>
-												<td scope="row">${categoria.orden}</td>
-												<th style="display:none">${categoria.id}</th>
-												<td>${categoria.nombre}</td>
-												<td>${categoria.descripcion}</td>											
-												<td><a
-													href="${contextPath}/bajarOrdenCategoria?id=${categoria.id}&orden=${categoria.orden}">
-														<button class="btn btn-outline-info">
-															<i class="fa fa-sort-desc" aria-hidden="true"></i>
-														</button>
-												</a> <a
-													href="${contextPath}/subirOrdenCategoria?id=${categoria.id}&orden=${categoria.orden}">
-														<button class="btn btn-outline-info">
-															<i class="fa fa-sort-asc" aria-hidden="true"></i>
-														</button>
-												</a> <a
-													href="${contextPath}/actualizarCategoria?id=${categoria.id}">
-														<button class="btn btn-outline-primary">
-															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-														</button>
-												</a> <a
-													href="${contextPath}/eliminarCategoria?id=${categoria.id}">
-														<button class="btn btn-outline-danger">
-															<i class="fa fa-trash" aria-hidden="true"></i>
-														</button>
-												</a></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-								<!-- /Tabla -->
+								<form:form id="formlogo" action="guardarLogo" method="post" modelAttribute="logo" enctype="multipart/form-data">
+                                	
+                            		 <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${logoHorizontal.id}"/>
+                            		 <form:hidden id="tipo" path="tipo" class="form-control" aria-invalid="false" required = "true" value="LogoHorizontal"/>
+                                	<div class="form-group">
+	                                    <strong class="card-title">Logo horizontal</strong>                                    
+	                                	</br>
+	                    
+	                                	<div class="form-group">
+	                                    
+	                                    	<figure>
+	                                        	<img id = "img1" src="${logoHorizontal.imBase64image}" alt="Logo horizontal" width="800" height="228">                                        
+	                                    	</figure>                                    
+	                                    	<form:input type="file" path="contenido" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')" required = "true"/>
+	                            		</div>
+	    
+	                                	</div>
+                                	<button type="submit" class="btn btn-success">Actualizar logo horizontal</button>                                 
+                            	</form:form>        
+		                        </br>
+		                        </br>
+		                        </br>		
+								<form:form id="formlogo" action="guardarLogo" method="post" modelAttribute="logo" enctype="multipart/form-data">
+                                	
+                            		 <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${logoVertical.id}"/>
+                            		 <form:hidden id="tipo" path="tipo" class="form-control" aria-invalid="false" required = "true" value="LogoVertical"/>
+                                	<div class="form-group">
+	                                    <strong class="card-title">Logo vertical</strong>                                    
+	                                	</br>
+	                    
+	                                	<div class="form-group">
+	                                    
+	                                    	<figure>
+	                                        	<img id = "img2" src="${logoVertical.imBase64image}" alt="Logo Vertical" width="500" height="500">                                        
+	                                    	</figure>                                    
+	                                    	<form:input type="file" path="contenido" id="Imagen2" name="Imagen2" onchange="revisarArchivos('2')" required = "true"/>
+	                            		</div>
+	    
+	                                	</div>
+                                	<button type="submit" class="btn btn-success">Actualizar logo Vertical</button>                                 
+                            	</form:form>  		                        
+		                        						
 							</div>
 							<!-- /card-body -->
 						</div>
@@ -168,6 +172,37 @@
 		$(document).ready(function() {
 			$('#bootstrap-data-table-export').DataTable();
 		});
+		
+		function revisarArchivos(id){
+			var el = document.getElementById("Imagen"+id).files;
+			if(el!=null && el.length==0){
+				previewFile(id);
+			}else{
+				previewFile(id);
+			}
+		}
+		
+		/*
+		* Metodo que permite pintar una imagen recien 
+		*/
+		function previewFile(id) {
+			  var preview = document.getElementById('img'+id);
+			  var file    = document.getElementById('Imagen'+id).files[0];
+			  var reader  = new FileReader();
+
+			  reader.onloadend = function () {
+			    preview.src = reader.result;
+			    document.getElementById('im'+id+'Base64image').value = "Lleno";
+			  }
+
+			  if (file) {
+			    reader.readAsDataURL(file);
+			  } else {
+				  			  
+			    preview.src = "";
+			    document.getElementById('im'+id+'Base64image').value = "";
+			  }
+			}	
 	</script>
 
 </body>

@@ -32,8 +32,8 @@
                         	<div class="page-title">
                                 <ol class="breadcrumb text-right">
                                 	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
-                                    <li><a href="${contextPath}/categorias">Categorías / </li>
-                                    <li class="active"><a href="#"> Registrar Categoría</li>
+                                    <li><a href="${contextPath}/categorias">Noticias / </li>
+                                    <li class="active"><a href="#"> Registrar Noticia</li>
                             	</ol>
                             </div>
 						</div>    
@@ -65,7 +65,7 @@
                     	<div class="card">
                     		<!-- Titulo de la ventana -->
                         	<div class="card-header">
-                            	<strong class="card-title">Registrar categoría</strong>
+                            	<strong class="card-title">Registrar noticia</strong>
                         	</div>
                         	<div class="card-body">
                         		<!-- Si hubo un error en el registro muestra el mensaje-->						
@@ -79,17 +79,45 @@
 							    </c:if>
                         	
                         		<!-- Formulario -->
-                        		<form:form id="formCategoria" action="guardarCategoria" method="post" modelAttribute="categoria">
+                        		<form:form id="formNoticia" action="guardarNoticia" method="post" modelAttribute="noticia" enctype="multipart/form-data">
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
                                     	<label for="text-input" class=" form-control-label">Nombre</label>
-                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Servicios" aria-invalid="false" required = "true"/>
+                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Egresado xx" aria-invalid="false" required = "true"/>
                                 	</div> 
                                 	<!-- Campo para digitar la descripción -->
                                 	<div class="form-group">
                                         <label for="textarea-input" class=" form-control-label">Descripción</label>
-                                		<form:textarea id="descripcion" name="descripcion" class="form-control" path="descripcion" rows="5" cols="130" required = "true" placeholder="Esta categoria es para ofrecer informacion acerca de..." /> 
+                                		<form:textarea id="descripcion" maxlength="180" name="descripcion" class="form-control" path="descripcion" rows="2" cols="130" required = "true" placeholder="Egresado xx obtuvo premio por inventar yy..." /> 
                                 	</div>   
+
+                            		<!-- Campo para digitar la fecha -->
+                                	<div class="form-group">
+                                    	<label for="text-input" class=" form-control-label">Fecha del suceso</label>
+                                		<form:input type="date" id="fecha" path="fecha" class="form-control" placeholder="Servicios" aria-invalid="false" required = "true"/>
+                                	</div>
+                                	
+                                	 <!-- Campo para digitar la imagen 1 -->
+                                	<div id ="divim1" class="form-group btn btn-danger btn-sm">
+                                    	<label for="text-input" class=" form-control-label">Imagen 1</label>
+                                		<form:input type="file" path="Imagen1" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')" required = "true"/>
+                                	</div>
+                                	</br>
+                                	<div id = "divimagen1" class="form-group">
+                                		<img id = "img1" src="" height="200" alt="Imagen">
+                                	</div>
+                                	</br>
+                                	                                	
+                                	 <!-- Campo para digitar la imagen 2 -->
+                                	<div id ="divim2" class="form-group btn btn-danger btn-sm">
+                                    	<label for="text-input" class=" form-control-label">Imagen 2</label>
+                                		<form:input type="file" path="Imagen2" id="Imagen2" name="Imagen2"  onchange="revisarArchivos('2')" required = "true"/>
+                                	</div>                                		                                                               	                                	                              	
+                                	</br>
+                                	<div id = "divimagen2" class="form-group">
+                                		<img id = "img2" src="" height="200" alt="Imagen">
+                                	</div>
+                                	</br>                                	
                                 	
                                 	<!-- Boton para registrar los datos -->
                                 	<button type="submit" class="btn btn-success">Registrar</button>                                 
@@ -109,7 +137,42 @@
 
 	<!-- Carga de los archivos Javascript -->
 	<%@ include file = "../General/scripts.jsp" %>
+	
+	<!-- <script src="resources/assets/js/archivos.js"></script>  -->
+	<script type="text/javascript">
+		
+		
+		function revisarArchivos(id){
+			var el = document.getElementById("Imagen"+id).files;
+			if(el!=null && el.length==0){
+				document.getElementById("divim"+id).setAttribute('class', 'btn btn-danger btn-sm');
+				previewFile(id);
+			}else{
+				document.getElementById("divim"+id).setAttribute('class', 'btn btn-primary btn-sm');
+				//document.getElementById("divimagen1").removeAttribute('class');
+				previewFile(id);
+			}
+		}
+		
+		/*
+		* Metodo que permite pintar una imagen recien 
+		*/
+		function previewFile(id) {
+			  var preview = document.getElementById('img'+id);
+			  var file    = document.getElementById('Imagen'+id).files[0];
+			  var reader  = new FileReader();
 
+			  reader.onloadend = function () {
+			    preview.src = reader.result;
+			  }
+
+			  if (file) {
+			    reader.readAsDataURL(file);
+			  } else {
+			    preview.src = "";
+			  }
+			}		
+	</script>
 
 </body>
 </html>
