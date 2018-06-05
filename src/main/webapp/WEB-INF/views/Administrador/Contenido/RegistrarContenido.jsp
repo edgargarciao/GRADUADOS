@@ -155,6 +155,10 @@
 									<div style="display: none;">
 										<input type="file" id="video" name="video" onchange="revisarVideo(this);" accept="video/*">
 									</div>
+									
+									<div style="display: none;">
+										<input type="file" id="archivo" name=archivo onchange="revisarArchivo(this);" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf">
+									</div>									
 
 									<div class="form-group">
 										<label for="textarea-input" class=" form-control-label">Contenido</label>

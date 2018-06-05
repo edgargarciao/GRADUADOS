@@ -16,14 +16,18 @@
       document.execCommand($(this).data('command'), false, $(this).data('value'));
     }
     if (command == 'createlink') {
-    	
+    	alert("test --> ");
     	url = prompt('Enter the link here: ', 'http:\/\/');
+    	alert("url --> "+url);
     	document.execCommand($(this).data('command'), false, url);
     }if (command == 'insertimage') {
     	document.getElementById('imagen').click();
 
     }if (command == 'insertVideo') {
     	document.getElementById('video').click();
+
+    }if (command == 'insertFile') {
+    	document.getElementById('archivo').click();
 
     } else document.execCommand($(this).data('command'), false, null);
   });
@@ -69,28 +73,51 @@
   }
   
   function revisarVideo(input) {
-	  	//var video = document.getElementById("video");
       //THE METHOD THAT SHOULD SET THE VIDEO SOURCE
       if (input.files && input.files[0]) {
-          var file = input.files[0];
+    	  var file = input.files[0];
           var url = URL.createObjectURL(file);
           console.log(url);
           var reader = new FileReader();
           reader.onload = function() {
-              
-          	
-				var id = "rand" + Math.random();
-				var doc = document.getElementById("editor");
-				doc = doc.document;
-				img = "<video id='video1' height='300' width='600' controls><source src='" +  url + "' id=" + id + "/></video>";
-				document.execCommand("insertHTML", false, img);
-
-          	
-          	
-          	//video.src = url;
-              //video.play();
+        	  var id = "rand" + Math.random();
+        	  var doc = document.getElementById("editor");
+        	  doc = doc.document;
+        	  img = "<video id='video1' height='300' width='600' controls><source src='" +  url + "' id=" + id + "/></video>";
+        	  document.execCommand("insertHTML", false, img);
           }
           reader.readAsDataURL(file);
           document.getElementById("video").value = "";
       }
   }
+  function revisarArchivo(input) {
+
+    if (input.files && input.files[0]) {
+        var file = input.files[0];
+        var url = URL.createObjectURL(file);
+        console.log(url);
+        var reader = new FileReader();
+        reader.onload = function() {           
+        		var fileName = file.name;
+        		var fileSize = file.size;
+        		var fileType = file.type;
+        		var id = guardarArchivoEnBaseDeDatos(url,fileName,fileSize,fileType);
+        		
+        		
+				var doc = document.getElementById("editor");
+				doc = doc.document;
+				
+				img = "<img src='" +  url + "' id=" + id + "/>";
+		//		document.execCommand("insertHTML", false, img);
+        }
+        reader.readAsDataURL(file);
+        document.getElementById("archivo").value = "";
+    }
+}
+  
+  function guardarArchivoEnBaseDeDatos(url,fileName,fileSize,fileType){
+  	var id = 1;
+  	
+  	return id;
+  }
+  
