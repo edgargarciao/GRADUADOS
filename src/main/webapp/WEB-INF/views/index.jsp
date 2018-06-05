@@ -215,36 +215,17 @@
 		</div>
 		<!--header-v6-->
 		<ul class="pgwSlider">
-			<li><img
-				src="resources/rsc/img/banner excelencia investigativa.jpg" alt="">
-				<span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">Felicitaciones
-					a los investigadores de GIDIS, merecido Premio a la Excelencia
-					Investigativa, trabajo y esfuerzo de todos </span></li>
-			<li><img src="resources/rsc/img/banner Proyecion social.jpg"
-				alt=""> <span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">Durante
-					el presente Semestre los estudiantes de Proyecto Social vienen
-					realizando actividades para la Fundaci�n Casa Hogar: San Francisco
-					de As�s.Se invita a la comunidad acad�mica a donar los productos de
-					comida no perecederos. Mayor informacion Secretaria del Dpto de
-					Sistemas e Inform�tica</span></li>
-			<li><img src="resources/rsc/img/Presentacion Semilleros.jpg"
-				alt=""> <span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">La
-					presentaci�n de los Semilleros de Investigaci�n se realizo de
-					manera satisfactoria en la ma�ana de hoy 14 de marzo, con la
-					asistencia de m�s de 200 estudiantes. </span></li>
-			<li><img src="resources/rsc/img/banner-node.jpg" alt=""> <span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">El
-					NodeSchool se llev� a cabo exitosamente, el pasado s�bado 14 de
-					Abril.</span></li>
-			<li><img
-				src="resources/rsc/img/banner curso de profundizacion.jpg" alt="">
-				<span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">Hoy
-					23 de Abril, inician las clases del curso de profundizaci�n en
-					desarrollo de software a las 6:00 pm.</span></li>
+			
+			<c:forEach var="noticia" items="${noticias}">
+				<li>
+					<img
+					src="${noticia.im1Base64image}" alt="">
+					<span	style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">
+						${noticia.descripcion}
+					</span>
+				</li>
+			</c:forEach>
+
 		</ul>
 		<!--Entra a html_noticias-->
 		<!--Antes de acceder a la base de datos-->
@@ -265,22 +246,26 @@
 						<div class="row equal-height-columns margin-bottom-10">
 							<div class="container">
 								<ul class="row block-grid-v2">
+									
 									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
 										style="padding-left: 14px;">
+										
 										<div class="easy-block-v1">
 											<img onclick="openModalImage('modal148')" src="" alt=""
 												style="cursor: zoom-in;">
 											<div class="easy-block-v1-badge rgba-red">2 de Abril de
 												2018</div>
-										</div>
+										</div>										
 										<div
 											class="block-grid-v2-info rounded-bottom  bloques_eventos">
 											<h5>
 												<b><a href="index.php?modulo=verinformacion&idinfo=148">Curso
 														de Profundizaci�n de Desarrollo de Software</a></b>
 											</h5>
+										
 										</div>
 									</li>
+									
 									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
 										style="padding-left: 14px;">
 										<div class="easy-block-v1">
@@ -298,6 +283,7 @@
 											</h5>
 										</div>
 									</li>
+									
 									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
 										style="padding-left: 14px;">
 										<div class="easy-block-v1">
@@ -334,6 +320,7 @@
 											</h5>
 										</div>
 									</li>
+									
 								</ul>
 								<a href="./index.php?modulo=principal"
 									class="btn-u btn-u-sm pull-right tooltips"

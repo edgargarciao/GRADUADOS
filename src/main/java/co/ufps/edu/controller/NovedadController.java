@@ -75,7 +75,7 @@ public class NovedadController {
    * @return La página a donde debe redireccionar después de la acción.
    */
   @PostMapping(value = "/guardarNovedad")
-  public String registrarNovedad(@ModelAttribute("novedad") Novedad novedad, Model model) {
+  public String guardarNovedad(@ModelAttribute("novedad") Novedad novedad, Model model) {
 
     // Consulta si tiene todos los campos llenos
     if (novedad.isValidoParaRegistrar()) {
@@ -90,7 +90,7 @@ public class NovedadController {
       }
       //
     } else {
-      model.addAttribute("wrong", "Debes llenar todos los campos.");
+      model.addAttribute("wrong", "Debes llenartodos  los campos.");
       return "Administrador/Novedad/RegistrarNovedad";
     }
   }
