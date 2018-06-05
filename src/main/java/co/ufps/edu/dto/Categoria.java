@@ -1,5 +1,7 @@
 package co.ufps.edu.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.util.StringUtils;
 
 public class Categoria {
@@ -8,6 +10,12 @@ public class Categoria {
   private String nombre;
   private String descripcion;
   private int orden;
+  private List<SubCategoria> subcategorias;
+  private String contenido;
+
+  public Categoria() {
+    subcategorias = new ArrayList<>();
+  }
 
   public long getId() {
     return id;
@@ -50,7 +58,26 @@ public class Categoria {
     return "Categoria [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion
         + ", orden=" + orden + "]";
   }
-  
-  
+
+  public List<SubCategoria> getSubcategorias() {
+    return subcategorias;
+  }
+
+  public void setSubcategorias(List<SubCategoria> subcategorias) {
+    this.subcategorias = subcategorias;
+  }
+
+  public void agregarSubcategoria(SubCategoria subCategoria) {
+    this.subcategorias.add(subCategoria);
+
+  }
+
+  public String getContenido() {
+    return contenido;
+  }
+
+  public void setContenido(String contenido) {
+    this.contenido = contenido;
+  }
 
 }

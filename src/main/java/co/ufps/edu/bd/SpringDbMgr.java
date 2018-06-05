@@ -1,7 +1,9 @@
 package co.ufps.edu.bd;
 
+import java.util.Arrays;
 import java.util.Properties;
 import javax.sql.DataSource;
+import org.apache.commons.io.Charsets;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -41,9 +43,8 @@ public class SpringDbMgr {
 		p.setProperty("user", "root");
 		p.setProperty("password", "");
 		p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
-		p.setProperty("url", "jdbc:mysql://localhost:8080/graduados");
 
-		dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados", p);
+		dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8", p);
 		//jdbc:mysql://localhost:3306/dbname
 	}
 
@@ -152,9 +153,11 @@ public class SpringDbMgr {
 
 	public static void main(String[] args) {
 		SpringDbMgr s = new SpringDbMgr();
-		SqlRowSet r = s.executeQuery("select * from estudiante");
+		SqlRowSet r = s.executeQuery("select * from contenido");
 		r.next();
-		System.out.println(r.getString("nombre"));
+		byte []a = (byte[]) r.getObject("contenido");
+		String res = new String(a,Charsets.UTF_8);
+		System.out.println("res --> \n "+res);
 		
 		/*MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("codigo", 1550967);

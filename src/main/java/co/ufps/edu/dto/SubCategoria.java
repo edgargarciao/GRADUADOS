@@ -9,6 +9,7 @@ public class SubCategoria {
   private String descripcion;
   private int orden;
   private Categoria categoria;
+  private Contenido contenido;
 
   public long getId() {
     return id;
@@ -60,6 +61,14 @@ public class SubCategoria {
   public String toString() {
     return "SubCategoria [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion
         + ", orden=" + orden + ", categoria=" + categoria + "]";
+  }
+
+  public Contenido getContenido() {
+    return contenido;
+  }
+
+  public void setContenido(Contenido contenido) {
+    this.contenido = contenido;
   }
 
 }

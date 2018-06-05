@@ -116,7 +116,7 @@
 											<tr>
 												<th style="display:none">${contenido.id}</th>
 												<td scope="row">${contenido.nombre}</td>
-												<td>${contenido.tipoContenido}</td>
+												<td>${contenido.tipoContenido.nombre}</td>
 												<td>${contenido.tipoAsociacion}</td>											
 												<td> <a
 													href="${contextPath}/actualizarContenido?id=${contenido.id}">

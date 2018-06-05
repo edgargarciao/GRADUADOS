@@ -185,8 +185,7 @@
 			</div>
 			<!-- Navbar -->
 			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div
-				class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
+			<div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
 				<div class="containermenu">
 					<ul class="nav navbar-nav" style="float: left;">
 					
@@ -204,304 +203,123 @@
 								</ul>
 							</li>
 						</c:forEach>
-					
-					
-            
-
 					</ul>
 				</div>
 			</div>
 			<!--/navbar-collapse-->
 		</div>
-		<!--header-v6-->
-		<ul class="pgwSlider">
-			<li><img
-				src="resources/rsc/img/banner excelencia investigativa.jpg" alt="">
-				<span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">Felicitaciones
-					a los investigadores de GIDIS, merecido Premio a la Excelencia
-					Investigativa, trabajo y esfuerzo de todos </span></li>
-			<li><img src="resources/rsc/img/banner Proyecion social.jpg"
-				alt=""> <span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">Durante
-					el presente Semestre los estudiantes de Proyecto Social vienen
-					realizando actividades para la Fundaci�n Casa Hogar: San Francisco
-					de As�s.Se invita a la comunidad acad�mica a donar los productos de
-					comida no perecederos. Mayor informacion Secretaria del Dpto de
-					Sistemas e Inform�tica</span></li>
-			<li><img src="resources/rsc/img/Presentacion Semilleros.jpg"
-				alt=""> <span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">La
-					presentaci�n de los Semilleros de Investigaci�n se realizo de
-					manera satisfactoria en la ma�ana de hoy 14 de marzo, con la
-					asistencia de m�s de 200 estudiantes. </span></li>
-			<li><img src="resources/rsc/img/banner-node.jpg" alt=""> <span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">El
-					NodeSchool se llev� a cabo exitosamente, el pasado s�bado 14 de
-					Abril.</span></li>
-			<li><img
-				src="resources/rsc/img/banner curso de profundizacion.jpg" alt="">
-				<span
-				style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">Hoy
-					23 de Abril, inician las clases del curso de profundizaci�n en
-					desarrollo de software a las 6:00 pm.</span></li>
-		</ul>
-		<!--Entra a html_noticias-->
-		<!--Antes de acceder a la base de datos-->
-		<!--Despues de acceder a la base de datos-->
-		<div style="clear: both;"></div>
-		<div style="background-color: #e8e8e8;">
-			<div class="container content-prin profile">
-				<div class="row margin-top-10">
-					<div
-						class="headline-center-v2 headline-center-v2-dark margin-bottom-10">
-						<h1 class="shop-h1" style="font-size: 30px;">
-							<b>Novedades</b>
-						</h1>
-						<span class="bordered-icon"><i class="fa fa-newspaper-o"
-							aria-hidden="true"></i></span>
-					</div>
-					<div class="col-md-12">
-						<div class="row equal-height-columns margin-bottom-10">
-							<div class="container">
-								<ul class="row block-grid-v2">
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal148')" src="" alt=""
-												style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">2 de Abril de
-												2018</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=148">Curso
-														de Profundizaci�n de Desarrollo de Software</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal146')"
-												src="resources/rsc/img/clp_WhatsApp Image 2017-11-28 at 21.59.17 (1).jpeg"
-												alt="" style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">28 de
-												Noviembre de 2017</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=146">D�a
-														Internacional de la Seguridad Inform�tica</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal144')"
-												src="resources/rsc/img/clp_20171111_085650.jpg" alt=""
-												style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">15 de
-												Noviembre de 2017</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=144">Marat�n
-														Latinoamericana de Programaci�n 2017 ICPC / ACIS -
-														2017-11-15</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal143')"
-												src="resources/rsc/img/clp_ponencia semilleros2.png" alt=""
-												style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">23 de Octubre
-												de 2017</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=143">Participaci�n
-														de Semilleros Ingenier�a de sistemas UFPS - 2017/10/23
-														Bucaramanga</a></b>
-											</h5>
-										</div>
-									</li>
-								</ul>
-								<a href="./index.php?modulo=principal"
-									class="btn-u btn-u-sm pull-right tooltips"
-									data-toggle="tooltip" data-placement="left"
-									data-original-title="Ver m&aacute;s novedades">Ver m�s <i
-									class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- FIN EVENTOS -->
-		<div style="background-color: #b43432; padding-bottom: 10px;">
-			<div class="container content-prin profile">
-				<div class="row margin-bottom-10 margin-top-10">
-					<div class="headline-center-v2 margin-bottom-10">
-						<h1 style="font-size: 30px; color: #fff;">
-							<b>Pr&oacute;ximas actividades</b>
-						</h1>
-						<span class="bordered-icon"><i class="fa fa-calendar-o"
-							aria-hidden="true"></i></span>
-					</div>
-					<div class="col-sm-3">
-						<div class="service-block-v1 md-margin-bottom-50"
-							style="background: #fff; border-top: 5px solid #f1c40f;">
-							<i
-								class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark"
-								style="background: #fff;"></i>
-							<h5 class="title-v3-bg text-uppercase">
-								<b></b>
-							</h5>
-							<p>Esta actividad se desarrollar&aacute; el 27 de abril</p>
-						</div>
-					</div>
-				</div>
-				<!--/row-->
-				<a href="./index.php?modulo=calendarios"
-					class="btn-u btn-u-sm pull-right tooltips" data-toggle="tooltip"
-					data-placement="left"
-					data-original-title="Ingresar a Calendario de Eventos">Ver m�s
-					<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-				</a>
-			</div>
-		</div>
-		<!-- FIN DESTACADOS -->
-		<div style="clear: both;"></div>
-		<div style="background-color: #d4d4d4;">
-			<div class="container content-prin profile">
-				<div class="row margin-top-10">
-					<div
-						class="headline-center-v2 headline-center-v2-dark margin-bottom-10">
-						<h1 class="shop-h1" style="font-size: 30px; color: #444;">
-							<b>Galer&iacute;as</b>
-						</h1>
-						<span class="bordered-icon" style="color: #444;"><i
-							class="fa fa-newspaper-o" aria-hidden="true"></i></span>
-					</div>
-					<div class="col-md-12">
-						<div class="row equal-height-columns margin-bottom-10">
-							<div class="container">
-								<ul class="row block-grid-v2">
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=22"> <img
-												src="resources/rsc/img/20171202_003306.jpg" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=22">Cena
-														de Graduados 2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=21"> <img
-												src="resources/rsc/img/WhatsApp Image 2017-12-07 at 17.20.46.jpeg"
-												alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=21">Novena
-														de Aguinaldos 2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=20"> <img
-												src="resources/rsc/img/encuentro1.png" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=20">2do
-														Encuentro Acad�mico-Investigaci�n 2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=18"> <img
-												src="resources/rsc/img/WhatsApp Image 2017-11-30 at 18.44.43.jpeg"
-												alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=18">D�a
-														Internacional de la Seguridad Inform�tica</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=19"> <img
-												src="resources/rsc/img/feriabanner.jpg" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=19">Feria
-														de Proyectos de Aula 2.0 29/11/2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=17"> <img
-												src="resources/rsc/img/20171026_192324 dos.jpg" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=17">Visita
-														de Pares Acad�micos </a></b>
-											</h5>
-										</div>
-									</li>
-								</ul>
-								<a href="./index.php?modulo=galerias"
-									class="btn-u btn-u-sm pull-right tooltips"
-									data-toggle="tooltip" data-placement="left"
-									data-original-title="Ver m&aacute;s galer&iacute;as">Ver
-									m�s <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- FIN EVENTOS -->
+		
+		
+        <div class="container content profile">
+          <div class="row margin-bottom-30">
+
+             <div style="clear:both;">
+             </div>
+            	<div id="informacionContent" class="col-md-8 mb-margin-bottom-30 shadow-wrapper">
+              		<div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom:20px; border-bottom: 3px solid #aa1916; padding: 0;">
+                		<h1 class="pull-left" style="font-size:36px;">${titulo}</h1>
+              </div>
+              
+              ${codigo}
+              
+
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">&nbsp;</p>            
+<div style="clear:both; min-height:30px;"></div>
+
+
+            </div><!--informacionContent-->
+            <div class="col-md-4">
+            <div class="gdl-custom-sidebar">
+              <h3 class="gdl-custom-sidebar-title-m">Novedades</h3>
+            </div>
+            <div class="gdl-custom-sidebar">
+              <a href="./index.php?modulo=principal&idtipoi=1"><button class="ufps-btn-accordionlike">Noticias</button></a>
+              <a href="./index.php?modulo=principal&idtipoi=2"><button class="ufps-btn-accordionlike">Anuncios</button></a>
+              <a href="./index.php?modulo=principal&idtipoi=3"><button class="ufps-btn-accordionlike">Eventos</button></a>
+              <a href="./index.php?modulo=principal&idtipoi=4"><button class="ufps-btn-accordionlike">Convocatorias</button></a>
+            </div>
+            <div id="proximasContent" class="gdl-custom-sidebar gdl-custom-sidebar-nofirst">
+              <h3 class="gdl-custom-sidebar-title-m">Actividades de esta semana<div class="ufps-tooltip" style="float:right;"><span style="float:right;"><a href="./index.php?modulo=calendarios"><img src="rsc/img/calendar.png"></a></span><span class="ufps-tooltip-content-left" style="font-size:14px; font-weight:normal; margin-right:5px;">Ir al calendario</span></div></h3>
+              <div id="browseweek" class="browseweek" style="background:#424242; min-height:25px; width:100%; margin:auto; margin-bottom:0px;"><div class="ufps-tooltip"><div style="margin-left:2px; margin-right:2px; float:left; top:0px; left:0px; width:25px;"><img src="rsc/img/rewind.png" style="cursor:pointer;" onclick="WeekDirection(0,-1,'right');"></div><span class="ufps-tooltip-content-right">Semana anterior</span></div><div class="ufps-tooltip" style="float:right;"><div style="margin-left:2px; margin-right:2px; float:right; top:0px; right:0px; width:25px;"><img src="rsc/img/forward.png" style="cursor:pointer;" onclick="WeekDirection(0,+1,'right');"></div><span class="ufps-tooltip-content-left">Semana siguiente</span></div></div>
+    <span style="text-align:center;"><h3 class="simple" style="margin-top:20px; color:#dd1617;">No hay actividades para mostrar</h3></span>
+              <div class="clear" style="height:10px;"></div>
+            </div><!--proximasContent-->
+            <div class="gdl-custom-sidebar gdl-custom-sidebar-nofirst">
+              <h3 class="gdl-custom-sidebar-title-m">Galer&iacute;as</h3>
+              <div class="col-md-6 col-sm-6 col-xs-6 col-md-margin-bottom-30" style="padding-left: 14px; margin-bottom: 14px;">
+                <div class="easy-block-v1">
+                  <a href="./index.php?modulo=detallegaleria&idgale=27">
+                  <img src="rsc/img/Socialización Proyecto NanFree 404.jpeg" alt="">
+                  </a>
+                  <div class="easy-block-v1-badge rgba-black" style="z-index:0; width:100%; top: 0px; color:#fff; font-size:0.9em;">
+                    IV Encuentro Regional de Semilleros de  Investigación - REDCOLSI                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6 col-md-margin-bottom-30" style="padding-left: 14px; margin-bottom: 14px;">
+                <div class="easy-block-v1">
+                  <a href="./index.php?modulo=detallegaleria&idgale=26">
+                  <img src="rsc/img/photo4913524990322780157.jpg" alt="">
+                  </a>
+                  <div class="easy-block-v1-badge rgba-black" style="z-index:0; width:100%; top: 0px; color:#fff; font-size:0.9em;">
+                    Cúcuta Digital Valley 2018                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6 col-md-margin-bottom-30" style="padding-left: 14px; margin-bottom: 14px;">
+                <div class="easy-block-v1">
+                  <a href="./index.php?modulo=detallegaleria&idgale=22">
+                  <img src="rsc/img/20171202_003306.jpg" alt="">
+                  </a>
+                  <div class="easy-block-v1-badge rgba-black" style="z-index:0; width:100%; top: 0px; color:#fff; font-size:0.9em;">
+                    Cena de Graduados 2017                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6 col-md-margin-bottom-30" style="padding-left: 14px; margin-bottom: 14px;">
+                <div class="easy-block-v1">
+                  <a href="./index.php?modulo=detallegaleria&idgale=18">
+                  <img src="rsc/img/WhatsApp Image 2017-11-30 at 18.44.43.jpeg" alt="">
+                  </a>
+                  <div class="easy-block-v1-badge rgba-black" style="z-index:0; width:100%; top: 0px; color:#fff; font-size:0.9em;">
+                    Día Internacional de la Seguridad Informática                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6 col-md-margin-bottom-30" style="padding-left: 14px; margin-bottom: 14px;">
+                <div class="easy-block-v1">
+                  <a href="./index.php?modulo=detallegaleria&idgale=19">
+                  <img src="rsc/img/feriabanner.jpg" alt="">
+                  </a>
+                  <div class="easy-block-v1-badge rgba-black" style="z-index:0; width:100%; top: 0px; color:#fff; font-size:0.9em;">
+                    Feria de Proyectos de Aula 2.0 29/11/2017                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6 col-md-margin-bottom-30" style="padding-left: 14px; margin-bottom: 14px;">
+                <div class="easy-block-v1">
+                  <a href="./index.php?modulo=detallegaleria&idgale=17">
+                  <img src="rsc/img/20171026_192324 dos.jpg" alt="">
+                  </a>
+                  <div class="easy-block-v1-badge rgba-black" style="z-index:0; width:100%; top: 0px; color:#fff; font-size:0.9em;">
+                    Visita de Pares Académicos                   </div>
+                </div>
+              </div>
+            </div>
+            <div style="clear:both;"></div>
+            <div class="gdl-custom-sidebar gdl-custom-sidebar-nofirst">
+              <h3 class="gdl-custom-sidebar-title-m">Lista de correo</h3>
+                <h4 class="simple">Suscr&iacute;base a nuestro grupo de Google&trade; IngenieriaSistemasUFPS.</h4>
+                <form action="http://groups.google.com/group/ingenieriasistemasufps/boxsubscribe">
+                  <input type=hidden name="hl" value="es">
+                  <input type="text" placeholder="Escriba su correo electr&oacute;nico" class="ufps-input" style="width:85%;"><img src="rsc/img/send.png" style="margin-left:7px;">
+                </form>
+                <p class="readmore-simple readmore">
+                <a target="_blank" href="/images/Descargas/manual_inscripcion_lista_correos.pdf">Ver manual</a>&nbsp; &nbsp; <a target="_blank" href="http://groups.google.com/group/ingenieriasistemasufps?hl=es">Consultar este grupo</a></p>
+            </div>
+            <div style="clear:both; min-height:26px;">
+            </div>
+            </div><!--col-md-4-->
+          </div><!-- row margin-bottom-30-->
+        </div><!--container content profile-->		
+		
 		<!-- ICONOS REDES SOCIALES -->
 		<div id="idcuadroredes" class="cuadroredes" style="height: 190px">
 			<div

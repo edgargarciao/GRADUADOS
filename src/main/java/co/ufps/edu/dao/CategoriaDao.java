@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.dto.Categoria;
+import co.ufps.edu.dto.SubCategoria;
 
 /**
  * Clase que permite acceder a la capa de datos en el entorno de categorias.
@@ -299,6 +300,61 @@ public class CategoriaDao {
 	    	cant = sqlRowSet.getInt("cantidad");
 	    }
 	    return cant;
+  }
+
+  public List<Categoria> getCategoriasConSubcategorias() {
+ // Lista para retornar con los datos
+    List<Categoria> categorias = new LinkedList<>();
+
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    CATEGORIA.ID                    idCategoria,            "
+                                                  + "           CATEGORIA.NOMBRE                nombreCategoria,        "
+                                                  + "           CATEGORIA.DESCRIPCION           descripcionCategoria,   "
+                                                  + "           CATEGORIA.ORDEN                 ordenCategoria,         "
+                                                  + "           SUBCATEGORIA.ID                 idSubcategoria,         "
+                                                  + "           SUBCATEGORIA.NOMBRE             nombreSubCategoria,     "
+                                                  + "           SUBCATEGORIA.DESCRIPCION        descripcionSubCategoria,"
+                                                  + "           SUBCATEGORIA.ORDEN              ordenSubCategoria       "
+                                                  + "   FROM    SUBCATEGORIA                                            "
+                                                  + "INNER JOIN CATEGORIA  ON CATEGORIA.id = SUBCATEGORIA.Categoria_id  "
+                                                  + "ORDER BY   CATEGORIA.ORDEN ASC,SUBCATEGORIA.ORDEN ASC                 ");
+
+    // Recorre cada registro obtenido de base de datos
+    while (sqlRowSet.next()) {
+      // Objeto en el que sera guardada la informacion del registro
+      SubCategoria subCategoria = new SubCategoria();
+
+      subCategoria.setId(sqlRowSet.getLong("idSubcategoria"));
+      subCategoria.setNombre(sqlRowSet.getString("nombreSubCategoria"));
+      subCategoria.setDescripcion(sqlRowSet.getString("descripcionSubCategoria"));
+      subCategoria.setOrden(sqlRowSet.getInt("ordenSubCategoria"));
+      
+      Categoria categoria = getCategoria(categorias,sqlRowSet.getLong("idCategoria"),sqlRowSet);
+      
+      // Guarda el registro para ser retornado
+      categoria.agregarSubcategoria(subCategoria);
+    }
+
+    // Retorna todos las categorias desde base de datos
+    return categorias;
+  }
+
+  private Categoria getCategoria(List<Categoria> categorias, long idCategoria, SqlRowSet sqlRowSet) {
+    
+    for(Categoria cat:categorias) {
+      if(cat.getId() == idCategoria) {
+        return cat;
+      }
+    }
+    
+    Categoria categoria = new Categoria();
+    categoria.setId(sqlRowSet.getLong("idCategoria"));
+    categoria.setNombre(sqlRowSet.getString("nombreCategoria"));
+    categoria.setDescripcion(sqlRowSet.getString("descripcionCategoria"));
+    categoria.setOrden(sqlRowSet.getInt("ordenCategoria"));
+    categorias.add(categoria);
+    return categoria;
+    
   }
 
 }
