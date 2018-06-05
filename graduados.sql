@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2018 a las 19:20:35
+-- Tiempo de generación: 06-06-2018 a las 01:23:40
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -36,8 +36,7 @@ CREATE TABLE `categoria` (
 
 CREATE TABLE `contacto` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(1000) DEFAULT NULL,
-  `url` varchar(1000) DEFAULT NULL
+  `nombre` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -48,7 +47,7 @@ CREATE TABLE `contacto` (
 
 CREATE TABLE `contenido` (
   `id` int(11) NOT NULL,
-  `contenido` varchar(100) DEFAULT NULL,
+  `contenido` longblob,
   `TipoContenido_id` int(11) NOT NULL,
   `asociacion` int(11) NOT NULL,
   `tipoasociacion` varchar(100) NOT NULL,
@@ -63,7 +62,8 @@ CREATE TABLE `contenido` (
 
 CREATE TABLE `enlaceinteres` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL
+  `nombre` varchar(45) DEFAULT NULL,
+  `url` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -112,8 +112,8 @@ CREATE TABLE `logo` (
 
 CREATE TABLE `noticia` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL,
-  `descripcion` varchar(45) DEFAULT NULL,
+  `nombre` varchar(300) DEFAULT NULL,
+  `descripcion` varchar(1000) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `orden` int(11) DEFAULT NULL,
   `Imagen1` mediumblob,
@@ -128,8 +128,9 @@ CREATE TABLE `noticia` (
 
 CREATE TABLE `novedad` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL,
-  `fecha` date DEFAULT NULL
+  `nombre` varchar(1000) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `imagen` mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -154,7 +155,7 @@ CREATE TABLE `proximaactividad` (
 --
 
 CREATE TABLE `redsocial` (
-  `idRedSocial` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `url` varchar(1000) DEFAULT NULL,
   `tipo` varchar(50) DEFAULT NULL
@@ -284,7 +285,7 @@ ALTER TABLE `proximaactividad`
 -- Indices de la tabla `redsocial`
 --
 ALTER TABLE `redsocial`
-  ADD PRIMARY KEY (`idRedSocial`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `subcategoria`
@@ -319,7 +320,7 @@ ALTER TABLE `visita`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `contacto`
 --
@@ -329,7 +330,7 @@ ALTER TABLE `contacto`
 -- AUTO_INCREMENT de la tabla `contenido`
 --
 ALTER TABLE `contenido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT de la tabla `enlaceinteres`
 --
@@ -354,7 +355,7 @@ ALTER TABLE `logo`
 -- AUTO_INCREMENT de la tabla `noticia`
 --
 ALTER TABLE `noticia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `novedad`
 --
@@ -369,12 +370,12 @@ ALTER TABLE `proximaactividad`
 -- AUTO_INCREMENT de la tabla `redsocial`
 --
 ALTER TABLE `redsocial`
-  MODIFY `idRedSocial` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `subcategoria`
 --
 ALTER TABLE `subcategoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT de la tabla `tipocontenido`
 --
@@ -401,3 +402,6 @@ ALTER TABLE `foto`
 ALTER TABLE `subcategoria`
   ADD CONSTRAINT `fk_Subcategoria_Categoria` FOREIGN KEY (`Categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

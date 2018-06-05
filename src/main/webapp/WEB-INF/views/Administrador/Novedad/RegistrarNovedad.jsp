@@ -88,16 +88,7 @@
                                 	</div>   
                                 	
 			                         </br>                                	
-                                	 <!-- Campo para digitar la imagen 1 -->
-                                	 <!-- <div id ="divim1" class="form-group btn btn-danger btn-sm">
-                                    	<label for="text-input" class=" form-control-label">Imagen</label>
-                                		<form:input type="file" path="imagen" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')" required = "true"/>
-                                	</div>
-                                	</br>
-                                	<div id = "divimagen1" class="form-group">
-                                		<img id = "img1" src="" height="200" alt="Imagen">
-                                	</div>
-                                	</br> -->                        	
+                      	
                                 	
                                 	<!-- Boton para registrar los datos -->
                                 	<button type="submit" class="btn btn-success">Registrar</button>                                 
