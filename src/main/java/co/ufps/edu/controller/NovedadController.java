@@ -6,17 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import co.ufps.edu.dao.NovedadDao;
-import co.ufps.edu.dto.Categoria;
-import co.ufps.edu.dto.Contacto;
 import co.ufps.edu.dto.Novedad;
 
 
 
 /**
- * Controlador de contenidos. Los contenidos son las paginas que se abren cuando se da click a una información. Todos los
- * servicios publicados en esta clase seran expuestos para ser consumidos por los archivos .JSP
+ * Controlador de novedades. Las novedades son sucesos importantes que ocurren y hay que destacarlos para que las 
+ * personas puedan observarlo. Todos los servicios publicados en esta clase seran expuestos para ser consumidos 
+ * por los archivos .JSP
  * <p>
  * La etiqueta @Controller escanea todos los servicios para publicarlos segun el tipo de metodo
  * HTTP.
@@ -75,7 +73,7 @@ public class NovedadController {
    * @return La página a donde debe redireccionar después de la acción.
    */
   @PostMapping(value = "/guardarNovedad")
-  public String registrarNovedad(@ModelAttribute("novedad") Novedad novedad, Model model) {
+  public String guardarNovedad(@ModelAttribute("novedad") Novedad novedad, Model model) {
 
     // Consulta si tiene todos los campos llenos
     if (novedad.isValidoParaRegistrar()) {
@@ -90,7 +88,7 @@ public class NovedadController {
       }
       //
     } else {
-      model.addAttribute("wrong", "Debes llenar todos los campos.");
+      model.addAttribute("wrong", "Debes llenartodos  los campos.");
       return "Administrador/Novedad/RegistrarNovedad";
     }
   }

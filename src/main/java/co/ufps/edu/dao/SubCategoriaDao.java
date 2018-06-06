@@ -2,10 +2,12 @@ package co.ufps.edu.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.commons.io.Charsets;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.dto.Categoria;
+import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.SubCategoria;
 
 /**
@@ -39,7 +41,7 @@ public class SubCategoriaDao {
                                                   + "           SUBCATEGORIA.ORDEN              ordenSubCategoria       "
                                                   + "   FROM    SUBCATEGORIA                                            "
                                                   + "INNER JOIN CATEGORIA  ON CATEGORIA.id = SUBCATEGORIA.Categoria_id  "
-                                                  + "ORDER BY   CATEGORIA.ID ASC,SUBCATEGORIA.ORDEN ASC                 ");
+                                                  + "ORDER BY   CATEGORIA.ORDEN ASC,SUBCATEGORIA.ORDEN ASC                 ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
@@ -354,4 +356,53 @@ public class SubCategoriaDao {
 	    }
 	   return cant;
 	}
+
+  public SubCategoria obtenerContenidoSubCategoriaPorId(long idSubCategoria) {
+    
+    // Lista para retornar con los datos
+    SubCategoria subCategoria = new SubCategoria();
+
+    // Consulta para realizar en base de datos
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", idSubCategoria);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    SUBCATEGORIA.ID                 idSubcategoria         ,"
+                                                  + "           SUBCATEGORIA.NOMBRE             nombreSubCategoria     ,"
+                                                  + "           SUBCATEGORIA.DESCRIPCION        descripcionSubCategoria,"
+                                                  + "           SUBCATEGORIA.ORDEN              ordenSubCategoria      ,"
+                                                  
+                                                  + "           CONTENIDO.id                    idContenido            ,"
+                                                  + "           CONTENIDO.contenido             contenido              ,"
+                                                  + "           CONTENIDO.TipoContenido_id      tipoContenido          ,"
+                                                  + "           CONTENIDO.asociacion            asociacion             ,"
+                                                  + "           CONTENIDO.tipoasociacion        tipoasociacion         ,"
+                                                  + "           CONTENIDO.titulo                titulo                 "
+                                                  
+                                                  + "   FROM    SUBCATEGORIA                                            "
+                                                  + "INNER JOIN CONTENIDO  ON CONTENIDO.asociacion = SUBCATEGORIA.id    "
+                                                  + "WHERE      SUBCATEGORIA.ID = :id                                   ", map);
+
+    // Consulto si la categoria existe
+    if (sqlRowSet.next()) {
+
+      subCategoria.setId(sqlRowSet.getLong("idSubcategoria"));
+      subCategoria.setNombre(sqlRowSet.getString("nombreSubCategoria"));
+      subCategoria.setDescripcion(sqlRowSet.getString("descripcionSubCategoria"));
+      subCategoria.setOrden(sqlRowSet.getInt("ordenSubCategoria"));
+      
+      Contenido contenido = new Contenido();
+      contenido.setId(sqlRowSet.getLong("idContenido"));
+      
+      byte []a = (byte[]) sqlRowSet.getObject("contenido");
+      String res = new String(a,Charsets.UTF_8);      
+      contenido.setContenido(res);      
+      contenido.setAsociacion(sqlRowSet.getLong("asociacion"));
+      contenido.setNombre(sqlRowSet.getString("titulo"));
+      contenido.setTipoAsociacion(sqlRowSet.getString("tipoasociacion"));
+            
+      subCategoria.setContenido(contenido);
+    }
+
+    // Retorna la categoria desde base de datos
+    return subCategoria;
+  }
 }

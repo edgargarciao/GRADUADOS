@@ -104,6 +104,7 @@ public class NoticiaDao {
           Types.BLOB);
     } catch (IOException e) {
       new Exception();
+      
     }
 
     map.addValue("orden", 1);
@@ -362,6 +363,38 @@ public class NoticiaDao {
     // de error.
     return (result == 1) ? "Eliminacion exitosa"
         : "Error al eliminar la noticia. Contacte al administrador del sistema.";
+  }
+
+  public List<Noticia> getUltimasNoticias() {
+    // Lista para retornar con los datos
+    List<Noticia> noticias = new LinkedList<>();
+
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOTICIA ORDER BY ORDEN ASC LIMIT 0, 4");
+
+    // Recorre cada registro obtenido de base de datos
+    while (sqlRowSet.next()) {
+      // Objeto en el que sera guardada la informacion del registro
+      Noticia noticia = new Noticia();
+
+      noticia.setId(sqlRowSet.getLong("id"));
+      noticia.setNombre(sqlRowSet.getString("nombre"));
+      noticia.setDescripcion(sqlRowSet.getString("descripcion"));
+      noticia.setOrden(sqlRowSet.getInt("orden"));
+      noticia.setFecha(sqlRowSet.getDate("fecha"));
+
+      Object imagen1Blob = sqlRowSet.getObject("imagen1");
+      noticia.setIm1Base64image(imagenUtil.convertirImagen((byte[]) imagen1Blob));
+
+      Object imagen2Blob = sqlRowSet.getObject("imagen2");
+      noticia.setIm2Base64image(imagenUtil.convertirImagen((byte[]) imagen2Blob));
+
+      // Guarda el registro para ser retornado
+      noticias.add(noticia);
+    }
+
+    // Retorna todas las noticias desde base de datos
+    return noticias;
   }
 
 }

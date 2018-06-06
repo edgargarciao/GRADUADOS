@@ -346,5 +346,27 @@ public class SubCategoriaController {
       subCategoriaDao.cambiarOrdenDeSubCategoria(subcategoria.getCategoria().getId(),idSubCategoria, i);
     }
   }
+  
+  /**
+   * Método que obtiene la pagina de actualizar categoria dado un ID.
+   * 
+   * @param idCategoria Identificador de la categoria
+   * @param model Objeto para enviar información a los archivos .JSP
+   * @return La pagina con la información de la categoria cargada.
+   */
+  @GetMapping(value = "/servicios/subcategoria")
+  public String obtenerContenido(@RequestParam("id") long idSubCategoria, Model model) {
+    // Consulto que el Id sea mayor a 0.
+    if (idSubCategoria <= 0) {
+      return "index";
+    }
+    SubCategoria subcategoria = subCategoriaDao.obtenerContenidoSubCategoriaPorId(idSubCategoria);
+    
+    
+    model.addAttribute("categorias", categoriaDao.getCategoriasConSubcategorias());
+    model.addAttribute("titulo",(subcategoria.getContenido() == null)?"":subcategoria.getContenido().getNombre());
+    model.addAttribute("codigo",(subcategoria.getContenido() == null)?"":subcategoria.getContenido().getContenido());
+    return "contenido"; // Nombre del archivo jsp
+  }
 
 }

@@ -64,8 +64,8 @@ public class AdminController {
 	
 	@GetMapping("/") // Base
 	public String main(Model model) {
-	    model.addAttribute("categorias",categoriaDao.getCategorias());
-	    
+	    model.addAttribute("categorias",categoriaDao.getCategoriasConSubcategorias());
+	    model.addAttribute("noticias",noticiaDao.getUltimasNoticias());
 		return "index"; // Nombre del archivo jsp
 	}
 

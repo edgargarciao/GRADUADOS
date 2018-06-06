@@ -97,8 +97,6 @@ public class LogoDao {
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", logo.getId());
     map.addValue("tipo", logo.getTipo());
-    String sqlImagen = "";
-
     try {
       map.addValue("contenido",
           new SqlLobValue(new ByteArrayInputStream(logo.getContenido().getBytes()),

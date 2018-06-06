@@ -260,6 +260,7 @@ public class CategoriaController {
       model.addAttribute("categorias", categoriaDao.getCategorias());
       return "Administrador/Categoria/Categorias"; // Nombre del archivo jsp
     } else {
+      model.addAttribute("categoria", categoriaDao.obtenerCategoriaPorId(categoria.getId()));
       model.addAttribute("wrong", mensaje);
       return "Administrador/Categoria/EliminarCategoria";
     }

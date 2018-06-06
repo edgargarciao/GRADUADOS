@@ -1,20 +1,27 @@
 package co.ufps.edu.controller;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.dao.ContenidoDao;
-import co.ufps.edu.dto.Actividad;
+import co.ufps.edu.dao.TipoContenidoDao;
 import co.ufps.edu.dto.Contenido;
 
+
 /**
- * Controlador de contenidos. Los contenidos son las paginas que se abren cuando se da click a una información. Todos los
- * servicios publicados en esta clase seran expuestos para ser consumidos por los archivos .JSP
+ * Controlador de contenidos. Los contenidos son las paginas que se abren cuando se da click a una
+ * información. Todos los servicios publicados en esta clase seran expuestos para ser consumidos por
+ * los archivos .JSP
  * <p>
  * La etiqueta @Controller escanea todos los servicios para publicarlos segun el tipo de metodo
  * HTTP.
@@ -26,12 +33,14 @@ import co.ufps.edu.dto.Contenido;
 public class ContenidoController {
 
   private ContenidoDao contenidoDao;
+  private TipoContenidoDao tipoContenidoDao;
 
   /**
    * Constructor de la clase en donde se inicializan las variables
    */
   public ContenidoController() {
     contenidoDao = new ContenidoDao();
+    tipoContenidoDao = new TipoContenidoDao();
   }
 
   /**
@@ -48,13 +57,14 @@ public class ContenidoController {
 
   /**
    * Modelo con el que se realizara el formulario
+   * 
    * @return Un objeto para ser llenado desde el archivo .JSP
    */
   @ModelAttribute("contenido")
   public Contenido setUpUserForm() {
     return new Contenido();
-  } 
-  
+  }
+
   /**
    * Método que retorna una pagina para realizar el registro de un contenido.
    * 
@@ -62,21 +72,22 @@ public class ContenidoController {
    */
   @GetMapping("/registrarContenido") // Base
   public String registrarContenido(Model model) {
-    model.addAttribute("tiposAsociacion",getAsosiaciones());
-    //model.addAttribute("tiposContenido",getiposD);
+    model.addAttribute("tiposAsociacion", getAsosiaciones());
+    model.addAttribute("tiposContenido", tipoContenidoDao.getContenidos());
     return "Administrador/Contenido/RegistrarContenido"; // Nombre del archivo jsp
   }
 
   /**
    * Metodo en donde se almacenan las asosiaciones existentes.
+   * 
    * @return todas las asosiaciones existentes.
    */
   private Map<String, String> getAsosiaciones() {
     Map<String, String> mapaDeAsosiaciones = new HashMap<>();
-    mapaDeAsosiaciones.put("Subcategoria", "Subcategoria");
-    mapaDeAsosiaciones.put("Noticia", "Noticia");
-    mapaDeAsosiaciones.put("Novedad", "Novedad");
-    mapaDeAsosiaciones.put("Actividad", "Actividad");
+    mapaDeAsosiaciones.put(Constantes.SUBCATEGORIA, "Subcategoria");
+    mapaDeAsosiaciones.put(Constantes.NOTICIA, "Noticia");
+    mapaDeAsosiaciones.put(Constantes.NOVEDAD, "Novedad");
+    mapaDeAsosiaciones.put(Constantes.ACTIVIDAD, "Actividad");
     return mapaDeAsosiaciones;
   }
 
@@ -106,5 +117,39 @@ public class ContenidoController {
       return registrarContenido(model);
     }
   }
-   
+
+  @PostMapping(value = "servicios/asosiaciones")
+  public @ResponseBody ResponseEntity<Map<Integer, String>> getAsosiacionesPorTipo(
+      @RequestBody String tipoAsociacion) {
+    System.out.println("tipoAsociacion --> " + tipoAsociacion);
+    Map<Integer, String> asociaciones = contenidoDao.getAsociaciones(tipoAsociacion);
+    return new ResponseEntity<Map<Integer, String>>(asociaciones, HttpStatus.OK);
+  }
+
+  @PostMapping(value = "servicios/recibirInformacion" )
+  public @ResponseBody ResponseEntity<String> recibirInformacion(@RequestBody Contenido contenido) {
+    System.out.println("contenido  --> \n " + contenido);
+
+    // Consulta si tiene todos los campos llenos
+    if (contenido.isValidoParaRegistrar()) {
+      String mensaje = contenidoDao.registrarContenido(contenido);
+      if (mensaje.equals("Registro exitoso")) {
+        //model.addAttribute("result", "Contenido registrado con éxito.");
+        //return index(model);
+        return new ResponseEntity<String>("REGISTRO EXITOSO", HttpStatus.OK);
+      } else {
+        //model.addAttribute("wrong", mensaje);
+        // return registrarContenido(model); // Nombre del archivo jsp
+        return new ResponseEntity<String>("REGISTRO NO EXITOSO", HttpStatus.OK);
+      }
+      //
+    } else {
+      //model.addAttribute("wrong", "Debes llenar todos los campos.");
+      //return registrarContenido(model);
+      return new ResponseEntity<String>("CAMPOS INVALIDOS", HttpStatus.OK);
+    }
+    
+    
+    //return new ResponseEntity<String>("LLEGO LA INFO", HttpStatus.OK);
+  }
 }

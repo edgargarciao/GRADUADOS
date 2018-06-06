@@ -41,13 +41,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     // 3. Registrar los Recursos (Css,JS,font,entre otros)
     registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    registry.addResourceHandler("/servicios/resources/**").addResourceLocations("/resources/");
   }
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     // Mapea la clase para la seguridad
     registry.addInterceptor(getSessionManager()).addPathPatterns("/**")
-        .excludePathPatterns("/resources/**", "/admin","/autenticar","/");
+        .excludePathPatterns("/resources/**", "/admin","/autenticar","/servicios/*","/");
   }
 
   @Bean

@@ -1,3 +1,16 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 06-06-2018 a las 01:23:40
+-- Versión del servidor: 10.1.21-MariaDB
+-- Versión de PHP: 5.6.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
 --
 -- Base de datos: `graduados`
 --
@@ -15,15 +28,6 @@ CREATE TABLE `categoria` (
   `orden` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `categoria`
---
-
-INSERT INTO `categoria` (`id`, `nombre`, `descripcion`, `orden`) VALUES
-(1, 'Servicios', 'Categoria para almacenar los servicios prestados por la oficina de posgrados.', 1),
-(2, 'Portal de empleo', 'El portal de empleo es para informar desde la oficina de graduados a todos los profesionales de las ofertas laborales actuales.', 2),
-(13, 'test', 'test', 3);
-
 -- --------------------------------------------------------
 
 --
@@ -32,8 +36,7 @@ INSERT INTO `categoria` (`id`, `nombre`, `descripcion`, `orden`) VALUES
 
 CREATE TABLE `contacto` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(1000) DEFAULT NULL,
-  `url` varchar(1000) DEFAULT NULL
+  `nombre` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -44,12 +47,11 @@ CREATE TABLE `contacto` (
 
 CREATE TABLE `contenido` (
   `id` int(11) NOT NULL,
-  `contenido` varchar(100) DEFAULT NULL,
+  `contenido` longblob,
   `TipoContenido_id` int(11) NOT NULL,
-  `Subcategoria_id` int(11) NOT NULL,
-  `Noticia_id` int(11) NOT NULL,
-  `ProximaActividad_id` int(11) NOT NULL,
-  `Novedad_id` int(11) NOT NULL
+  `asociacion` int(11) NOT NULL,
+  `tipoasociacion` varchar(100) NOT NULL,
+  `titulo` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -60,7 +62,8 @@ CREATE TABLE `contenido` (
 
 CREATE TABLE `enlaceinteres` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL
+  `nombre` varchar(45) DEFAULT NULL,
+  `url` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -98,7 +101,7 @@ CREATE TABLE `galeria` (
 CREATE TABLE `logo` (
   `id` int(11) NOT NULL,
   `tipo` varchar(100) DEFAULT NULL,
-  `contenido` blob
+  `contenido` mediumblob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -109,12 +112,12 @@ CREATE TABLE `logo` (
 
 CREATE TABLE `noticia` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL,
-  `descripcion` varchar(45) DEFAULT NULL,
+  `nombre` varchar(300) DEFAULT NULL,
+  `descripcion` varchar(1000) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   `orden` int(11) DEFAULT NULL,
-  `Imagen1` blob,
-  `imagen2` blob
+  `Imagen1` mediumblob,
+  `imagen2` mediumblob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -125,8 +128,9 @@ CREATE TABLE `noticia` (
 
 CREATE TABLE `novedad` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL,
-  `fecha` date DEFAULT NULL
+  `nombre` varchar(1000) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `imagen` mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -141,7 +145,7 @@ CREATE TABLE `proximaactividad` (
   `lugar` varchar(45) DEFAULT NULL,
   `fechaInicial` date DEFAULT NULL,
   `fechaFinal` date DEFAULT NULL,
-  `imagen` blob
+  `imagen` mediumblob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -151,7 +155,7 @@ CREATE TABLE `proximaactividad` (
 --
 
 CREATE TABLE `redsocial` (
-  `idRedSocial` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `url` varchar(1000) DEFAULT NULL,
   `tipo` varchar(50) DEFAULT NULL
@@ -171,17 +175,6 @@ CREATE TABLE `subcategoria` (
   `Categoria_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `subcategoria`
---
-
-INSERT INTO `subcategoria` (`id`, `nombre`, `descripcion`, `orden`, `Categoria_id`) VALUES
-(1, 'Biblioteca', 'Esta sub test', 1, 1),
-(2, 't', 'd', 2, 1),
-(3, 'S', 'R', 3, 1),
-(4, 'Q', 'A', 1, 2),
-(5, 'C', 'V', 2, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -191,7 +184,7 @@ INSERT INTO `subcategoria` (`id`, `nombre`, `descripcion`, `orden`, `Categoria_i
 CREATE TABLE `tipocontenido` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) DEFAULT NULL,
-  `descripcion` varchar(45) DEFAULT NULL
+  `descripcion` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -205,13 +198,6 @@ CREATE TABLE `usuario` (
   `correoInstitucional` varchar(100) DEFAULT NULL,
   `Contraseña` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`id`, `correoInstitucional`, `Contraseña`) VALUES
-(1, 'edgaryesidgo@ufps.edu.co', '1234');
 
 -- --------------------------------------------------------
 
@@ -248,12 +234,7 @@ ALTER TABLE `contacto`
 -- Indices de la tabla `contenido`
 --
 ALTER TABLE `contenido`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_Contenido_TipoContenido1_idx` (`TipoContenido_id`),
-  ADD KEY `fk_Contenido_Subcategoria1_idx` (`Subcategoria_id`),
-  ADD KEY `fk_Contenido_Noticia1_idx` (`Noticia_id`),
-  ADD KEY `fk_Contenido_ProximaActividad1_idx` (`ProximaActividad_id`),
-  ADD KEY `fk_Contenido_Novedad1_idx` (`Novedad_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `enlaceinteres`
@@ -278,13 +259,15 @@ ALTER TABLE `galeria`
 -- Indices de la tabla `logo`
 --
 ALTER TABLE `logo`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tipo` (`tipo`);
 
 --
 -- Indices de la tabla `noticia`
 --
 ALTER TABLE `noticia`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `orden` (`orden`);
 
 --
 -- Indices de la tabla `novedad`
@@ -302,7 +285,7 @@ ALTER TABLE `proximaactividad`
 -- Indices de la tabla `redsocial`
 --
 ALTER TABLE `redsocial`
-  ADD PRIMARY KEY (`idRedSocial`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `subcategoria`
@@ -337,7 +320,7 @@ ALTER TABLE `visita`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `contacto`
 --
@@ -347,7 +330,7 @@ ALTER TABLE `contacto`
 -- AUTO_INCREMENT de la tabla `contenido`
 --
 ALTER TABLE `contenido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT de la tabla `enlaceinteres`
 --
@@ -367,37 +350,37 @@ ALTER TABLE `galeria`
 -- AUTO_INCREMENT de la tabla `logo`
 --
 ALTER TABLE `logo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `noticia`
 --
 ALTER TABLE `noticia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `novedad`
 --
 ALTER TABLE `novedad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `proximaactividad`
 --
 ALTER TABLE `proximaactividad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `redsocial`
 --
 ALTER TABLE `redsocial`
-  MODIFY `idRedSocial` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `subcategoria`
 --
 ALTER TABLE `subcategoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT de la tabla `tipocontenido`
 --
 ALTER TABLE `tipocontenido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
@@ -406,16 +389,6 @@ ALTER TABLE `usuario`
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `contenido`
---
-ALTER TABLE `contenido`
-  ADD CONSTRAINT `fk_Contenido_Noticia1` FOREIGN KEY (`Noticia_id`) REFERENCES `noticia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Contenido_Novedad1` FOREIGN KEY (`Novedad_id`) REFERENCES `novedad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Contenido_ProximaActividad1` FOREIGN KEY (`ProximaActividad_id`) REFERENCES `proximaactividad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Contenido_Subcategoria1` FOREIGN KEY (`Subcategoria_id`) REFERENCES `subcategoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Contenido_TipoContenido1` FOREIGN KEY (`TipoContenido_id`) REFERENCES `tipocontenido` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `foto`
@@ -428,3 +401,7 @@ ALTER TABLE `foto`
 --
 ALTER TABLE `subcategoria`
   ADD CONSTRAINT `fk_Subcategoria_Categoria` FOREIGN KEY (`Categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,9 +1,14 @@
 package co.ufps.edu.dao;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.support.SqlLobValue;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import co.ufps.edu.bd.SpringDbMgr;
@@ -53,9 +58,21 @@ public class NovedadDao {
 	    // Agrego los datos del registro (nombreColumna/Valor)
 	    MapSqlParameterSource map = new MapSqlParameterSource();
 	    map.addValue("nombre", novedad.getNombre());
-	    map.addValue("fecha", novedad.getFecha());
+	    /*map.addValue("fecha", novedad.getFecha());
+	    try {
+	      map.addValue("imagen",
+	          new SqlLobValue(new ByteArrayInputStream(novedad.getImagen().getBytes()),
+	              novedad.getImagen().getBytes().length, new DefaultLobHandler()),
+	          Types.BLOB);
+	    } catch (IOException e) {
+	      new Exception();
+	    }
+	    */
+	    
+	    
 	    
 	    // Armar la sentencia de actualización de base de datos
+	    //String query = "INSERT INTO NOVEDAD(nombre, fecha, imagen) VALUES(:nombre, :fecha, :imagen)";
 	    String query = "INSERT INTO NOVEDAD(nombre, fecha) VALUES(:nombre, :fecha)";
 
 	    // Ejecutar la sentencia
