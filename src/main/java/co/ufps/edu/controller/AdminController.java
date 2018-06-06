@@ -66,6 +66,11 @@ public class AdminController {
 	public String main(Model model) {
 	    model.addAttribute("categorias",categoriaDao.getCategoriasConSubcategorias());
 	    model.addAttribute("noticias",noticiaDao.getUltimasNoticias());
+	    model.addAttribute("novedades", novedadDao.getUltimasNovedades());
+	    model.addAttribute("actividades", actividadDao.getUltimasActividades());
+	    model.addAttribute("logoHorizontal", logoDao.getLogo("LogoHorizontal"));
+	    model.addAttribute("logoVertical", logoDao.getLogo("LogoVertical"));
+	    
 		return "index"; // Nombre del archivo jsp
 	}
 

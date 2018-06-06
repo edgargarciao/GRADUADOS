@@ -1,6 +1,9 @@
 package co.ufps.edu.dto;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,8 +12,9 @@ public class Novedad {
   private long id;
   private String nombre;
   private Date fecha;
-  //private MultipartFile imagen;
-  //private String imBase64image;
+  private MultipartFile imagen;
+  private String imBase64image;
+  private String fechaEnFormato;
 
   public long getId() {
     return id;
@@ -34,18 +38,25 @@ public class Novedad {
 
   public void setFecha(Date fecha) {
     this.fecha = fecha;
+    LocalDate today = LocalDate.of(2019, 10, 04);
+    String mes = today.getMonth().getDisplayName(TextStyle.FULL, new Locale("es","ES"));
+    this.fechaEnFormato = fecha.getDate()+" de "+mes+" de "+fecha.getYear();
   }
 
   public boolean isValidoParaRegistrar() {
     return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.fecha));
   }
 
+  public boolean isValidoParaActualizar() {
+    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.fecha) && !StringUtils.isEmpty(imBase64image));
+  }
+  
   @Override
   public String toString() {
     return "Novedad [id=" + id + ", nombre=" + nombre + ", fecha=" + fecha + "]";
   }
 
-  /*public MultipartFile getImagen() {
+  public MultipartFile getImagen() {
     return imagen;
   }
 
@@ -59,6 +70,14 @@ public class Novedad {
 
   public void setImBase64image(String imBase64image) {
     this.imBase64image = imBase64image;
-  }*/
+  }
 
+  public String getFechaEnFormato() {
+    return fechaEnFormato;
+  }
+
+  public void setFechaEnFormato(String fechaEnFormato) {
+    this.fechaEnFormato = fechaEnFormato;
+  }
+  
 }

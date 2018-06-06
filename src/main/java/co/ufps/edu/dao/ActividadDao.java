@@ -3,8 +3,13 @@ package co.ufps.edu.dao;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
@@ -204,6 +209,37 @@ public class ActividadDao {
     // de error.
     return (result == 1) ? "Eliminacion exitosa"
         : "Error al eliminar la actividad. Contacte al administrador del sistema.";
+  }
+
+  public List<Actividad> getUltimasActividades() {
+
+    // Lista para retornar con los datos
+    List<Actividad> actividades = new LinkedList<>();
+
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM PROXIMAACTIVIDAD ORDER BY fechaInicial DESC LIMIT 0, 4 ");
+
+    // Recorre cada registro obtenido de base de datos
+    while (sqlRowSet.next()) {
+      // Objeto en el que sera guardada la informacion del registro
+      Actividad actividad = new Actividad();
+
+      actividad.setId(sqlRowSet.getLong("id"));
+      actividad.setNombre(sqlRowSet.getString("nombre"));
+      actividad.setLugar(sqlRowSet.getString("lugar"));
+      actividad.setFechaInicial(sqlRowSet.getDate("fechaInicial"));
+      actividad.setFechaFinal(sqlRowSet.getDate("fechaFinal"));
+      
+      Object imagen1Blob = sqlRowSet.getObject("imagen");
+      actividad.setImBase64image(imagenUtil.convertirImagen((byte[]) imagen1Blob));   
+
+      // Guarda el registro para ser retornado
+      actividades.add(actividad);
+    }
+
+    // Retorna todos las actividades desde base de datos
+    return actividades;
+ 
   }
   
 }

@@ -75,20 +75,33 @@
 							    </c:if>
                         	
                         		<!-- Formulario -->
-                        		<form:form id="formNovedad" action="guardarNovedad" method="post" modelAttribute="novedad" >
-                            		<!-- Campo para digitar el nombre -->
+                        		<form:form id="formNovedad" action="guardarNovedad" method="post" modelAttribute="novedad" enctype="multipart/form-data">
+                            		
+									<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
                                     	<label for="text-input" class=" form-control-label">Novedad</label>
                                 		<form:input id="nombre" path="nombre" class="form-control" placeholder="Nombre de novedad" aria-invalid="false" required = "true"/>
-                                	</div> 
-                                	<!-- Campo para digitar la fecha -->
-                                	<div class="form-group">
-                                        <label for="text-input" class=" form-control-label">Fecha</label>
-                                		<form:input id="fecha" name="fecha" type="date" class="form-control" path="fecha" rows="5" cols="130" required = "true" placeholder="Fecha del evento" /> 
-                                	</div>   
+                                	</div>        
+                                	 
                                 	
-			                         </br>                                	
-                      	
+                            		<!-- Campo para digitar la fecha -->
+                                	<div class="form-group">
+                                    	<label for="text-input" class=" form-control-label">Fecha</label>
+                                		<form:input type="date" id="fecha" path="fecha" class="form-control" aria-invalid="false" required = "true"/>
+                                	</div>                                	
+                                	
+			                         </br> 
+                                
+   	 								<!-- Campo para digitar la imagen 1 -->
+                                	<div id ="divim1" class="form-group btn btn-danger btn-sm">
+                                    	<label for="text-input" class=" form-control-label">Imagen</label>
+                                		<form:input type="file" path="imagen" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')" required = "true"/>
+                                	</div>
+                                	</br>
+                                	<div id = "divimagen1" class="form-group">
+                                		<img id = "img1" src="" height="200" alt="Imagen">
+                                	</div>
+                                	</br>                                   	
                                 	
                                 	<!-- Boton para registrar los datos -->
                                 	<button type="submit" class="btn btn-success">Registrar</button>                                 
@@ -106,10 +119,10 @@
     <!-- Right Panel -->
 	<!-- Carga de los archivos Javascript -->
 	<%@ include file = "../General/scripts.jsp" %>
-
+	
+	
 	<script type="text/javascript">
-		
-		
+
 		function revisarArchivos(id){
 			var el = document.getElementById("Imagen"+id).files;
 			if(el!=null && el.length==0){
@@ -141,6 +154,6 @@
 			  }
 			}		
 	</script>
-
+		
 </body>
 </html>

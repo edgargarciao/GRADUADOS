@@ -123,14 +123,14 @@ public class NovedadController {
   public String editarNovedad(@ModelAttribute("novedad") Novedad novedad, Model model) {
 
     // Consulta si tiene todos los campos llenos
-    if (novedad.isValidoParaRegistrar()) {
+    if (novedad.isValidoParaActualizar()) {
       String mensaje = novedadDao.editarNovedad(novedad);
       if (mensaje.equals("Actualizacion exitosa")) {
         model.addAttribute("result", "Información de novedad actualizada con éxito.");
         model.addAttribute("novedades", novedadDao.getNovedades());
         return "Administrador/Novedad/novedades"; // Nombre del archivo jsp
       } else {
-        model.addAttribute("wrong", mensaje);
+        model.addAttribute("wrong", mensaje);        
         return "Administrador/Novedad/ActualizarNovedad";
       }
       //
@@ -182,8 +182,4 @@ public class NovedadController {
 
   }
 
-  
-
- 
-  
 }

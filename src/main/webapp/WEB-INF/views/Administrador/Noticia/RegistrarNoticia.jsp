@@ -100,7 +100,7 @@
                                 	 <!-- Campo para digitar la imagen 1 -->
                                 	<div id ="divim1" class="form-group btn btn-danger btn-sm">
                                     	<label for="text-input" class=" form-control-label">Imagen 1</label>
-                                		<form:input type="file" path="Imagen1" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')" required = "true"/>
+                                		<form:input type="file" path="Imagen1" id="Imagen1" name="Imagen1" accept="images/*" onchange="revisarArchivos('1')" required = "true"/>
                                 	</div>
                                 	</br>
                                 	<div id = "divimagen1" class="form-group">
@@ -111,7 +111,7 @@
                                 	 <!-- Campo para digitar la imagen 2 -->
                                 	<div id ="divim2" class="form-group btn btn-danger btn-sm">
                                     	<label for="text-input" class=" form-control-label">Imagen 2</label>
-                                		<form:input type="file" path="Imagen2" id="Imagen2" name="Imagen2"  onchange="revisarArchivos('2')" required = "true"/>
+                                		<form:input type="file" path="Imagen2" id="Imagen2" name="Imagen2" accept="images/*" onchange="revisarArchivos('2')" required = "true"/>
                                 	</div>                                		                                                               	                                	                              	
                                 	</br>
                                 	<div id = "divimagen2" class="form-group">

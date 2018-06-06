@@ -149,9 +149,9 @@
 					<div class="parallax-quote-in" style="padding: 0px;">
 						<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-5">
-								<a href="./index.php"> <img id="logo-header"
-									src="resources/rsc/img/logo_vertical_ingsistemas_ht180.png"
-									alt="Logo Programa de Ingenier�a de Sistemas"
+								<a href="${contextPath}/"> <img id="logo-header"
+									src="${logoHorizontal.imBase64image}"
+									alt=""
 									style="max-height: 180px;">
 								</a>
 							</div>
@@ -245,82 +245,26 @@
 					<div class="col-md-12">
 						<div class="row equal-height-columns margin-bottom-10">
 							<div class="container">
-								<ul class="row block-grid-v2">
-									
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal148')" src="" alt=""
-												style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">2 de Abril de
-												2018</div>
-										</div>										
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=148">Curso
-														de Profundizaci�n de Desarrollo de Software</a></b>
-											</h5>
-										
-										</div>
-									</li>
-									
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal146')"
-												src="resources/rsc/img/clp_WhatsApp Image 2017-11-28 at 21.59.17 (1).jpeg"
-												alt="" style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">28 de
-												Noviembre de 2017</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=146">D�a
-														Internacional de la Seguridad Inform�tica</a></b>
-											</h5>
-										</div>
-									</li>
-									
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal144')"
-												src="resources/rsc/img/clp_20171111_085650.jpg" alt=""
-												style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">15 de
-												Noviembre de 2017</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=144">Marat�n
-														Latinoamericana de Programaci�n 2017 ICPC / ACIS -
-														2017-11-15</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal143')"
-												src="resources/rsc/img/clp_ponencia semilleros2.png" alt=""
-												style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">23 de Octubre
-												de 2017</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=143">Participaci�n
-														de Semilleros Ingenier�a de sistemas UFPS - 2017/10/23
-														Bucaramanga</a></b>
-											</h5>
-										</div>
-									</li>
-									
+								<ul class="row block-grid-v2">									
+									<c:forEach var="novedad" items="${novedades}">										
+										<li class="col-md-3 col-sm-6 md-margin-bottom-30" style="padding-left: 14px;">										
+											<div class="easy-block-v1">
+												<img onclick="openModalImage('modal148')" src=" ${novedad.imBase64image}" alt=""
+													style="cursor: zoom-in;">
+												<div class="easy-block-v1-badge rgba-red"> ${novedad.fechaEnFormato} </div>
+											</div>										
+											<div
+												class="block-grid-v2-info rounded-bottom  bloques_eventos">
+												<h5>
+													<b>
+														<a href="index.php?modulo=verinformacion&idinfo=148">
+															${novedad.nombre}													
+														</a>
+													</b>
+												</h5>											
+											</div>
+										</li>
+									</c:forEach>
 								</ul>
 								<a href="./index.php?modulo=principal"
 									class="btn-u btn-u-sm pull-right tooltips"
@@ -344,19 +288,30 @@
 						<span class="bordered-icon"><i class="fa fa-calendar-o"
 							aria-hidden="true"></i></span>
 					</div>
-					<div class="col-sm-3">
-						<div class="service-block-v1 md-margin-bottom-50"
-							style="background: #fff; border-top: 5px solid #f1c40f;">
-							<i
-								class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark"
-								style="background: #fff;"></i>
-							<h5 class="title-v3-bg text-uppercase">
-								<b></b>
-							</h5>
-							<p>Esta actividad se desarrollar&aacute; el 27 de abril</p>
+					
+					<c:forEach var="actividad" items="${actividades}">																					
+						<div class="col-sm-3">
+							<div class="service-block-v1 md-margin-bottom-50"
+								style="background: #fff; border-top: 5px solid #f1c40f;">
+								<i
+									class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark"
+									style="background: #fff;"></i>
+								<h5 class="title-v3-bg text-uppercase">
+									<b></b>
+								</h5>
+								<p>Actividad: ${actividad.nombre}</p>
+								<p>Lugar: ${actividad.lugar}</p>
+								<p>Fecha: ${actividad.fechaInicial}</p>
+							</div>
 						</div>
-					</div>
+					</c:forEach>					
+					
+
+					
+					
 				</div>
+				
+				
 				<!--/row-->
 				<a href="./index.php?modulo=calendarios"
 					class="btn-u btn-u-sm pull-right tooltips" data-toggle="tooltip"
@@ -554,9 +509,9 @@
 					<!-- About -->
 					<div class="col-md-3 col-sm-4 md-margin-bottom-40">
 						<div class="footer-main">
-							<a href="./"><img id="logo-footer" class="img-responsive"
-								src="resources/rsc/img/logo_ingsistemas_vertical_invertido.png"
-								alt="Logo Pie de P�gina"></a>
+							<a href="${contextPath}/"><img id="logo-footer" class="img-responsive"
+								src="${logoVertical.imBase64image}"
+								alt="Logo Pie de Página"></a>
 						</div>
 					</div>
 					<!--/col-md-3-->

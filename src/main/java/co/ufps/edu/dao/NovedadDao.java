@@ -13,12 +13,19 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.dto.Novedad;
+import co.ufps.edu.util.ImagenUtil;
 
 public class NovedadDao {
 
-	SpringDbMgr springDbMgr = new SpringDbMgr();
+	private SpringDbMgr springDbMgr;
+	private ImagenUtil imagenUtil;
 	
-
+	public NovedadDao() {
+	  springDbMgr = new SpringDbMgr();
+	  imagenUtil = new ImagenUtil();
+	}
+	
+	
 	/**
 	 * Metodo que consulta en base de datos todas las novedades existentes.
 	 * 
@@ -58,7 +65,7 @@ public class NovedadDao {
 	    // Agrego los datos del registro (nombreColumna/Valor)
 	    MapSqlParameterSource map = new MapSqlParameterSource();
 	    map.addValue("nombre", novedad.getNombre());
-	    /*map.addValue("fecha", novedad.getFecha());
+	    map.addValue("fecha", novedad.getFecha());
 	    try {
 	      map.addValue("imagen",
 	          new SqlLobValue(new ByteArrayInputStream(novedad.getImagen().getBytes()),
@@ -67,14 +74,10 @@ public class NovedadDao {
 	    } catch (IOException e) {
 	      new Exception();
 	    }
-	    */
-	    
-	    
-	    
-	    // Armar la sentencia de actualización de base de datos
-	    //String query = "INSERT INTO NOVEDAD(nombre, fecha, imagen) VALUES(:nombre, :fecha, :imagen)";
-	    String query = "INSERT INTO NOVEDAD(nombre, fecha) VALUES(:nombre, :fecha)";
 
+	    // Armar la sentencia de actualización de base de datos
+	    String query = "INSERT INTO NOVEDAD(nombre, fecha, imagen) VALUES(:nombre, :fecha, :imagen)";
+	    
 	    // Ejecutar la sentencia
 	    int result = 0;
 	    try {
@@ -110,6 +113,9 @@ public class NovedadDao {
 	      novedad.setId(sqlRowSet.getLong("id"));
 	      novedad.setNombre(sqlRowSet.getString("nombre"));
 	      novedad.setFecha(sqlRowSet.getDate("fecha"));
+	      
+	      Object imagen1Blob = sqlRowSet.getObject("imagen");
+	      novedad.setImBase64image(imagenUtil.convertirImagen((byte[]) imagen1Blob));	      
 	    }
 
 	    // Retorna contacto desde base de datos
@@ -132,9 +138,21 @@ public class NovedadDao {
 	    map.addValue("id", novedad.getId());
 	    map.addValue("nombre", novedad.getNombre());
 	    map.addValue("fecha", novedad.getFecha());
-
+	    String sqlImagen = "";
+	    if (novedad.getImagen().getSize() > 0) {
+	       try {
+	          map.addValue("imagen",
+	              new SqlLobValue(new ByteArrayInputStream(novedad.getImagen().getBytes()),
+	                  novedad.getImagen().getBytes().length, new DefaultLobHandler()),
+	              Types.BLOB);
+	          sqlImagen = ", imagen = :imagen";
+	        } catch (IOException e) {
+	          new Exception();
+	        }
+	    }
+	    
 	    // Armar la sentencia de actualización debase de datos
-	    String query = "UPDATE NOVEDAD SET nombre = :nombre, fecha = :fecha  WHERE id = :id";
+	    String query = "UPDATE NOVEDAD SET nombre = :nombre, fecha = :fecha "+ sqlImagen + "  WHERE id = :id";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -186,4 +204,29 @@ public class NovedadDao {
 		    }
 		    return cant;
 	  }
+
+
+    public List<Novedad> getUltimasNovedades() {
+      // Lista para retornar con los datos
+      List<Novedad> novedades = new LinkedList<>();
+      // Consulta para realizar en base de datos
+      SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOVEDAD ORDER BY FECHA DESC LIMIT 0, 4 ");
+      
+      // Recorre cada registro obtenido de base de datos
+      while (sqlRowSet.next()) {
+        // Objeto en el que sera guardada la informacion del registro
+        Novedad novedad = new Novedad();
+
+        novedad.setId(sqlRowSet.getLong("id"));
+        novedad.setNombre(sqlRowSet.getString("nombre"));
+        novedad.setFecha(sqlRowSet.getDate("fecha"));
+        Object imagen1Blob = sqlRowSet.getObject("imagen");
+        novedad.setImBase64image(imagenUtil.convertirImagen((byte[]) imagen1Blob));   
+        
+        // Guarda el registro para ser retornado
+        novedades.add(novedad);
+      }
+      // Retorna todos los contactos desde base de datos
+      return novedades;
+    }
 }

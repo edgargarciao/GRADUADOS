@@ -114,7 +114,7 @@
                                 	 <!-- Campo para digitar la imagen 1 -->
                                 	<div id ="divim1" class="form-group btn btn-danger btn-sm">
                                     	<label for="text-input" class=" form-control-label">Imagen</label>
-                                		<form:input type="file" path="Imagen" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')" required = "true"/>
+                                		<form:input type="file" path="Imagen" id="Imagen1" name="Imagen1" accept="images/*" onchange="revisarArchivos('1')" required = "true"/>
                                 	</div>
                                 	</br>
                                 	<div id = "divimagen1" class="form-group">
