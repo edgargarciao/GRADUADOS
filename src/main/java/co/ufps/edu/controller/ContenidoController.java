@@ -128,7 +128,6 @@ public class ContenidoController {
 
   @PostMapping(value = "servicios/recibirInformacion" )
   public @ResponseBody ResponseEntity<String> recibirInformacion(@RequestBody Contenido contenido) {
-    System.out.println("contenido  --> \n " + contenido);
 
     // Consulta si tiene todos los campos llenos
     if (contenido.isValidoParaRegistrar()) {

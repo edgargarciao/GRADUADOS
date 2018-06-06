@@ -534,24 +534,16 @@
 					<!-- Link List -->
 					<div class="col-md-3 col-sm-4  md-margin-bottom-40">
 						<div class="headline" style="border-bottom: #272727;">
-							<h2>Enlaces de Inter�s</h2>
+							<h2>Enlaces de Interés</h2>
 						</div>
 						<ul class="list-unstyled latest-list">
-							<li><a href="javascript:;">Sitio Web-Departamento de
-									Sistemas</a></li>
-							<li><a href="http://biblioteca.ufps.edu.co" target="_blank">Biblioteca
-									Eduardo Cote Lamus</a></li>
-							<li><a href="http://200.93.148.47/bienestar/"
-								target="_blank">Vicerrector�a de Bienestar Universitario</a></li>
-							<li><a href="./index.php?id=27">Cronograma del Comit�
-									Curricular</a></li>
-							<li><a href="http://php.net/" target="_blank">Recursos
-									PHP</a></li>
-							<li><a href="https://www.facebook.com/IngSistUFPS/?fref=ts">Facebook</a></li>
-							<li><a href="http://200.93.148.29/ingsistemas_viejo/">Ir
-									a versi�n Anterior</a></li>
-							<li><a href="http://www.youtube.com" target="_blank">Canal
-									UFPS en YouTube</a></li>
+							<c:forEach var="enlace" items="${enlaces}">		
+								<li>
+									<a href="${enlace.url}" target="_blank">
+										${enlace.nombre}
+									</a>
+								</li>
+							</c:forEach>
 						</ul>
 					</div>
 					<!--/col-md-3-->
@@ -562,12 +554,12 @@
 							<h2>Contactos</h2>
 						</div>
 						<address class="md-margin-bottom-40">
-							Programa de Ingenier�a de Sistemas de la Universidad Francisco de
-							Paula Santander<br>Acreditaci�n de alta calidad seg�n
-							resoluci�n No. 15757 del Ministerio de Educaci�n Nacional<br>Avenida
-							Gran Colombia No. 12E-96 Barrio Colsag, C�cuta, Colombia<br>Tel�fono
-							(57) 7 5776655 Extensiones 201 y 203<br>Correo electr�nico:
-							ingsistemas@ufps.edu.co
+						
+							<c:forEach var="contacto" items="${contactos}">																					
+								${contacto.nombre}
+								<br>
+							</c:forEach>
+
 						</address>
 					</div>
 					<!--/col-md-3-->
@@ -575,6 +567,8 @@
 				</div>
 			</div>
 		</div>
+		
+		
 		<!--/footer-->
 		<div class="copyright">
 			<div class="container">
