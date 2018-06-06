@@ -20,7 +20,7 @@ import co.ufps.edu.dto.Contenido;
 
 /**
  * Controlador de contenidos. Los contenidos son las paginas que se abren cuando se da click a una
- * informaciÛn. Todos los servicios publicados en esta clase seran expuestos para ser consumidos por
+ * informaci√≥n. Todos los servicios publicados en esta clase seran expuestos para ser consumidos por
  * los archivos .JSP
  * <p>
  * La etiqueta @Controller escanea todos los servicios para publicarlos segun el tipo de metodo
@@ -44,9 +44,9 @@ public class ContenidoController {
   }
 
   /**
-   * MÈtodo que retorna una pagina con todas los contenidos en el sistema.
+   * M√©todo que retorna una pagina con todas los contenidos en el sistema.
    * 
-   * @return La p·gina principal de contenidos.
+   * @return La p√°gina principal de contenidos.
    */
   @GetMapping("/contenidos") // Base
   public String index(Model model) {
@@ -66,9 +66,9 @@ public class ContenidoController {
   }
 
   /**
-   * MÈtodo que retorna una pagina para realizar el registro de un contenido.
+   * M√©todo que retorna una pagina para realizar el registro de un contenido.
    * 
-   * @return La p·gina de registro de contenidos.
+   * @return La p√°gina de registro de contenidos.
    */
   @GetMapping("/registrarContenido") // Base
   public String registrarContenido(Model model) {
@@ -94,9 +94,9 @@ public class ContenidoController {
   /**
    * Servicio que permite guardar un contenido
    * 
-   * @param actividad Objeto con la informaciÛn a guardar
-   * @param model Modelo con la informaciÛn necesaria para transportar a los archivos .JSP
-   * @return La p·gina a donde debe redireccionar despuÈs de la acciÛn.
+   * @param actividad Objeto con la informaci√≥n a guardar
+   * @param model Modelo con la informaci√≥n necesaria para transportar a los archivos .JSP
+   * @return La p√°gina a donde debe redireccionar despu√©s de la acci√≥n.
    */
   @PostMapping(value = "/guardarContenido")
   public String registrarContenido(@ModelAttribute("contenido") Contenido contenido, Model model) {
@@ -105,7 +105,7 @@ public class ContenidoController {
     if (contenido.isValidoParaRegistrar()) {
       String mensaje = contenidoDao.registrarContenido(contenido);
       if (mensaje.equals("Registro exitoso")) {
-        model.addAttribute("result", "Contenido registrado con Èxito.");
+        model.addAttribute("result", "Contenido registrado con √©xito.");
         return index(model);
       } else {
         model.addAttribute("wrong", mensaje);
@@ -134,7 +134,7 @@ public class ContenidoController {
     if (contenido.isValidoParaRegistrar()) {
       String mensaje = contenidoDao.registrarContenido(contenido);
       if (mensaje.equals("Registro exitoso")) {
-        //model.addAttribute("result", "Contenido registrado con Èxito.");
+        //model.addAttribute("result", "Contenido registrado con √©xito.");
         //return index(model);
         return new ResponseEntity<String>("REGISTRO EXITOSO", HttpStatus.OK);
       } else {

@@ -47,10 +47,10 @@ public class RedSocialController {
    * 
    * @return La página principal de contenidos.
    */
-  @GetMapping("/redesSociales") // Base
+  @GetMapping("/redes") // Base
   public String index(Model model) {
     // Cargamos las redes sociales para poder mostrarlas en el cuadro.
-    model.addAttribute("redesociales", redSocialDao.getRedesSociales());
+    model.addAttribute("redesSociales", redSocialDao.getRedesSociales());
     return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
   }
   
@@ -74,13 +74,12 @@ public class RedSocialController {
    */
   @PostMapping(value = "/guardarRedSocial")
   public String registrarRedSocial(@ModelAttribute("redSocial") RedSocial redSocial, Model model) {
-
     // Consulta si tiene todos los campos llenos
     if (redSocial.isValidoParaRegistrar()) {
       String mensaje = redSocialDao.registrarRedSocial(redSocial);
       if (mensaje.equals("Registro exitoso")) {
         model.addAttribute("result", "Red social registrada con éxito.");
-        model.addAttribute("redesociales", redSocialDao.getRedesSociales());
+        model.addAttribute("redesSociales", redSocialDao.getRedesSociales());
         return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
@@ -101,15 +100,15 @@ public class RedSocialController {
    * @param model Objeto para enviar información a los archivos .JSP
    * @return La pagina con la información de la red social cargada.
    */
-  @GetMapping(value = "/actualizaredSocial")
+  @GetMapping(value = "/actualizarRedSocial")
   public String actualizarRedSocial(@RequestParam("id") long idRedSocial, Model model) {
     // Consulto que el Id sea mayor a 0.
     if (idRedSocial <= 0) {
-    	model.addAttribute("redesociales", redSocialDao.getRedesSociales());
+    	model.addAttribute("redesSociales", redSocialDao.getRedesSociales());
     	return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
     }
     RedSocial redSocial = redSocialDao.obtenerRedSocialPorId(idRedSocial);
-    model.addAttribute("redesSociales", redSocial);
+    model.addAttribute("redSocial", redSocial);
     return "Administrador/RedSocial/ActualizarRedSocial"; // Nombre del archivo jsp
   }
   
@@ -128,7 +127,7 @@ public class RedSocialController {
       String mensaje = redSocialDao.editarRedSocial(redSocial);
       if (mensaje.equals("Actualizacion exitosa")) {
         model.addAttribute("result", "Información de red social actualizada con éxito.");
-        model.addAttribute("redesociales", redSocialDao.getRedesSociales());
+        model.addAttribute("redesSociales", redSocialDao.getRedesSociales());
         return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
@@ -152,12 +151,12 @@ public class RedSocialController {
   public String eliminarRedSocial(@RequestParam("id") long idRedSocial, Model model) {
     // Consulto que el Id sea mayor a 0.
     if (idRedSocial <= 0) {
-    	model.addAttribute("redesociales", redSocialDao.getRedesSociales());
+    	model.addAttribute("redesSociales", redSocialDao.getRedesSociales());
       return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
     }
     RedSocial redSocial = redSocialDao.obtenerRedSocialPorId(idRedSocial);
-    model.addAttribute("redesSociales", redSocial);
-    return "Administrador/RedSocial/EliminarRedesSociales"; // Nombre del archivo jsp
+    model.addAttribute("redSocial", redSocial);
+    return "Administrador/RedSocial/EliminarRedSocial"; // Nombre del archivo jsp
   }
 
  
@@ -174,7 +173,7 @@ public class RedSocialController {
     String mensaje = redSocialDao.eliminarRedSocial(redSocial);
     if (mensaje.equals("Eliminacion exitosa")) {
       model.addAttribute("result", "Red social eliminada con éxito.");
-      model.addAttribute("redesociales", redSocialDao.getRedesSociales());
+      model.addAttribute("redesSociales", redSocialDao.getRedesSociales());
       return "Administrador/RedSocial/redes"; // Nombre del archivo jsp
     } else {
       model.addAttribute("wrong", mensaje);
