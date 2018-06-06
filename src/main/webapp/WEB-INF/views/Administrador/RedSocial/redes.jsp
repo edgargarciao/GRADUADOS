@@ -104,17 +104,21 @@
 											<th scope="col" style="width: 2%;display:none">Id</th>
 											<th scope="col" style="width: 26%">Nombre</th>
 											<th scope="col" style="width: 26%">URL</th>
-											<th scope="col" style="width: 26%">Tipo</th>
+											<th scope="col" style="width: 26%">logo</th>
 											<th scope="col" style="width: 27%">Acción</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="novedad" items="${redesSocciales}">
+										<c:forEach var="redSocial" items="${redesSociales}">
 											<tr>
-												<th style="display:none">${redesSociales.id}</th>
-												<td>${redesSociales.nombre}</td>
-												<td>${redesSociales.url}</td>
-												<td>${redesSociales.tipo}</td>												
+												<th style="display:none">${redSocial.id}</th>
+												<td>${redSocial.nombre}</td>
+												<td>${redSocial.url}</td>
+												<td>
+													<figure>
+	                                        			<img id = "img1" src="${redSocial.imBase64image}"  width="50" height="50">                                        
+	                                    			</figure> 		
+												</td>												
 												<td><a
 													href="${contextPath}/actualizarRedSocial?id=${redSocial.id}">
 														<button class="btn btn-outline-primary">
@@ -157,5 +161,6 @@
 		});
 	</script>
 
+	
 </body>
 </html>

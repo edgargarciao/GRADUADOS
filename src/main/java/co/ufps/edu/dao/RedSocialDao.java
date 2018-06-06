@@ -1,18 +1,24 @@
 package co.ufps.edu.dao;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.support.SqlLobValue;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.dto.RedSocial;
+import co.ufps.edu.util.ImagenUtil;
 
 public class RedSocialDao {
 
 	SpringDbMgr springDbMgr = new SpringDbMgr();
-	
+	ImagenUtil imagenUtil = new ImagenUtil();
 	
 	/**
 	 * Metodo que consulta en base de datos todos las redes sociales existentes.
@@ -35,7 +41,8 @@ public class RedSocialDao {
 	      redSocial.setId(sqlRowSet.getLong("id"));
 	      redSocial.setNombre(sqlRowSet.getString("nombre"));
 	      redSocial.setUrl(sqlRowSet.getString("url"));
-	      redSocial.setTipo(sqlRowSet.getString("tipo"));
+	      Object imagenBlob = sqlRowSet.getObject("logo");
+	      redSocial.setImBase64image(imagenUtil.convertirImagen((byte[]) imagenBlob));
 	      
 	      // Guarda el registro para ser retornado
 	      redesSociales.add(redSocial);
@@ -58,10 +65,17 @@ public class RedSocialDao {
 	    MapSqlParameterSource map = new MapSqlParameterSource();
 	    map.addValue("nombre", redSocial.getNombre());
 	    map.addValue("url", redSocial.getUrl());
-	    map.addValue("tipo", redSocial.getTipo());
+	    try {
+	        map.addValue("contenido",
+	            new SqlLobValue(new ByteArrayInputStream(redSocial.getContenido().getBytes()),
+	            		redSocial.getContenido().getBytes().length, new DefaultLobHandler()),
+	            Types.BLOB);
+	      } catch (IOException e) {
+	        new Exception();
+	      }
 
 	    // Armar la sentencia de actualización debase de datos
-	    String query = "INSERT INTO REDSOCIAL(nombre, url, tipo) VALUES(:nombre, :url, :tipo)";
+	    String query = "INSERT INTO REDSOCIAL(nombre, url, logo) VALUES(:nombre, :url, :contenido)";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -74,7 +88,6 @@ public class RedSocialDao {
 	    // de error.
 	    return (result == 1) ? "Registro exitoso"
 	        : "La información de la red social ya se encuentra en el sistema.";
-
 	  }
 
 	  
@@ -99,7 +112,8 @@ public class RedSocialDao {
 	      redSocial.setId(sqlRowSet.getLong("id"));
 	      redSocial.setNombre(sqlRowSet.getString("nombre"));
 	      redSocial.setUrl(sqlRowSet.getString("url"));
-	      redSocial.setTipo(sqlRowSet.getString("tipo"));
+	      Object imagenBlob = sqlRowSet.getObject("logo");
+	      redSocial.setImBase64image(imagenUtil.convertirImagen((byte[]) imagenBlob));
 	    }
 
 	    // Retorna red social desde base de datos
@@ -122,10 +136,17 @@ public class RedSocialDao {
 	    map.addValue("id", redSocial.getId());
 	    map.addValue("nombre", redSocial.getNombre());
 	    map.addValue("url", redSocial.getUrl());
-	    map.addValue("tipo", redSocial.getTipo());
+	    try {
+	        map.addValue("contenido",
+	            new SqlLobValue(new ByteArrayInputStream(redSocial.getContenido().getBytes()),
+	            		redSocial.getContenido().getBytes().length, new DefaultLobHandler()),
+	            Types.BLOB);
+	      } catch (IOException e) {
+	        new Exception();
+	     }
 
 	    // Armar la sentencia de actualización debase de datos
-	    String query = "UPDATE REDSOCIAL SET nombre = :nombre, url = :url, tipo = :tipo   WHERE id = :id";
+	    String query = "UPDATE REDSOCIAL SET nombre = :nombre, url = :url, logo = :contenido   WHERE id = :id";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
