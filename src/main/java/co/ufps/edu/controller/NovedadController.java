@@ -44,9 +44,9 @@ public class NovedadController {
   }
   
   /**
-   * Método que retorna una pagina con todas los contenidos en el sistema.
+   * Método que retorna una pagina con todas las novedades en el sistema.
    * 
-   * @return La página principal de contenidos.
+   * @return La página principal de novedades.
    */
   @GetMapping("/novedades") // Base
   public String index(Model model) {
