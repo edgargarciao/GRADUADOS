@@ -155,7 +155,7 @@
 									style="max-height: 180px;">
 								</a>
 							</div>
-							<div class="col-md-2 col-ms-1 col-xs-2 pull-right">
+							<div class="col-md-8 col-ms-8 col-xs-8">
 								<a href="http://www.ufps.edu.co/"><img class="header-banner"
 									src="resources/rsc/img/logo_ufps.png"
 									style="max-height: 160px;"
@@ -196,18 +196,15 @@
 								<ul class="dropdown-menu">
 									<c:forEach var="subcategoria" items="${categoria.subcategorias}">
 										<li>
-											<a href="${contextPath}/servicios/subcategoria?id=${subcategoria.id}">
+											
+											<a href="${contextPath}/servicios/componente?id=${subcategoria.id}&componente=subcategoria">
 												${subcategoria.nombre}
 											</a>
 										</li>
 									</c:forEach>
 								</ul>
 							</li>
-						</c:forEach>
-					
-					
-            
-
+						</c:forEach>			         
 					</ul>
 				</div>
 			</div>
@@ -218,8 +215,10 @@
 			
 			<c:forEach var="noticia" items="${noticias}">
 				<li>
+					<a href="${contextPath}/servicios/componente?id=${noticia.id}&componente=noticia">
 					<img
 					src="${noticia.im1Base64image}" alt="">
+					</a>
 					<span	style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">
 						${noticia.descripcion}
 					</span>
@@ -257,7 +256,7 @@
 												class="block-grid-v2-info rounded-bottom  bloques_eventos">
 												<h5>
 													<b>
-														<a href="index.php?modulo=verinformacion&idinfo=148">
+														<a href="${contextPath}/servicios/componente?id=${novedad.id}&componente=novedad">
 															${novedad.nombre}													
 														</a>
 													</b>
@@ -269,7 +268,7 @@
 								<a href="./index.php?modulo=principal"
 									class="btn-u btn-u-sm pull-right tooltips"
 									data-toggle="tooltip" data-placement="left"
-									data-original-title="Ver m&aacute;s novedades">Ver m�s <i
+									data-original-title="Ver m&aacute;s novedades">Ver más<i
 									class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
 							</div>
 						</div>
@@ -316,7 +315,7 @@
 				<a href="./index.php?modulo=calendarios"
 					class="btn-u btn-u-sm pull-right tooltips" data-toggle="tooltip"
 					data-placement="left"
-					data-original-title="Ingresar a Calendario de Eventos">Ver m�s
+					data-original-title="Ingresar a Calendario de Eventos">Ver más
 					<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
 				</a>
 			</div>

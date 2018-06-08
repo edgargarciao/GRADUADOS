@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.dao.NoticiaDao;
 import co.ufps.edu.dto.Noticia;
+import co.ufps.edu.dto.SubCategoria;
 
 /**
  * Controlador de noticias. Las noticias son publicaciones que permiten informar a las personas de los
@@ -291,4 +292,6 @@ public class NoticiaController {
       noticiaDao.cambiarOrdenDeNoticia(idnoticia, i);
     }
   }
+  
+
 }

@@ -89,17 +89,19 @@
 								<strong class="card-title">Registrar contenido</strong>
 							</div>
 							<div class="card-body">
-								<!-- Si hubo un error en el registro muestra el mensaje-->
-								<c:if test="${not empty wrong}">
-									<div
-										class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
-										<c:out value='${wrong}' />
-										<button type="button" class="close" data-dismiss="alert"
-											aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-								</c:if>
+							
+								
+							
+									<!-- Si hubo un error en el registro muestra el mensaje-->
+									<div id="exito">
+
+                                    </div>
+							
+									<div id="error">
+
+                                    </div>
+				                  
+							
 
 								<!-- Formulario -->
 								<form:form id="formContenido" action="guardarContenido"	method="post" modelAttribute="contenido">
@@ -134,15 +136,15 @@
 									</div>
 
 									<!-- Campo para digitar el nombre -->
-									<div class="form-group">
+									<div id="titulo" class="form-group">
 										<label for="text-input" class=" form-control-label">Título o nombre</label>
 										<form:input id="nombre" path="nombre" class="form-control"	placeholder="Oficina de la universidad lanza su pagina oficial" aria-invalid="false" required="true" />
 									</div>
 
 
-									<div class="form-group">
+									<div id="urll" class="form-group" style="display: none;">
 										<label for="text-input" class=" form-control-label">URL a direccionar</label> 
-										<input id="nombre" name="nombre" type="text"
+										<input id="url" name="url" type="text"
 											class="form-control" path="url"
 											placeholder="http://gidis.ufps.edu.co:8080/SeGre/"
 											aria-required="true" aria-invalid="false">
@@ -155,12 +157,13 @@
 									<div style="display: none;">
 										<input type="file" id="video" name="video" onchange="revisarVideo(this);" accept="video/*">
 									</div>
-									
+																		
 									<div style="display: none;">
 										<input type="file" id="archivo" name=archivo onchange="revisarArchivo(this);" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf">
-									</div>									
+									</div>	
+								
 
-									<div class="form-group">
+									<div id="pagina" class="form-group" >
 										<label for="textarea-input" class=" form-control-label">Contenido</label>
 										
 									<div class="toolbar">
@@ -259,9 +262,17 @@
 		// Aqui se obtiene el nombre o titlo
 		var titulo = document.getElementById("nombre").value;
 		
+		// Variable para guardar el contenido
+		var content = "";
+		
+		// Variable para guardar el tipo de contenido
+		var tipoCon = "";
 		
 		// Aqui consulto si es link o pagina normal
-		if(selectedValueTC == 'LINK'){
+		if(selectedValueTC == 2){
+			content = document.getElementById("url").value;	
+			titulo = "LINK";
+			tipoCon = "LINK";
 			
 		}else{
 			
@@ -269,18 +280,17 @@
 			var markup = document.documentElement.innerHTML;
 			var arr = ((markup.split("contenteditable")[1]).split("<!-- PQWOEIRUTUMZNXBCVB -->")[0]).split("\n");
 			arr.splice(0, 1);
-			var content = arr.join("");			
-			alert(content);
-			
-			
+			content = arr.join("");			
+			tipoCon = "PAGINA NORMAL";
+		}	
 			
 			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
 			var formData = {
 					  tipoAsociacion: 	selectedValueTA,
 			          asociacion: 		selectedValueA,
 			          tipoContenido: 	{
-			        	  id:			'1',
-			        	  nombre:		selectedValueTC	,
+			        	  id:			selectedValueTC,
+			        	  nombre:		tipoCon,
 			        	  description:	''
 			        	  
 			          },
@@ -296,20 +306,23 @@
 				url : url + "/servicios/recibirInformacion",
 				data: JSON.stringify(formData),
 				success : function(result) {
+					
 					if(result.trim() == 'REGISTRO EXITOSO'){
 						alert("Contenido registrado con exito.")
 						$('#formContenido').trigger("reset");
+						cambiarDeTipoDeContenido();
+						pintarRegistroExitoso();
 					}else{
-						alert("Contenido NO registrado.");
+						pintarRegistroNoExitoso();
 					}
 					
 				},
 				error : function(e) {
-					alert("Error! --> "+String(e));
+					pintarRegistroNoExitoso();
 					console.log("ERROR: ", e);
 				}
 			});	
-		}						
+								
 	}
 
 		function cambiarDeTipoDeAsosiacion() {
@@ -317,8 +330,7 @@
 			var selectedValue = selectBox.options[selectBox.selectedIndex].value;
 
 			// DO POST
-			var url = window.location.protocol + "//" + window.location.host
-					+ "/" + (window.location.pathname).split("/")[1];
+			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
@@ -327,23 +339,17 @@
 				success : function(result) {
 
 					var resultado = JSON.stringify(result);
-					var asosiaciones = resultado.split(",");
+					var asosiaciones = resultado.split("\",");
 					eliminarOpciones(document.getElementById("asosiacion"));
-					agregarOpcion(document.getElementById("asosiacion"), 0,
-							"Seleccione la asosiacion");
+					agregarOpcion(document.getElementById("asosiacion"), 0,"Seleccione la asosiacion");
 					for (var i = 0; i < asosiaciones.length; i++) {
 
-						var id = asosiaciones[i].substring(1,
-								asosiaciones[i].length).split(":")[0].replace(
-								'\"', '').replace('\"', '');
-						var nombre = asosiaciones[i].substring(1,
-								asosiaciones[i].length).split(":")[1].replace(
-								'\"', '').replace('\"', '');
+						var id = asosiaciones[i].substring(1,asosiaciones[i].length).split(":")[0].replace('\"', '').replace('\"', '');
+						var nombre = asosiaciones[i].substring(1,asosiaciones[i].length).split(":")[1].replace('\"', '').replace('\"', '');
 						if (nombre.indexOf("}") != -1) {
 							nombre = nombre.replace('}', '');
 						}
-						agregarOpcion(document.getElementById("asosiacion"),
-								id, nombre);
+						agregarOpcion(document.getElementById("asosiacion"),id, nombre);
 						
 					}
 				},
@@ -356,9 +362,19 @@
 		}
 
 		function cambiarDeTipoDeContenido() {
+			
 			var selectBox = document.getElementById("tipoContenido");
 			var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-			alert(selectedValue);
+			if(selectedValue == 2){
+				
+				document.getElementById("urll").setAttribute("style","");
+				document.getElementById("pagina").setAttribute("style","display: none;");
+				document.getElementById("titulo").setAttribute("style","display: none;");
+			}else{
+				document.getElementById("urll").setAttribute("style","display: none;");
+				document.getElementById("pagina").setAttribute("style","");
+				document.getElementById("titulo").setAttribute("style","");
+			}
 		}
 
 		function eliminarOpciones(selectbox) {
@@ -374,6 +390,56 @@
 			opt.text = nombre;
 			selectbox.options.add(opt);
 		}
+
+		function pintarRegistroExitoso(){
+			var exito = document.getElementById("exito");
+			
+			var div = document.createElement("DIV");
+			div.setAttribute("class","sufee-alert alert with-close alert-success alert-dismissible fade show");
+			var texto = document.createTextNode("Registro exitoso");       
+			div.appendChild(texto);
+			
+			var boton = document.createElement("BUTTON");
+			boton.setAttribute("type","button");
+			boton.setAttribute("class","close");
+			boton.setAttribute("data-dismiss","alert");
+			boton.setAttribute("aria-label","Close");
+			
+			var span = document.createElement("span");
+			span.setAttribute("aria-hidden","true");
+			var textos = document.createTextNode("X");       
+			span.appendChild(textos);
+			
+			boton.appendChild(span);
+			div.appendChild(boton);
+			exito.appendChild(div);
+		}
+		
+		function pintarRegistroNoExitoso(){
+			var error = document.getElementById("error");
+			
+			var div = document.createElement("DIV");
+			div.setAttribute("class","sufee-alert alert with-close alert-danger alert-dismissible fade show");
+			var texto = document.createTextNode("Registro no exitoso");       
+			div.appendChild(texto);
+			
+			var boton = document.createElement("BUTTON");
+			boton.setAttribute("type","button");
+			boton.setAttribute("class","close");
+			boton.setAttribute("data-dismiss","alert");
+			boton.setAttribute("aria-label","Close");
+			
+			var span = document.createElement("span");
+			span.setAttribute("aria-hidden","true");
+			var textos = document.createTextNode("X");       
+			span.appendChild(textos);
+			
+			boton.appendChild(span);
+			div.appendChild(boton);
+			error.appendChild(div);
+		}
+		
+
 	</script>   
 
 

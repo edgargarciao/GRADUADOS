@@ -7,6 +7,12 @@
     backPalette.append('<a href="#" data-command="backcolor" data-value="' + '#' + colorPalette[i] + '" style="background-color:' + '#' + colorPalette[i] + ';" class="palette-item"></a>');
   }
 
+  
+  /**
+   * Evento que se acciona cuando dan clic en alguna opcion de la paleta.
+   * @param e Evento.
+   * @returns
+   */
   $('.toolbar a').click(function(e) {
     var command = $(this).data('command');
     if (command == 'h1' || command == 'h2' || command == 'p') {
@@ -32,6 +38,10 @@
     } else document.execCommand($(this).data('command'), false, null);
   });
   
+  /**
+   * Metodo que permite cargar una imagen en la seccion editable.
+   * @returns
+   */
   function cargarImagen(){
 	  
 	  var file    = document.getElementById('imagen').files[0];
@@ -72,6 +82,11 @@
 	  }
   }
   
+  /**
+   * Metodo que coloca el video dentro de la seccion editable.
+   * @param input Video a colocar.
+   * @returns
+   */
   function revisarVideo(input) {
       //THE METHOD THAT SHOULD SET THE VIDEO SOURCE
       if (input.files && input.files[0]) {
@@ -90,34 +105,79 @@
           document.getElementById("video").value = "";
       }
   }
+  
+  /**
+   * Metodo que guarda un archivo en base de datos y luego pinta una imagen colocando
+   * como direccionamiento el codigo del archivo en base de datos para que cuando le den
+   * clic se descargue el archivo.
+   * @param input Archivo.
+   * @returns 
+   */
   function revisarArchivo(input) {
-
+	  // Consulta si cargo algun archivo
     if (input.files && input.files[0]) {
-        var file = input.files[0];
-        var url = URL.createObjectURL(file);
-        console.log(url);
-        var reader = new FileReader();
-        reader.onload = function() {           
-        		var fileName = file.name;
-        		var fileSize = file.size;
-        		var fileType = file.type;
-        		var id = guardarArchivoEnBaseDeDatos(url,fileName,fileSize,fileType);
-        		
-        		
-				var doc = document.getElementById("editor");
-				doc = doc.document;
+        // Obtiene el archivo
+    	var file = input.files[0];    	
+        
+        // Creo la url a consumir
+        var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+        
+        var formData = new FormData();
+        formData.append('archivo', file);
+        
+        // Aca guardo el archivo en base de datos y genero un ID
+		$.ajax({
+			type : "POST",
+			enctype: 'multipart/form-data',
+		    processData: false,
+		    contentType: false,
+		    cache: false,
+			url : url + "/servicios/registrarArchivo",
+			data: (formData),
+			success : function(result) {
+				var id  = result;
+				// Si guardo el archivo lo pintamos en pantalla
+				pintarImagen(id,file.type);    	
 				
-				img = "<img src='" +  url + "' id=" + id + "/>";
-		//		document.execCommand("insertHTML", false, img);
-        }
-        reader.readAsDataURL(file);
+			},
+			error : function(e) {
+				alert("Error! --> "+String(e));
+				console.log("ERROR: ", e);
+			}
+		}); 
+        
         document.getElementById("archivo").value = "";
     }
 }
   
-  function guardarArchivoEnBaseDeDatos(url,fileName,fileSize,fileType){
-  	var id = 1;
-  	
-  	return id;
+  function pintarImagen(id,fileType){
+	  
+	  	// Creo la url a consumir
+      	var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+      
+        var formData = new FormData();
+        formData.append('tipo', fileType);
+      	
+		// Aca guardo el archivo en base de datos y genero un ID
+		$.ajax({
+			type : "POST",
+			enctype: 'multipart/form-data',
+		    processData: false,
+		    contentType: false,
+		    cache: false,
+			url : url + "/servicios/solicitarImagen",
+			data: (formData),
+			success : function(result) {
+				var doc = document.getElementById("editor").document;		
+				var img = "<a href='/ufps-graduados/servicios/download?id="+id+"'><img src='" +  result + "' id=" + id + " height ='50' width ='50' /><a/>";
+				document.execCommand("insertHTML", false, img);
+				
+			},
+			error : function(e) {
+				alert("Error! --> "+String(e));
+				console.log("ERROR: ", e);
+			}
+		}); 		
   }
+
   

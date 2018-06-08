@@ -11,10 +11,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import co.ufps.edu.config.SessionManager;
 import co.ufps.edu.dao.ActividadDao;
 import co.ufps.edu.dao.CategoriaDao;
+import co.ufps.edu.dao.ComponenteDao;
 import co.ufps.edu.dao.ContactoDao;
 import co.ufps.edu.dao.ContenidoDao;
 import co.ufps.edu.dao.EnlaceDeInteresDao;
@@ -25,7 +27,9 @@ import co.ufps.edu.dao.NoticiaDao;
 import co.ufps.edu.dao.NovedadDao;
 import co.ufps.edu.dao.RedSocialDao;
 import co.ufps.edu.dao.SubCategoriaDao;
+import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Login;
+import co.ufps.edu.dto.SubCategoria;
 import co.ufps.edu.dto.VisitaDao;
 import co.ufps.edu.util.JwtUtil;
 
@@ -49,6 +53,7 @@ public class AdminController {
   private ContactoDao contactoDao;
   private RedSocialDao redSocialDao;
   private VisitaDao visitaDao;
+  private ComponenteDao componenteDao;
 
   public AdminController() {
     jwtUtil = new JwtUtil();
@@ -65,11 +70,17 @@ public class AdminController {
     contactoDao = new ContactoDao();
     redSocialDao = new RedSocialDao();
     visitaDao = new VisitaDao();
+    componenteDao = new ComponenteDao();
   }
 
   @GetMapping("/") // Base
   public String main(Model model, HttpServletRequest request) {
     guardarVisita(request);
+    cargarModelo(model);
+    return "index"; // Nombre del archivo jsp
+  }
+
+  private void cargarModelo(Model model) {
 
     model.addAttribute("categorias", categoriaDao.getCategoriasConSubcategorias());
     model.addAttribute("noticias", noticiaDao.getUltimasNoticias());
@@ -81,7 +92,7 @@ public class AdminController {
     model.addAttribute("logoHorizontal", logoDao.getLogo("LogoHorizontal"));
     model.addAttribute("logoVertical", logoDao.getLogo("LogoVertical"));
 
-    return "index"; // Nombre del archivo jsp
+    
   }
 
   /**
@@ -248,5 +259,28 @@ public class AdminController {
     model.addAttribute("catidadContactos", this.contactoDao.getCantidadContactos());
     model.addAttribute("catidadRedesSociales", this.redSocialDao.getCantidadRedesSociales());
   }
+  
+  /**
+   * Método que obtiene la pagina de actualizar categoria dado un ID.
+   * 
+   * @param idCategoria Identificador de la categoria
+   * @param model Objeto para enviar información a los archivos .JSP
+   * @return La pagina con la información de la categoria cargada.
+   */
+  @GetMapping(value = "/servicios/componente")
+  public String obtenerContenido(@RequestParam("id") long idComponente,@RequestParam("componente") String tipo, Model model) {
+    // Consulto que el Id sea mayor a 0.
+    if (idComponente <= 0) {
+      return "index";
+    }
+    Contenido contenido = componenteDao.obtenerContenidoComponentePorId(idComponente,tipo);
+    
+    
+    cargarModelo(model);
+    model.addAttribute("titulo",(contenido == null)?"":contenido.getNombre());
+    model.addAttribute("codigo",(contenido == null)?"":contenido.getContenido());
+    return "contenido"; // Nombre del archivo jsp
+  }
+
 
 }

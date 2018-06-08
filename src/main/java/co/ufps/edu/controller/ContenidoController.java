@@ -1,20 +1,27 @@
 package co.ufps.edu.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.dao.ContenidoDao;
 import co.ufps.edu.dao.TipoContenidoDao;
+import co.ufps.edu.dto.Archivo;
 import co.ufps.edu.dto.Contenido;
 
 
@@ -121,7 +128,7 @@ public class ContenidoController {
   @PostMapping(value = "servicios/asosiaciones")
   public @ResponseBody ResponseEntity<Map<Integer, String>> getAsosiacionesPorTipo(
       @RequestBody String tipoAsociacion) {
-    System.out.println("tipoAsociacion --> " + tipoAsociacion);
+    
     Map<Integer, String> asociaciones = contenidoDao.getAsociaciones(tipoAsociacion);
     return new ResponseEntity<Map<Integer, String>>(asociaciones, HttpStatus.OK);
   }
@@ -150,5 +157,41 @@ public class ContenidoController {
     
     
     //return new ResponseEntity<String>("LLEGO LA INFO", HttpStatus.OK);
+  }
+  
+  @PostMapping(value = "servicios/registrarArchivo" )
+  public @ResponseBody ResponseEntity<String> registrarArchivo(@RequestParam("archivo") MultipartFile multipartFile) {    
+    long id = contenidoDao.registrarArchivo(multipartFile);
+    return new ResponseEntity<String>(String.valueOf(id), HttpStatus.OK);
+  }
+  
+  @PostMapping(value = "servicios/solicitarImagen" )
+  public @ResponseBody ResponseEntity<String> solicitarImagen(@RequestParam("tipo") String tipo) {    
+    String imagenBase64 = contenidoDao.solicitarImagen(tipo);
+    if(StringUtils.isEmpty(imagenBase64)) {
+      imagenBase64 = contenidoDao.solicitarImagen("RecibirImagenCualquiera");
+    }
+    return new ResponseEntity<String>(imagenBase64, HttpStatus.OK);
+  }
+  
+  @GetMapping(value = "servicios/download" )
+  public void download(@RequestParam("id") long id, HttpServletResponse response) {    
+   
+    Archivo archivo = contenidoDao.obtenerArchivo(id);
+    try {
+      // get your file as InputStream
+      InputStream is = archivo.getContenido();
+      
+      // copy it to response's OutputStream
+      response.setContentType(archivo.getTipo());      
+      response.setHeader("Content-Disposition", "attachment; filename=\""+archivo.getNombre()+"\""); 
+      org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+      
+      response.flushBuffer();
+    } catch (IOException ex) {
+      
+      throw new RuntimeException("IOError writing file to output stream");
+    }
+    
   }
 }
