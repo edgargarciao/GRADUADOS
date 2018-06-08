@@ -45,7 +45,7 @@ public class RedSocialController {
   /**
    * Método que retorna una pagina con todas los redes sociales en el sistema.
    * 
-   * @return La página principal de contenidos.
+   * @return La página principal de redes sociales.
    */
   @GetMapping("/redes") // Base
   public String index(Model model) {
