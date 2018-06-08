@@ -308,7 +308,7 @@
 				success : function(result) {
 					
 					if(result.trim() == 'REGISTRO EXITOSO'){
-						alert("Contenido registrado con exito.")
+						
 						$('#formContenido').trigger("reset");
 						cambiarDeTipoDeContenido();
 						pintarRegistroExitoso();

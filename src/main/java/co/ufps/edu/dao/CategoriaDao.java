@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.io.Charsets;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.dto.Categoria;
+import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.SubCategoria;
+import co.ufps.edu.dto.TipoContenido;
 
 /**
  * Clase que permite acceder a la capa de datos en el entorno de categorias.
@@ -303,7 +306,7 @@ public class CategoriaDao {
   }
 
   public List<Categoria> getCategoriasConSubcategorias() {
- // Lista para retornar con los datos
+    // Lista para retornar con los datos
     List<Categoria> categorias = new LinkedList<>();
 
     // Consulta para realizar en base de datos
@@ -317,7 +320,7 @@ public class CategoriaDao {
                                                   + "           SUBCATEGORIA.ORDEN              ordenSubCategoria       "
                                                   + "   FROM    SUBCATEGORIA                                            "
                                                   + "INNER JOIN CATEGORIA  ON CATEGORIA.id = SUBCATEGORIA.Categoria_id  "
-                                                  + "ORDER BY   CATEGORIA.ORDEN ASC,SUBCATEGORIA.ORDEN ASC                 ");
+                                                  + "ORDER BY   CATEGORIA.ORDEN ASC,SUBCATEGORIA.ORDEN ASC              ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
@@ -328,15 +331,65 @@ public class CategoriaDao {
       subCategoria.setNombre(sqlRowSet.getString("nombreSubCategoria"));
       subCategoria.setDescripcion(sqlRowSet.getString("descripcionSubCategoria"));
       subCategoria.setOrden(sqlRowSet.getInt("ordenSubCategoria"));
+      cargarContenido(subCategoria);
       
       Categoria categoria = getCategoria(categorias,sqlRowSet.getLong("idCategoria"),sqlRowSet);
       
       // Guarda el registro para ser retornado
       categoria.agregarSubcategoria(subCategoria);
     }
+    
+    for(Categoria cat:categorias) {
+      for(SubCategoria subs : cat.getSubcategorias()) {
+        Contenido co = subs.getContenido();
+        if(co!=null){
+          System.out.println("id --> "+co.getTipoContenido().getId());
+        }
+      }
+    }
 
     // Retorna todos las categorias desde base de datos
     return categorias;
+  }
+
+  private void cargarContenido(SubCategoria subCategoria) {
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", subCategoria.getId());
+ // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    CONTENIDO.ID                    idContenido,            "
+                                                  + "           CONTENIDO.CONTENIDO             contenido,              "
+                                                  + "           CONTENIDO.TipoContenido_id      tipoContenido,          "                                                  
+                                                  + "           SUBCATEGORIA.ID                 idSubcategoria,         "
+                                                  + "           SUBCATEGORIA.NOMBRE             nombreSubCategoria,     "
+                                                  + "           SUBCATEGORIA.DESCRIPCION        descripcionSubCategoria,"
+                                                  + "           SUBCATEGORIA.ORDEN              ordenSubCategoria       "
+                                                  + "   FROM    SUBCATEGORIA                                            "
+                                                  + "INNER JOIN CONTENIDO  ON CONTENIDO.ASOCIACION = SUBCATEGORIA.ID "
+                                                  + "WHERE SUBCATEGORIA.ID = :id",map);
+
+    // Recorre cada registro obtenido de base de datos
+    if (sqlRowSet.next()) {
+      // Objeto en el que sera guardada la informacion del registro
+      Contenido contenido = new Contenido();
+      
+      contenido.setId(sqlRowSet.getLong("idContenido"));      
+      byte []a = (byte[]) sqlRowSet.getObject("contenido");
+      String res = new String(a,Charsets.UTF_8);
+      contenido.setContenido(res);      
+
+      TipoContenido tipoContenido = new TipoContenido();
+      tipoContenido.setId(sqlRowSet.getLong("tipoContenido"));
+            
+      contenido.setTipoContenido(tipoContenido);
+      
+      // Guarda el registro para ser retornado
+      subCategoria.setContenido(contenido);
+      
+      
+      
+    }
+
+    
   }
 
   private Categoria getCategoria(List<Categoria> categorias, long idCategoria, SqlRowSet sqlRowSet) {

@@ -196,10 +196,30 @@
 								<ul class="dropdown-menu">
 									<c:forEach var="subcategoria" items="${categoria.subcategorias}">
 										<li>
+											<c:choose>
+												<c:when test="${not empty subcategoria.contenido}">
+													<c:choose>
+														<c:when test="${subcategoria.contenido.tipoContenido.id == 2}">
+															<a href="${subcategoria.contenido.contenido}">
+																${subcategoria.nombre}
+															</a>																	
+														</c:when>
+														<c:otherwise>
+															<a href="${contextPath}/servicios/componente?id=${subcategoria.id}&componente=subcategoria">
+																${subcategoria.nombre}
+															</a>
+														</c:otherwise>		
+													</c:choose>		
+												    
+												</c:when>
+												<c:otherwise>
+												    <a href="">
+														${subcategoria.nombre}
+													</a>
+											 	</c:otherwise>
+											</c:choose>
+																		
 											
-											<a href="${contextPath}/servicios/componente?id=${subcategoria.id}&componente=subcategoria">
-												${subcategoria.nombre}
-											</a>
 										</li>
 									</c:forEach>
 								</ul>
