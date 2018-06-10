@@ -16,6 +16,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.web.multipart.MultipartFile;
 import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.constantes.Constantes;
+import co.ufps.edu.dto.Actividad;
 import co.ufps.edu.dto.Archivo;
 import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Noticia;
@@ -139,6 +140,24 @@ public class ContenidoDao {
 
     return asociaciones;
   }
+  
+  public Map<Integer, String> getAsociacionesCompletas(String tipoAsociacion,long idAsociacion) {
+
+    Map<Integer, String> asociaciones = new HashMap<>();
+    String tabla = (tipoAsociacion.equalsIgnoreCase(Constantes.ACTIVIDAD)) ? "PROXIMAACTIVIDAD": tipoAsociacion;
+    
+    MapSqlParameterSource map = new MapSqlParameterSource();
+   // map.addValue("tabla", tabla);
+    map.addValue("id", idAsociacion);
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM "+tabla+" WHERE ID NOT IN (SELECT ASOCIACION FROM CONTENIDO) OR ID = :id",map );
+
+    while (sqlRowSet.next()) {
+      asociaciones.put(sqlRowSet.getInt("id"), sqlRowSet.getString("nombre"));
+    }
+
+    return asociaciones;
+  }
 
   public long registrarArchivo(MultipartFile archivo) {
     // Agrego los datos del registro (nombreColumna/Valor)
@@ -216,6 +235,90 @@ public class ContenidoDao {
     return archivo;
   }
 
+  /**
+   * Metodo que consulta en base de datos la informacion de un contenido dado
+   * 
+   * @param idActividad Identificador del contenido.
+   * @return La información de una actividad en un objeto.
+   */
+  public Contenido obtenerContenidoPorId(long idContenido) {
+    // Lista para retornar con los datos
+    Contenido contenido = new Contenido();
 
+    // Consulta para realizar en base de datos
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", idContenido);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CONTENIDO WHERE id = :id", map);
 
+    // Consulto si la actividad existe
+    if (sqlRowSet.next()) {
+      // Almaceno los datos de la actividad
+      contenido.setId(sqlRowSet.getLong("id"));
+      contenido.setNombre(sqlRowSet.getString("titulo"));
+      contenido.setTipoAsociacion(sqlRowSet.getString("tipoasociacion"));
+      byte []a = (byte[]) sqlRowSet.getObject("contenido");
+      String res = new String(a,Charsets.UTF_8);
+      contenido.setContenido(res);
+      TipoContenido tipoContenido = new TipoContenido();
+      tipoContenido.setId(sqlRowSet.getLong("TipoContenido_id"));
+      contenido.setTipoContenido(tipoContenido);
+      contenido.setAsociacion(sqlRowSet.getLong("asociacion"));
+      
+    }
+    // Retorna la actividad desde base de datos
+    return contenido;
+  }
+
+  public String actualizarContenido(Contenido contenido) {
+ // Agrego los datos del registro (nombreColumna/Valor)
+
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", contenido.getId());
+    map.addValue("titulo", contenido.getNombre());
+    map.addValue("tipoasociacion", contenido.getTipoAsociacion());
+    map.addValue("TipoContenido_id", contenido.getTipoContenido().getId());
+    map.addValue("asociacion", contenido.getAsociacion());
+    
+    map.addValue("contenido",contenido.getContenido().getBytes(Charsets.UTF_8));
+
+    // Armar la sentencia de actualización debase de datos
+    String query =
+        "UPDATE CONTENIDO SET titulo = :titulo,tipoasociacion = :tipoasociacion,TipoContenido_id = :TipoContenido_id,asociacion = :asociacion,contenido = :contenido WHERE id = :id";
+
+    // Ejecutar la sentencia
+    int result = 0;
+    try {
+      result = springDbMgr.executeDml(query, map);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
+    // de error.
+    return (result == 1) ? "Actualizacion exitosa"
+        : "Error al actualizar el contenido. Contacte al administrador del sistema.";
+  }
+
+  public String eliminarContenido(Contenido contenido) {
+
+    // Agrego los datos de la eliminación (nombreColumna/Valor)
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", contenido.getId());
+
+    // Armar la sentencia de actualización debase de datos
+    String query = "DELETE FROM CONTENIDO WHERE id = :id";
+
+    // Ejecutar la sentencia
+    int result = 0;
+    try {
+      result = springDbMgr.executeDml(query, map);
+    } catch (Exception e) {
+      new Exception();
+    }
+    // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
+    // de error.
+    return (result == 1) ? "Eliminacion exitosa"
+        : "Error al eliminar el contenido. Contacte al administrador del sistema.";
+  }
+
+  
 }

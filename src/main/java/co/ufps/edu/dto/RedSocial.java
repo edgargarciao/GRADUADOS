@@ -1,15 +1,13 @@
 package co.ufps.edu.dto;
 
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 public class RedSocial {
 
 	private long id;
 	private String nombre;
 	private String url;
-	private MultipartFile contenido;
-	private String imBase64image;
+	private String logo;
 	
 	
 	public long getId() {
@@ -35,23 +33,7 @@ public class RedSocial {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	
-	public String getImBase64image() {
-		return imBase64image;
-	}
 
-	public void setImBase64image(String imBase64image) {
-		this.imBase64image = imBase64image;
-	}
-
-	public MultipartFile getContenido() {
-		return contenido;
-	}
-
-	public void setContenido(MultipartFile contenido) {
-		this.contenido = contenido;
-	}
 
 	@Override
 	public String toString() {
@@ -62,5 +44,13 @@ public class RedSocial {
 	    return (!StringUtils.isEmpty(this.nombre)
 	        && !StringUtils.isEmpty(this.url));
 	  }
+
+  public String getLogo() {
+    return logo;
+  }
+
+  public void setLogo(String logo) {
+    this.logo = logo;
+  }
 	
 }

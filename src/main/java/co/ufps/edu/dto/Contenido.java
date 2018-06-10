@@ -73,6 +73,7 @@ public class Contenido {
 
   public boolean isValidoParaRegistrar() {
     return (!StringUtils.isEmpty(this.nombre)
+        && !StringUtils.isEmpty(this.contenido)
         && !StringUtils.isEmpty(this.tipoContenido.getNombre())
         && !StringUtils.isEmpty(this.tipoAsociacion) && this.asociacion != 0);
   }

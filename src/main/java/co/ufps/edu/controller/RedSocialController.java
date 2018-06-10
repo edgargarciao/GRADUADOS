@@ -1,5 +1,7 @@
 package co.ufps.edu.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +66,8 @@ public class RedSocialController {
     return "Administrador/RedSocial/RegistrarRedSocial"; // Nombre del archivo jsp
   }
   
-  
+
+
   /**
    * Servicio que permite guardar red social
    * 

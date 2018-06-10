@@ -9,14 +9,64 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
 <head>
-	<%@ include file = "../General/css.jsp" %>
+
+ <style>
+            div.gallery {
+                margin: 5px;
+                border: 1px solid #ccc;
+                float: left;
+                width: 180px;
+            }
+            
+            div.gallery:hover {
+                border: 1px solid #777;
+            }
+            
+            div.gallery img {
+                width: 100%;
+                height: auto;
+            }
+            
+            div.desc {
+                padding: 15px;
+                text-align: center;
+            }
+            </style>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin-Ufps</title>
+    <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <link rel="shortcut icon" href="resources/favicon.ico">
+
+    <link rel="stylesheet" href="resources/assets/css/normalize.css">
+    <link rel="stylesheet" href="resources/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="resources/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="resources/assets/css/flag-icon.min.css">
+    <link rel="stylesheet" href="resources/assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="resources/assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="resources/assets/css/lib/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="resources/assets/css/lib/datepicker/datepicker.css">
+    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
+    <link rel="stylesheet" href="resources/assets/scss/style.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
+
+   
 </head>
 <body>
-	<!-- Left Panel -->
+<!-- Left Panel -->
 
 		<%@ include file = "../General/LeftPanel.jsp" %>
-
-	<!-- /#left-panel -->
+    <!-- Left Panel -->
 
     <!-- Right Panel -->
 
@@ -26,21 +76,22 @@
         <header id="header" class="header">
 
             <div class="header-menu">
-            	<div class="col-sm-7">
+                <div class="col-sm-7">
                         <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
                         <div class="page-header float-left">
-                        	<div class="page-title">
-                                <ol class="breadcrumb text-right">
-                                	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
-                                    <li><a href="${contextPath}/galerias">Galerias / </li>
-                                    <li class="active"><a href="#"> Registrar galeria</li>
-                            	</ol>
-                            </div>
-						</div>    
+                                <div class="page-title">
+	                                <ol class="breadcrumb text-right">
+	                                	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
+	                                    <li><a href="${contextPath}/redes">Redes/ </li>
+	                                    <li class="active"><a href="#"> Registrar galeria</li>
+	                            	</ol>
+                                </div>
+                            </div>    
+
                 </div>
-               	<!-- Area en donde se encuentra la foto del usuario y la barra de opciones -->
-				<div class="col-sm-5">
-	            	<div class="user-area dropdown float-right">
+                <div class="col-sm-5">
+                   
+                    <div class="user-area dropdown float-right">
 	                	<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                    	<img class="user-avatar rounded-circle" src="resources/images/admin.jpg" alt="User Avatar">
 						</a>
@@ -49,26 +100,27 @@
 	                        <a class="nav-link" href="#"><i class="fa fa -cog"></i>Configuración de la cuenta</a>
 	                        <a class="nav-link" href="${contextPath}/logout"><i class="fa fa-power -off"></i>Salir</a>
 						</div>
-					</div>                        
-				</div>
+                    </div>
+
+                   
+
+                </div>
             </div>
 
         </header><!-- /header -->
         <!-- Header-->
-		
-		<!-- Contenedor del formulario -->
+
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
-                	<div class="col-md-12">                	
- 	
-                    	<div class="card">
-                    		<!-- Titulo de la ventana -->
-                        	<div class="card-header">
-                            	<strong class="card-title">Registrar Galeria</strong>
-                        	</div>
-                        	<div class="card-body">
-                        		<!-- Si hubo un error en el registro muestra el mensaje-->						
+	                <div class="col-md-12">
+	                    <div class="card">
+	                        <div class="card-header">
+	                            <strong class="card-title">Registrar galeria</strong>
+	                        </div>
+	                        <div class="card-body">
+	                        
+	                            <!-- Si hubo un error en el registro muestra el mensaje-->						
 								<c:if test="${not empty wrong}">		            
 		                        	<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">				                   	
 				                    		<c:out value='${wrong}' />
@@ -77,34 +129,59 @@
 				                    	</button>
 				                   </div>
 							    </c:if>
-                        	
-                        		<!-- Formulario -->
-                        		<form:form id="formGaleria" action="guardarGaleria" method="post" modelAttribute="galeria" enctype="multipart/form-data">
-                            		<!-- Campo para digitar el nombre -->
-                                	<div class="form-group">
-                                    	<label for="text-input" class=" form-control-label">Nombre</label>
-                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Nombre de galeria" aria-invalid="false" required = "true"/>
-                                	</div> 
-                                	
-                                	<!-- Campo para digitar la descripción -->
-                                	<div class="form-group">
-                                        <label for="textarea-input" class=" form-control-label">Descripción</label>
-                                		<form:textarea id="descripcion" name="descripcion" class="form-control" path="descripcion" rows="5" cols="130" required = "true" placeholder="Descripción" /> 
-                                	</div>   
-                                	
-                                	<!-- Campo para digitar la fecha -->
-                                	<div class="form-group">
-                                        <label for="text-input" class=" form-control-label">Fecha</label>
-                                		<form:input id="fecha" name="fecha" type="date" class="form-control" path="fecha" rows="5" cols="130" required = "true" placeholder="Fecha" /> 
-                                	</div>  
-                                	
-	                            		
-                                	<!-- Boton para registrar los datos -->
-                                	<button type="submit" class="btn btn-success">Registrar</button>                                 
-                            	 </form:form>                          
-                        	</div>
-                    	</div>
-                	</div>
+							    
+	                            <form:form id="formActividad" action="guardarGaleria" method="post" modelAttribute="galeria" enctype="multipart/form-data">
+	                                <div class="form-group">
+	                                    <label for="text-input" class=" form-control-label">Nombre</label>	                                    
+	                                	<form:input id="nombre" path="nombre" name="nombre" type="text" class="form-control" placeholder="Egresado xx" aria-invalid="false" required = "true"/>
+	                                </div> 
+	                                <div class="form-group">
+	                                 	<label for="textarea-input" class=" form-control-label">Descripción corta</label>
+	                                	<form:textarea id="descripcion" maxlength="180" name="descripcion" class="form-control" path="descripcion" rows="2" cols="130" required = "true" placeholder="Egresado xx obtuvo premio por inventar yy..." />
+	                                </div>   
+	
+	
+									<div class="form-group"> <!-- Date input -->
+								        <label class="control-label" for="date">Fecha</label>
+								        <form:input type="date" id="fecha" path="fecha" class="form-control" aria-invalid="false" required = "true"/>
+								    </div>
+	
+	                                         
+			                        </br>
+			                        <div class="form-group"> <!-- Date input -->
+			                           			
+			                              <div class="gallery">
+			                                    <a target="_blank">
+			                                      <img id="im1" src="http://www.clker.com/cliparts/M/I/9/z/q/H/male-upload-md.png" alt="Mountains" width="600" height="400">
+			                                    </a>
+			                                    			                                  
+			                                    <div class="desc">
+			                                    	<input type="file" id="Imagen1" name="Imagen1" accept="images/*" onchange="revisarArchivos('1')">
+			                                    </div>                                    
+			                                    
+			                                    <div class="desc">
+			                                        <textarea name="textarea-input" maxlength="180" id="textarea-input" rows="2" placeholder="Descripción de la imagen" class="form-control"></textarea>
+			                                    </div>
+			                                    <div class="desc">
+			                                        <button type="button" class="btn btn-success">Guardar foto</button>
+			                                    </div>
+			                                </div>
+			                                
+			                            </div>
+										
+										<div class="form-group"> <!-- Date input -->
+									        <label class="control-label" for="date">&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  </label>									        
+									    </div>
+										
+	                            		<button type="button" class="btn btn-success">Registrar</button> 
+	                            </form:form>                                         
+	                                   
+	                        </div>
+	                       
+	                    </div>
+	                </div>
+                
+
                 </div>
             </div><!-- .animated -->
         </div><!-- .content -->
@@ -112,48 +189,34 @@
 
     </div><!-- /#right-panel -->
 
+
     <!-- Right Panel -->
 
-
-	<!-- Carga de los archivos Javascript -->
-	<%@ include file = "../General/scripts.jsp" %>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#bootstrap-data-table-export').DataTable();
-		});
-		
-		function revisarArchivos(id){
-			var el = document.getElementById("Imagen"+id).files;
-			if(el!=null && el.length==0){
-				previewFile(id);
-			}else{
-				previewFile(id);
-			}
-		}
+	
+	<%@ include file="../General/scripts.jsp"%>
+   
+		<script type="text/javascript">
 		
 		/*
 		* Metodo que permite pintar una imagen recien 
 		*/
-		function previewFile(id) {
-			  var preview = document.getElementById('img'+id);
-			  var file    = document.getElementById('Imagen'+id).files[0];
-			  var reader  = new FileReader();
+		function revisarArchivos(id) {
+			var preview = document.getElementById('img'+id);
+			var file    = document.getElementById('Imagen'+id).files[0];
+			var reader  = new FileReader();
+			  
+			reader.onloadend = function () {
+				preview.src = reader.result;
+			}
 
-			  reader.onloadend = function () {
-			    preview.src = reader.result;
-			    document.getElementById('im'+id+'Base64image').value = "Lleno";
-			  }
-
-			  if (file) {
-			    reader.readAsDataURL(file);
-			  } else {
-				  			  
+			if (file) {
+				reader.readAsDataURL(file);
+			} else {
 			    preview.src = "";
-			    document.getElementById('im'+id+'Base64image').value = "";
-			  }
-			}	
+			}
+		}		
 	</script>
+
 
 </body>
 </html>

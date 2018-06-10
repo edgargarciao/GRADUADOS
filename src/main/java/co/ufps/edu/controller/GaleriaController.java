@@ -51,7 +51,7 @@ public class GaleriaController {
   public String index(Model model) {
     // Cargamos las galerias para poder mostrarlas en el cuadro.
     model.addAttribute("galerias", galeriaDao.getGalerias());
-    return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+    return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
   }
   
   
@@ -82,7 +82,7 @@ public class GaleriaController {
       if (mensaje.equals("Registro exitoso")) {
         model.addAttribute("result", "Galeria registrada con éxito.");
         model.addAttribute("galerias", galeriaDao.getGalerias() );
-        return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+        return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         return "Administrador/Galeria/RegistrarGaleria";
@@ -106,7 +106,7 @@ public class GaleriaController {
     // Consulto que el Id sea mayor a 0.
     if (idGaleria <= 0) {
       model.addAttribute("galerias", galeriaDao.getGalerias());
-      return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+      return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
     }
     Galeria galeria = galeriaDao.obtenerGaleriaPorId(idGaleria);
     model.addAttribute("galeria", galeria);
@@ -130,7 +130,7 @@ public class GaleriaController {
       if (mensaje.equals("Actualizacion exitosa")) {
         model.addAttribute("result", "Información de galeria actualizada con éxito.");
         model.addAttribute("galerias", galeriaDao.getGalerias());
-        return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+        return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         return "Administrador/Galeria/ActualizarGaleria";
@@ -154,7 +154,7 @@ public class GaleriaController {
     // Consulto que el Id sea mayor a 0.
     if (idGaleria <= 0) {
       model.addAttribute("galerias", galeriaDao.getGalerias());
-      return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+      return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
     }
     Galeria galeria = galeriaDao.obtenerGaleriaPorId(idGaleria);
     model.addAttribute("galeria", galeria);
@@ -177,7 +177,7 @@ public class GaleriaController {
     if (mensaje.equals("Eliminacion exitosa")) {
       model.addAttribute("result", "Galeria eliminada con éxito.");
       model.addAttribute("galerias", galeriaDao.getGalerias());
-      return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+      return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
     } else {
       model.addAttribute("wrong", mensaje);
       return "Administrador/Galeria/EliminarGaleria";

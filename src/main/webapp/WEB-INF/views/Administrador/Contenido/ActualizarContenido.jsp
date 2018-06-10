@@ -50,7 +50,7 @@
 								<li><a href="${contextPath}/indexAdmin">Panel de
 										control</a></li>
 								<li><a href="${contextPath}/contenidos">Contenidos / </li>
-								<li class="active"><a href="#"> Registrar contenido</li>
+								<li class="active"><a href="#"> Actualizar contenido</li>
 							</ol>
 						</div>
 					</div>
@@ -86,41 +86,41 @@
 						<div class="card">
 							<!-- Titulo de la ventana -->
 							<div class="card-header">
-								<strong class="card-title">Registrar contenido</strong>
+								<strong class="card-title">Actualizar contenido</strong>
 							</div>
 							<div class="card-body">
 							
-								
-							
-									<!-- Si hubo un error en el registro muestra el mensaje-->
-									<div id="exito">
+								<!-- Si hubo un error en el registro muestra el mensaje-->
+								<div id="exito">
 
-                                    </div>
+                                </div>
 							
-									<div id="error">
+								<div id="error">
 
-                                    </div>
+                                </div>
 				                  
-							
-
 								<!-- Formulario -->
-								<form:form id="formContenido" action="guardarContenido"	method="post" modelAttribute="contenido">
+								<form:form id="formContenido"	method="post" modelAttribute="contenido">
+									
+									<input type="hidden" id="asoc" name="asoc" value="${contenido.asociacion}"> 
+									<form:input type="hidden" id="id" path="id" class="form-control" value = "${contenido.id}" />
 									
 									<!-- Campo para escoger el tipo de asosiacion -->
 									<div class="form-group">
-										<label for="text-input" class=" form-control-label">Tipo de asosiación</label>
+										<label for="text-input" class=" form-control-label">Tipo de asociación</label>
 										<form:select path="tipoAsociacion" id="tipoAsociacion" class="form-control" onchange="cambiarDeTipoDeAsosiacion();">
 											<form:option value="0"
 												label="Seleccione el tipo de asosiacion" />
 											<form:options items="${tiposAsociacion}" />
 										</form:select>
 									</div>
+									
 									<!-- Campo para escoger la asosiacion -->
 									<div class="form-group">
-										<label for="text-input" class=" form-control-label">Asosiación</label>
-										<form:select path="asociacion" id="asosiacion"
+										<label for="text-input" class=" form-control-label">Asociación</label>
+										<form:select path="asociacion" id="asociacion" name="asociacion"
 											class="form-control">
-											<form:option value="0" label="Seleccione la asosiacion" />
+											<form:option value="0" label="Seleccione la asociacion" />
 										</form:select>
 									</div>
 
@@ -136,7 +136,7 @@
 									<!-- Campo para digitar el nombre -->
 									<div id="titulo" class="form-group">
 										<label for="text-input" class=" form-control-label">Título o nombre</label>
-										<form:input id="nombre" path="nombre" class="form-control"	placeholder="Oficina de la universidad lanza su pagina oficial" aria-invalid="false" required="true" />
+										<form:input id="nombre" path="nombre" class="form-control"	value = "${contenido.nombre}" />
 									</div>
 
 
@@ -213,15 +213,12 @@
 									  <a href="#" data-command='superscript'><i class='fa fa-superscript'></i></a>
 									</div>
 									<div id='editor' contenteditable>
-										<h1>Pagina contenido UFPS.</h1>
-										<p>Aquí podrás agregar el contenido que desees ver en la página</p>
-										
-										<!-- PQWOEIRUTUMZNXBCVB -->
+										${contenido.contenido}
 									</div>									
 										
 									</div>
 									<!-- Boton para registrar los datos -->
-									<button type="button" onclick="enviarDatos()"   class="btn btn-success">Registrar</button>
+									<button type="button" onclick="enviarDatos()"   class="btn btn-success">Actualizar</button>
 								</form:form>
 							</div>
 						</div>
@@ -250,6 +247,14 @@
 
 	<script type="text/javascript">
 	
+	cambiarDeTipoDeAsosiacion();
+	cambiarTDA();
+	
+	function cambiarTDA(){
+		
+		document.getElementById('asociacion').value = document.getElementById('asoc').value;
+	}
+	
 	function enviarDatos(){
 		
 		// Aqui se obtiene el tipo de asociacion		
@@ -257,7 +262,7 @@
 		var selectedValueTA = selectBoxTA.options[selectBoxTA.selectedIndex].value;		
 		
 		// Aqui se obtiene la asociacion
-		var selectBoxA = document.getElementById("asosiacion");
+		var selectBoxA = document.getElementById("asociacion");
 		var selectedValueA = selectBoxA.options[selectBoxA.selectedIndex].value;		
 		
 		// Aqui se obtiene el tipo de contenido
@@ -266,6 +271,10 @@
 		
 		// Aqui se obtiene el nombre o titlo
 		var titulo = document.getElementById("nombre").value;
+		
+
+		// Aqui se obtiene el nombre o titlo
+		var idContenido = document.getElementById("id").value;
 		
 		// Variable para guardar el contenido
 		var content = "";
@@ -300,39 +309,24 @@
 			          nombre: 			titulo,
 			          contenido:		content,
 			          url:				"",
-			          id:				'0'
+			          id:				idContenido
 			};
 			
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : url + "/servicios/recibirInformacion",
+				url : url + "/servicios/actualizarInformacion",
 				data: JSON.stringify(formData),
 				success : function(result) {
 					
-					if(result.trim() == 'REGISTRO EXITOSO'){
+					if(result.trim() == 'ACTUALIZACIÓN EXITOSA'){
 						
-						$('#formContenido').trigger("reset");
-						cambiarDeTipoDeContenido();
 						pintarRegistroExitoso();
-						document.getElementById('editor').innerHTML = "";
-
-						var h = document.createElement("H1");						
-						var texto = document.createTextNode("Pagina contenido UFPS.");       
-						h.appendChild(texto);
-						
-
-						var p = document.createElement("P");						
-						var text = document.createTextNode("Aquí podrás agregar el contenido que desees ver en la página");       
-						p.appendChild(text);
-						
-						document.getElementById('editor').appendChild(h);
-						document.getElementById('editor').appendChild(p);
 						
 					}else{
 						pintarRegistroNoExitoso(result.trim());
 					}
-				
+					
 				},
 				error : function(e) {
 					pintarRegistroNoExitoso("Error en el sistema. Contacte al administradr.");
@@ -343,22 +337,25 @@
 	}
 
 		function cambiarDeTipoDeAsosiacion() {
+			
 			var selectBox = document.getElementById("tipoAsociacion");
 			var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-
+			
+			var idAsociacion = document.getElementById("asoc").value;
+			
 			// DO POST
 			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : url + "/servicios/asosiaciones",
-				data : selectedValue,
+				url : url + "/servicios/asosiacionesCompletas?tipoAsociacion="+selectedValue+"&asociacion="+idAsociacion,
+				async:false,
 				success : function(result) {
 
 					var resultado = JSON.stringify(result);
 					var asosiaciones = resultado.split("\",");
-					eliminarOpciones(document.getElementById("asosiacion"));
-					agregarOpcion(document.getElementById("asosiacion"), 0,"Seleccione la asosiacion");
+					eliminarOpciones(document.getElementById("asociacion"));
+					agregarOpcion(document.getElementById("asociacion"), 0,"Seleccione la asociacion");
 					for (var i = 0; i < asosiaciones.length; i++) {
 
 						var id = asosiaciones[i].substring(1,asosiaciones[i].length).split(":")[0].replace('\"', '').replace('\"', '');
@@ -366,9 +363,10 @@
 						if (nombre.indexOf("}") != -1) {
 							nombre = nombre.replace('}', '');
 						}
-						agregarOpcion(document.getElementById("asosiacion"),id, nombre);
+						agregarOpcion(document.getElementById("asociacion"),id, nombre);
 						
 					}
+					
 				},
 				error : function(e) {
 					alert("Error!")
@@ -379,7 +377,7 @@
 		}
 
 		function cambiarDeTipoDeContenido() {
-			
+		
 			var selectBox = document.getElementById("tipoContenido");
 			var selectedValue = selectBox.options[selectBox.selectedIndex].value;
 			if(selectedValue == 2){
@@ -413,7 +411,7 @@
 			
 			var div = document.createElement("DIV");
 			div.setAttribute("class","sufee-alert alert with-close alert-success alert-dismissible fade show");
-			var texto = document.createTextNode("Registro exitoso");       
+			var texto = document.createTextNode("Actualización exitosa");       
 			div.appendChild(texto);
 			
 			var boton = document.createElement("BUTTON");

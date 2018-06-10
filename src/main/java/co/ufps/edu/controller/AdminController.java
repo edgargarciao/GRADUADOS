@@ -87,6 +87,7 @@ public class AdminController {
     model.addAttribute("novedades", novedadDao.getUltimasNovedades());
     model.addAttribute("actividades", actividadDao.getUltimasActividades());
 
+    model.addAttribute("redes", redSocialDao.getRedesSociales());
     model.addAttribute("enlaces", enlaceDeInteresDao.getEnlacesDeInteres());
     model.addAttribute("contactos", contactoDao.getContactos());
     model.addAttribute("logoHorizontal", logoDao.getLogo("LogoHorizontal"));

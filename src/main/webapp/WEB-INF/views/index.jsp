@@ -213,7 +213,7 @@
 												    
 												</c:when>
 												<c:otherwise>
-												    <a href="">
+												    <a>
 														${subcategoria.nombre}
 													</a>
 											 	</c:otherwise>
@@ -324,10 +324,7 @@
 							</div>
 						</div>
 					</c:forEach>					
-					
-
-					
-					
+	
 				</div>
 				
 				
@@ -464,31 +461,7 @@
 		</div>
 		<!-- FIN EVENTOS -->
 		<!-- ICONOS REDES SOCIALES -->
-		<div id="idcuadroredes" class="cuadroredes" style="height: 190px">
-			<div
-				style="text-align: center; vertical-align: middle; font-size: 1.25em; cursor: pointer; margin: 4px; padding: 0px; border-bottom: 1px dotted #666;"
-				onclick="document.getElementById('idcuadroredes').style.display='none';">
-				<i class="icon-close"></i>
-			</div>
-			<ul class="social-icons social-icons-color margin-top-10">
-				<li class="tooltips" data-toggle="tooltip" data-placement="bottom"
-					data-original-title="S�guenos en Facebook"><a
-					href="https://www.facebook.com/UFPS-C%C3%BAcuta-553833261409690"
-					class="rounded social_facebook"></a></li>
-				<li class="tooltips" data-toggle="tooltip" data-placement="bottom"
-					data-original-title="S�guenos en Twitter"><a
-					href="https://twitter.com/UFPSCUCUTA"
-					class="rounded social_twitter"></a></li>
-				<li class="tooltips" data-toggle="tooltip" data-placement="bottom"
-					data-original-title="S�guenos en YouTube"><a
-					href="https://www.youtube.com/channel/UCgPz-qqaAk4lbHfr0XH3k2"
-					class="rounded social_youtube"></a></li>
-				<li class="tooltips" data-toggle="tooltip" data-placement="bottom"
-					data-original-title="S�guenos en Instagram"><a
-					href="https://www.instagram.com/ufpscucuta/"
-					class="rounded social_instagram"></a></li>
-			</ul>
-		</div>
+		
 		<!-- FIN ICONOS REDES SOCIALES -->
 		<div id="modal148" class="ufps-image-modal">
 			<span class="ufps-image-modal-close">&times;</span> <img
@@ -594,33 +567,24 @@
 				<div class="row">
 					<div class="col-md-8">
 						<p>
-							2016 � All Rights Reserved. Desarrollado por: <a href="#">VAVM
-								- Divisi�n de Sistemas</a>
+							2018� All Rights Reserved. Desarrollado por: <a href="#">VAVM
+								- Departamento de Sistemas</a>
 						</p>
 					</div>
 					<!-- Social Links -->
 					<div class="col-md-4">
 						<ul class="list-inline dark-social pull-right space-bottom-0">
-							<li><a data-placement="top" data-toggle="tooltip"
-								class="tooltips" data-original-title="Facebook"
-								href="https://www.facebook.com/UFPS-C%C3%BAcuta-553833261409690">
-									<i class="fa fa-facebook" style="color: #fff;"></i>
-							</a></li>
-							<li><a data-placement="top" data-toggle="tooltip"
-								class="tooltips" data-original-title="Twitter"
-								href="https://twitter.com/UFPSCUCUTA"> <i
-									class="fa fa-twitter" style="color: #fff;"></i>
-							</a></li>
-							<li><a data-placement="top" data-toggle="tooltip"
-								class="tooltips" data-original-title="Youtube"
-								href="https://www.youtube.com/channel/UCgPz-qqaAk4lbHfr0XH3k2">
-									<i class="fa fa-youtube" style="color: #fff;"></i>
-							</a></li>
-							<li><a data-placement="top" data-toggle="tooltip"
-								class="tooltips" data-original-title="Instagram"
-								href="https://www.instagram.com/ufpscucuta/"> <i
-									class="fa fa-instagram" style="color: #fff;"></i>
-							</a></li>
+							<c:forEach var="red" items="${redes}">																					
+								<li>
+									<a data-placement="top" data-toggle="tooltip" class="tooltips" data-original-title="${red.nombre}"
+										href="${red.url}">
+											<i class="fa ${red.logo}" style="color: #fff;"></i>
+									</a>
+								</li>
+								
+							</c:forEach>
+							
+							
 						</ul>
 					</div>
 					<!-- End Social Links -->
