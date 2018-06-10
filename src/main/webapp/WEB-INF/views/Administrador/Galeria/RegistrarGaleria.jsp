@@ -152,7 +152,7 @@
 			                           			
 			                              <div class="gallery">
 			                                    <a target="_blank">
-			                                      <img id="im1" src="http://www.clker.com/cliparts/M/I/9/z/q/H/male-upload-md.png" alt="Mountains" width="600" height="400">
+			                                      <img id="img1" src="http://www.clker.com/cliparts/M/I/9/z/q/H/male-upload-md.png" alt="Mountains" width="600" height="400">
 			                                    </a>
 			                                    			                                  
 			                                    <div class="desc">

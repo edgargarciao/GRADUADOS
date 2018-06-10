@@ -21,7 +21,7 @@
 	<!--/ Left Panel -->
 	<!-- Right Panel -->
 	<div id="right-panel" class="right-panel">
-
+ 
 		<!-- Header-->
 		<header id="header" class="header">
 			<!-- Header menu -->
