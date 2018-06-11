@@ -326,7 +326,7 @@
 				
 				},
 				error : function(e) {
-					pintarRegistroNoExitoso("Error en el sistema. Contacte al administradr.");
+					pintarRegistroNoExitoso("Error en el sistema. Contacte al administrador.");
 					console.log("ERROR: ", e);
 				}
 			});	

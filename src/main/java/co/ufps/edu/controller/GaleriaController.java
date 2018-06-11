@@ -1,5 +1,7 @@
 package co.ufps.edu.controller;
 
+import java.util.List;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import co.ufps.edu.dao.GaleriaDao;
 import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Galeria;
+import co.ufps.edu.dto.Imagen;
 
 /**
  * Controlador de galerias. Las galerias son contenedores de imagenes. Todos los
@@ -107,6 +110,13 @@ public class GaleriaController {
     return "Administrador/Galeria/ActualizarGaleria"; // Nombre del archivo jsp
   }
   
+  @PostMapping(value = "servicios/obtenerFotos")
+  public @ResponseBody ResponseEntity<List<Imagen>> getAsosiacionesPorTipoCompletas(
+      @RequestParam("id") long id) {
+    
+    List<Imagen> imagenes = galeriaDao.getImagenesPorIDCompletas(id);
+    return new ResponseEntity<List<Imagen>>(imagenes, HttpStatus.OK);
+  }
   
   /**
    * Servicio que permite editar una galeria.
@@ -115,25 +125,23 @@ public class GaleriaController {
    * @param model Modelo con la información necesaria para transportar a los archivos .JSP
    * @return La página a donde debe redireccionar después de la acción.
    */
-  @PostMapping(value = "/editarGaleria")
-  public String editarGaleria(@ModelAttribute("galeria") Galeria galeria, Model model) {
+
+  @PostMapping(value = "servicios/editarGaleria" )
+  public @ResponseBody ResponseEntity<String> editarGaleria(@RequestBody Galeria galeria) {
 
     // Consulta si tiene todos los campos llenos
     if (galeria.isValidoParaRegistrar()) {
       String mensaje = galeriaDao.editarGaleria(galeria);
       if (mensaje.equals("Actualizacion exitosa")) {
-        model.addAttribute("result", "Información de galeria actualizada con éxito.");
-        model.addAttribute("galerias", galeriaDao.getGalerias());
-        return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
+        return new ResponseEntity<String>("ACTUALIZACIÓN EXITOSA", HttpStatus.OK);
       } else {
-        model.addAttribute("wrong", mensaje);
-        return "Administrador/Galeria/ActualizarGaleria";
+        return new ResponseEntity<String>("ACTUALIZACIÓN NO EXITOSA", HttpStatus.OK);
       }
       //
     } else {
-      model.addAttribute("wrong", "Debes llenar todos los campos.");
-      return "Administrador/Galeria/ActualizarGaleria";
+      return new ResponseEntity<String>("CAMPOS INVALIDOS", HttpStatus.OK);
     }
+    
   }
   
   /**

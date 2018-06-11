@@ -1,5 +1,55 @@
 		var imagenes = [];
-		crearCuadro();
+		cargarImagenes();
+		
+		function cargarImagenes(){
+			// Aqui se obtiene el nombre o titlo
+			var id = document.getElementById("id").value;
+			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+				
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : url + "/servicios/obtenerFotos?id="+id,
+				async : false,
+				success : function(result) {
+
+					result.forEach(function (arrayItem) {
+					    var imagen = arrayItem.imagen;
+					    var descripcion = arrayItem.descripcion;
+					    
+					    // Se crea el cuadro
+						var galerias = document.getElementById("galerias");						
+						var id = Math.floor(Math.random() * 1000) + 1;
+						
+						var im = {
+								id:id,
+								imagen:imagen,
+								descripcion:descripcion
+						}
+						imagenes.push(im);
+						
+						// Se crea el div general
+						var div = document.createElement("DIV");
+						div.setAttribute("id","gal"+id);
+						div.setAttribute("class","gallery");
+					    
+						/*****************************************
+						*		Se añade el div general al area
+						******************************************/			
+						galerias.appendChild(div);
+						
+						cambiarDiseno(id,imagen,descripcion);
+						
+					});
+				},
+				error : function(e) {
+					pintarRegistroNoExitoso("Error en el sistema. Contacte al administradr.");
+					console.log("ERROR: ", e);
+				}
+			});	
+			crearCuadro();
+		}
+		
 		
 		function crearCuadro(){
 			var galerias = document.getElementById("galerias");
@@ -111,7 +161,10 @@
 		
 		function cargarImagen(id){
 			if(guardarImagen(id)){
-				cambiarDiseno(id);
+				// Se obtienen los datos
+				var src = document.getElementById('img'+id).src;
+				var descripcion = document.getElementById('textarea-input'+id).value;
+				cambiarDiseno(id,src,descripcion);
 				crearCuadro();
 			}
 		}
@@ -128,11 +181,8 @@
 			return true;
 		}
 		
-		function cambiarDiseno(id){
-			// Se obtienen los datos
-			var src = document.getElementById('img'+id).src;
-			var descripcion = document.getElementById('textarea-input'+id).value;
-			
+		function cambiarDiseno(id,src,descripcion){
+
 			// Se limpia la seccion
 			document.getElementById('gal'+id).innerHTML = "";
 			
@@ -207,8 +257,10 @@
 				
 			
 		}
-		         
+		
+        
 		function eliminarImagen(id){
+			
 			if(borrarImagen(id)){
 				 var elem = document.getElementById('gal'+id);
 				 elem.parentNode.removeChild(elem);
@@ -217,11 +269,18 @@
 		}
 		
 		function borrarImagen(id){
-			imagenes = imagenes.filter(function(el) {
-			    return el.id !== id;
-			});	
+
+			for(var i in imagenes){
+			    if(imagenes[i].id == id){
+			        imagenes.splice(i,1);
+			        break;
+			    }
+			}
+			
 			return true;
 		}		
+		
+	
 		
 		/*
 		* Metodo que permite pintar una imagen recien 
@@ -249,7 +308,10 @@
 			}
 		}		
 		
-		function guardarGaleria(){
+		function actualizarGaleria(){
+			
+			// Aqui se obtiene el id
+			var id = document.getElementById("id").value;
 			
 			// Aqui se obtiene el nombre o titlo
 			var nombre = document.getElementById("nombre").value;
@@ -267,7 +329,7 @@
 					nombre: 			nombre,
 					descripcion: 		descripcion,
 					fecha: 				fecha,
-					id: 				0,
+					id: 				id,
 					imagenes:			imagenes
 			};
 			
@@ -276,17 +338,13 @@
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : url + "/servicios/guardarGaleria",
+				url : url + "/servicios/editarGaleria",
 				data: JSON.stringify(formData),
 				success : function(result) {
 						
-					if(result.trim() == 'REGISTRO EXITOSO'){
-							
-						$('#formGaleria').trigger("reset");
+					if(result.trim() == 'ACTUALIZACIÓN EXITOSA'){													
 						
 						pintarRegistroExitoso();
-						document.getElementById('galerias').innerHTML = "";
-						crearCuadro();
 						
 					}else{
 						pintarRegistroNoExitoso(result.trim());
@@ -305,7 +363,7 @@
 			
 			var div = document.createElement("DIV");
 			div.setAttribute("class","sufee-alert alert with-close alert-success alert-dismissible fade show");
-			var texto = document.createTextNode("Registro exitoso");       
+			var texto = document.createTextNode("Galeria actualizada con exito");       
 			div.appendChild(texto);
 			
 			var boton = document.createElement("BUTTON");

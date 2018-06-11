@@ -181,7 +181,7 @@ public class GaleriaDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "UPDATE GALERIA SET nombre = :nombre, descripcion = :descripion, fecha = :fecha  WHERE id = :id";
+        "UPDATE GALERIA SET nombre = :nombre, descripcion = :descripcion, fecha = :fecha  WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -190,14 +190,34 @@ public class GaleriaDao {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    borrarImagenes(galeria.getId());
+    guardarImagenes(galeria.getId(),galeria.getImagenes());
+    
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
     return (result == 1) ? "Actualizacion exitosa" : "La galeria ya se encuentra en el sistema.";
   }
 
 
+  private void borrarImagenes(long id) {
+ // Agrego los datos de la eliminación (nombreColumna/Valor)
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", id);
+
+    // Armar la sentencia de eliminación debase de datos
+    String query = "DELETE FROM FOTO WHERE Galeria_id = :id";
+
+    // Ejecutar la sentencia
+    int result = 0;
+    try {
+      result = springDbMgr.executeDml(query, map);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+  }
+
   public String eliminarGaleria(Galeria galeria) {
-    SpringDbMgr springDbMgr = new SpringDbMgr();
 
     // Agrego los datos de la eliminación (nombreColumna/Valor)
     MapSqlParameterSource map = new MapSqlParameterSource();
@@ -230,5 +250,34 @@ public class GaleriaDao {
       cant = sqlRowSet.getInt("cantidad");
     }
     return cant;
+  }
+
+  public List<Imagen> getImagenesPorIDCompletas(long id) {
+
+    // Lista para retornar con los datos
+    List<Imagen> imagenes = new LinkedList<>();
+    
+    // Carga de datos
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id",id );
+    
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM FOTO WHERE Galeria_id = :id",map);
+
+    // Recorre cada registro obtenido de base de datos
+    while (sqlRowSet.next()) {
+      // Objeto en el que sera guardada la informacion del registro
+      Imagen imagen = new Imagen();
+
+      imagen.setDescripcion(sqlRowSet.getString("descripcion"));
+      Object imagenBlob = sqlRowSet.getObject("contenido");
+      imagen.setImagen(new String( (byte[]) imagenBlob));      
+      
+      // Guarda el registro para ser retornado
+      imagenes.add(imagen);
+    }
+    // Retorna todos las galerias desde base de datos
+    return imagenes;
+
   }
 }
