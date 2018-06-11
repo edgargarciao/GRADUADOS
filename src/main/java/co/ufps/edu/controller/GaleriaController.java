@@ -1,13 +1,17 @@
 package co.ufps.edu.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import co.ufps.edu.dao.GaleriaDao;
+import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Galeria;
 
 /**
@@ -65,34 +69,24 @@ public class GaleriaController {
     return "Administrador/Galeria/RegistrarGaleria"; // Nombre del archivo jsp
   }
 
-  
-  /**
-   * Servicio que permite guardar galerias
-   * 
-   * @param galera Objeto con la información a guardar
-   * @param model Modelo con la información necesaria para transportar a los archivos .JSP
-   * @return La página a donde debe redireccionar después de la acción.
-   */
-  @PostMapping(value = "/guardarGaleria")
-  public String guardarGaleria(@ModelAttribute("galeria") Galeria galeria, Model model) {
+  @PostMapping(value = "servicios/guardarGaleria" )
+  public @ResponseBody ResponseEntity<String> guardarGaleria(@RequestBody Galeria galeria) {
 
     // Consulta si tiene todos los campos llenos
     if (galeria.isValidoParaRegistrar()) {
       String mensaje = galeriaDao.registrarGaleria(galeria);
       if (mensaje.equals("Registro exitoso")) {
-        model.addAttribute("result", "Galeria registrada con éxito.");
-        model.addAttribute("galerias", galeriaDao.getGalerias() );
-        return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
+        return new ResponseEntity<String>("REGISTRO EXITOSO", HttpStatus.OK);
       } else {
-        model.addAttribute("wrong", mensaje);
-        return "Administrador/Galeria/RegistrarGaleria";
+        return new ResponseEntity<String>("REGISTRO NO EXITOSO", HttpStatus.OK);
       }
       //
     } else {
-      model.addAttribute("wrong", "Debes llenartodos  los campos.");
-      return "Administrador/Galeria/RegistrarGaleria";
+      return new ResponseEntity<String>("CAMPOS INVALIDOS", HttpStatus.OK);
     }
+    
   }
+  
  
   /**
    * Método que obtiene la pagina de actualizar galeria dado un ID.
@@ -184,4 +178,7 @@ public class GaleriaController {
     }
 
   }
+  
+  
+  
 }

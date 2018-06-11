@@ -2,7 +2,6 @@ package co.ufps.edu.controller;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import co.ufps.edu.config.SessionManager;
 import co.ufps.edu.dao.ActividadDao;
 import co.ufps.edu.dao.CategoriaDao;
@@ -29,7 +27,6 @@ import co.ufps.edu.dao.RedSocialDao;
 import co.ufps.edu.dao.SubCategoriaDao;
 import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Login;
-import co.ufps.edu.dto.SubCategoria;
 import co.ufps.edu.dto.VisitaDao;
 import co.ufps.edu.util.JwtUtil;
 
@@ -86,7 +83,8 @@ public class AdminController {
     model.addAttribute("noticias", noticiaDao.getUltimasNoticias());
     model.addAttribute("novedades", novedadDao.getUltimasNovedades());
     model.addAttribute("actividades", actividadDao.getUltimasActividades());
-
+    model.addAttribute("galerias", galeriaDao.getGalerias());
+    
     model.addAttribute("redes", redSocialDao.getRedesSociales());
     model.addAttribute("enlaces", enlaceDeInteresDao.getEnlacesDeInteres());
     model.addAttribute("contactos", contactoDao.getContactos());

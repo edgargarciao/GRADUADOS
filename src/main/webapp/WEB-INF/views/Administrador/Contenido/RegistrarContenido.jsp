@@ -90,19 +90,12 @@
 							</div>
 							<div class="card-body">
 							
-								
-							
-									<!-- Si hubo un error en el registro muestra el mensaje-->
-									<div id="exito">
-
-                                    </div>
-							
-									<div id="error">
-
-                                    </div>
-				                  
-							
-
+								<!-- Si hubo un error en el registro muestra el mensaje-->
+								<div id="exito">
+                                </div>
+								<div id="error">
+                                </div>
+                                    
 								<!-- Formulario -->
 								<form:form id="formContenido" action="guardarContenido"	method="post" modelAttribute="contenido">
 									
@@ -245,8 +238,6 @@
 	<script src="resources/assets/js/editor.js"></script>	
 	
 	<%@ include file="../General/scripts.jsp"%>
-
-	
 
 	<script type="text/javascript">
 	

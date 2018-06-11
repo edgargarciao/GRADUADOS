@@ -119,18 +119,14 @@
 	                            <strong class="card-title">Registrar galeria</strong>
 	                        </div>
 	                        <div class="card-body">
-	                        
-	                            <!-- Si hubo un error en el registro muestra el mensaje-->						
-								<c:if test="${not empty wrong}">		            
-		                        	<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">				                   	
-				                    		<c:out value='${wrong}' />
-				                    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-				                    	</button>
-				                   </div>
-							    </c:if>
+
+								<!-- Si hubo un error en el registro muestra el mensaje-->
+								<div id="exito">
+                                </div>
+								<div id="error">
+                                </div>								
 							    
-	                            <form:form id="formActividad" action="guardarGaleria" method="post" modelAttribute="galeria" enctype="multipart/form-data">
+	                            <form:form id="formGaleria" action="guardarGaleria" method="post" modelAttribute="galeria" enctype="multipart/form-data">
 	                                <div class="form-group">
 	                                    <label for="text-input" class=" form-control-label">Nombre</label>	                                    
 	                                	<form:input id="nombre" path="nombre" name="nombre" type="text" class="form-control" placeholder="Egresado xx" aria-invalid="false" required = "true"/>
@@ -148,32 +144,15 @@
 	
 	                                         
 			                        </br>
-			                        <div class="form-group"> <!-- Date input -->
-			                           			
-			                              <div class="gallery">
-			                                    <a target="_blank">
-			                                      <img id="img1" src="http://www.clker.com/cliparts/M/I/9/z/q/H/male-upload-md.png" alt="Mountains" width="600" height="400">
-			                                    </a>
-			                                    			                                  
-			                                    <div class="desc">
-			                                    	<input type="file" id="Imagen1" name="Imagen1" accept="images/*" onchange="revisarArchivos('1')">
-			                                    </div>                                    
-			                                    
-			                                    <div class="desc">
-			                                        <textarea name="textarea-input" maxlength="180" id="textarea-input" rows="2" placeholder="Descripción de la imagen" class="form-control"></textarea>
-			                                    </div>
-			                                    <div class="desc">
-			                                        <button type="button" class="btn btn-success">Guardar foto</button>
-			                                    </div>
-			                                </div>
-			                                
-			                            </div>
+			                        <div id="galerias" class="form-group"> <!-- Date input -->
+     
+			                        </div>
 										
-										<div class="form-group"> <!-- Date input -->
-									        <label class="control-label" for="date">&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  </label>									        
-									    </div>
+									<div class="form-group"> <!-- Date input -->
+										<label class="control-label" for="date">&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  </label>									        
+									</div>
 										
-	                            		<button type="button" class="btn btn-success">Registrar</button> 
+	                            	<button type="button" onclick="guardarGaleria()" class="btn btn-success">Registrar</button> 
 	                            </form:form>                                         
 	                                   
 	                        </div>
@@ -195,27 +174,7 @@
 	
 	<%@ include file="../General/scripts.jsp"%>
    
-		<script type="text/javascript">
-		
-		/*
-		* Metodo que permite pintar una imagen recien 
-		*/
-		function revisarArchivos(id) {
-			var preview = document.getElementById('img'+id);
-			var file    = document.getElementById('Imagen'+id).files[0];
-			var reader  = new FileReader();
-			  
-			reader.onloadend = function () {
-				preview.src = reader.result;
-			}
-
-			if (file) {
-				reader.readAsDataURL(file);
-			} else {
-			    preview.src = "";
-			}
-		}		
-	</script>
+	<script src="resources/assets/js/server/registrarGaleria.js"></script>
 
 
 </body>

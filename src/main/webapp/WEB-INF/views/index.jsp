@@ -354,98 +354,22 @@
 						<div class="row equal-height-columns margin-bottom-10">
 							<div class="container">
 								<ul class="row block-grid-v2">
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=22"> <img
-												src="resources/rsc/img/20171202_003306.jpg" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=22">Cena
-														de Graduados 2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=21"> <img
-												src="resources/rsc/img/WhatsApp Image 2017-12-07 at 17.20.46.jpeg"
-												alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=21">Novena
-														de Aguinaldos 2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=20"> <img
-												src="resources/rsc/img/encuentro1.png" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=20">2do
-														Encuentro Acad�mico-Investigaci�n 2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=18"> <img
-												src="resources/rsc/img/WhatsApp Image 2017-11-30 at 18.44.43.jpeg"
-												alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=18">D�a
-														Internacional de la Seguridad Inform�tica</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=19"> <img
-												src="resources/rsc/img/feriabanner.jpg" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=19">Feria
-														de Proyectos de Aula 2.0 29/11/2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=17"> <img
-												src="resources/rsc/img/20171026_192324 dos.jpg" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=17">Visita
-														de Pares Acad�micos </a></b>
-											</h5>
-										</div>
-									</li>
+								
+									<c:forEach var="galeria" items="${galerias}">																					
+										<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30" style="padding-left: 14px;">
+											<div class="easy-block-v1">
+												<a href="./index.php?modulo=detallegaleria&idgale=22"> 
+													<img src="${galeria.primeraImagen}" alt="">
+												</a>
+											</div>
+											<div class="block-grid-v2-info rounded-bottom  bloques_eventos">
+												<h5>
+													<b><a href="index.php?modulo=detallegaleria&idgale=22">${galeria.nombre}</a></b>
+												</h5>
+											</div>
+										</li>
+									
+									</c:forEach>	
 								</ul>
 								<a href="./index.php?modulo=galerias"
 									class="btn-u btn-u-sm pull-right tooltips"
