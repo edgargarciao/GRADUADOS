@@ -219,6 +219,8 @@ public class GaleriaDao {
 
   public String eliminarGaleria(Galeria galeria) {
 
+    borrarImagenes(galeria.getId());
+    
     // Agrego los datos de la eliminación (nombreColumna/Valor)
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", galeria.getId());

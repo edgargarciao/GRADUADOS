@@ -217,9 +217,12 @@
 		}
 		
 		function borrarImagen(id){
-			imagenes = imagenes.filter(function(el) {
-			    return el.id !== id;
-			});	
+			for(var i in imagenes){
+			    if(imagenes[i].id == id){
+			        imagenes.splice(i,1);
+			        break;
+			    }
+			}
 			return true;
 		}		
 		
