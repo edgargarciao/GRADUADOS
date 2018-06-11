@@ -1,6 +1,6 @@
 package co.ufps.edu.dto;
 import java.sql.Date;
-
+import java.util.ArrayList;
 import org.springframework.util.StringUtils;
 
 
@@ -10,7 +10,8 @@ public class Galeria {
 	private String nombre;
 	private String descripcion;
 	private Date fecha;
-	
+	private ArrayList<Imagen> imagenes;
+	private String primeraImagen;
 	
 	public long getId() {
 		return id;
@@ -45,8 +46,24 @@ public class Galeria {
 	}
 	
 	public boolean isValidoParaRegistrar() {
-	    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.fecha) && !StringUtils.isEmpty(this.descripcion));
+	    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.fecha) && !StringUtils.isEmpty(this.descripcion) && this.imagenes.size()>0);
 	 }
+
+  public ArrayList<Imagen> getImagenes() {
+    return imagenes;
+  }
+
+  public void setImagenes(ArrayList<Imagen> imagenes) {
+    this.imagenes = imagenes;
+  }
+
+  public String getPrimeraImagen() {
+    return primeraImagen;
+  }
+
+  public void setPrimeraImagen(String primeraImagen) {
+    this.primeraImagen = primeraImagen;
+  }
 	
 	
 }

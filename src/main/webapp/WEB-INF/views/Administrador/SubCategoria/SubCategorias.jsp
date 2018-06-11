@@ -105,12 +105,12 @@
 									<thead>
 										<tr>
 											<th scope="col" style="display:none">idCategoria</th>
-											<th scope="col" style="width: 10%">Categoria</th>
-											<th scope="col" style="width: 2%">Órden</th>
+											<th scope="col" style="width: 7%">Categoria</th>
+											<th scope="col" style="width: 1%">Órden</th>
 											<th scope="col" style="display:none">Id</th>
 											<th scope="col" style="width: 25%">Nombre subcategoria</th>
 											<th scope="col" style="width: 35%">Descripción</th>
-											<th scope="col" style="width: 30%">Acción</th>
+											<th scope="col" style="width: 34%">Acción</th>
 										</tr>
 									</thead>
 									<tbody>

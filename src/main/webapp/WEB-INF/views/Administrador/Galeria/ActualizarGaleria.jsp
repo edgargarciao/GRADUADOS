@@ -83,7 +83,7 @@
 	                                <ol class="breadcrumb text-right">
 	                                	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
 	                                    <li><a href="${contextPath}/galerias">Galerias / </li>
-	                                    <li class="active"><a href="#"> &nbsp; Registrar galeria</li>
+	                                    <li class="active"><a href="#"> &nbsp;Actualizar galeria</li>
 	                            	</ol>
                                 </div>
                             </div>    
@@ -116,7 +116,7 @@
 	                <div class="col-md-12">
 	                    <div class="card">
 	                        <div class="card-header">
-	                            <strong class="card-title">Registrar galeria</strong>
+	                            <strong class="card-title">Actualizar galeria</strong>
 	                        </div>
 	                        <div class="card-body">
 
@@ -127,22 +127,23 @@
                                 </div>								
 							    
 	                            <form:form id="formGaleria" action="guardarGaleria" method="post" modelAttribute="galeria" enctype="multipart/form-data">
+	                            	<form:input type="hidden" id="id" path="id" class="form-control" value = "${galeria.id}" />
+	                            	
+	                            
 	                                <div class="form-group">
 	                                    <label for="text-input" class=" form-control-label">Nombre</label>	                                    
-	                                	<form:input id="nombre" path="nombre" name="nombre" type="text" class="form-control" placeholder="Egresado xx" aria-invalid="false" required = "true"/>
+	                                	<form:input id="nombre" path="nombre" name="nombre" type="text" class="form-control" aria-invalid="false" required = "true" value="${galeria.nombre}"/>
 	                                </div> 
 	                                <div class="form-group">
 	                                 	<label for="textarea-input" class=" form-control-label">Descripción corta</label>
-	                                	<form:textarea id="descripcion" maxlength="180" name="descripcion" class="form-control" path="descripcion" rows="2" cols="130" required = "true" placeholder="Egresado xx obtuvo premio por inventar yy..." />
+	                                	<form:textarea id="descripcion" maxlength="180" name="descripcion" class="form-control" path="descripcion" rows="2" cols="130" required = "true" value="${galeria.descripcion}" />
 	                                </div>   
-	
 	
 									<div class="form-group"> <!-- Date input -->
 								        <label class="control-label" for="date">Fecha</label>
-								        <form:input type="date" id="fecha" path="fecha" class="form-control" aria-invalid="false" required = "true"/>
+								        <form:input type="date" id="fecha" path="fecha" class="form-control" aria-invalid="false" required = "true" value="${galeria.fecha}"/>
 								    </div>
-	
-	                                         
+		                                      
 			                        </br>
 			                        <div id="galerias" class="form-group"> <!-- Date input -->
      
@@ -152,7 +153,7 @@
 										<label class="control-label" for="date">&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;  </label>									        
 									</div>
 										
-	                            	<button type="button" onclick="guardarGaleria()" class="btn btn-success">Registrar</button> 
+	                            	<button type="button" onclick="actualizarGaleria()" class="btn btn-success">Actualizar</button> 
 	                            </form:form>                                         
 	                                   
 	                        </div>
@@ -174,7 +175,7 @@
 	
 	<%@ include file="../General/scripts.jsp"%>
    
-	<script src="resources/assets/js/server/registrarGaleria.js"></script>
+	<script src="resources/assets/js/server/actualizarGaleria.js"></script>
 
 
 </body>

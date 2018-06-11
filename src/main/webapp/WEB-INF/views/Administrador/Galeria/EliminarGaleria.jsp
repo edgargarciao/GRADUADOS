@@ -10,10 +10,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
 <head>
 	<%@ include file = "../General/css.jsp" %>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	<!-- Left Panel -->
+	<!-- Left Panel -->	
 
 		<%@ include file = "../General/LeftPanel.jsp" %>
 
@@ -33,8 +32,8 @@
                         	<div class="page-title">
                                 <ol class="breadcrumb text-right">
                                 	<li><a href="${contextPath}/indexAdmin">Panel de control</a></li>
-                                    <li><a href="${contextPath}/redesSociales">Redes sociales / </li>
-                                    <li class="active"><a href="#"> Registrar Redes socales</li>
+                                    <li><a href="${contextPath}/galerias"> Galerias / </li>
+                                    <li class="active"><a href="#">&nbsp; Eliminar galeria</li>
                             	</ol>
                             </div>
 						</div>    
@@ -66,10 +65,11 @@
                     	<div class="card">
                     		<!-- Titulo de la ventana -->
                         	<div class="card-header">
-                            	<strong class="card-title">Registrar Redes sociales</strong>
+                            	<strong class="card-title">Eliminar galeria</strong>
                         	</div>
                         	<div class="card-body">
-                        		<!-- Si hubo un error en el registro muestra el mensaje-->						
+                        	                  
+                        	    <!-- Si hubo un error en el registro muestra el mensaje-->						
 								<c:if test="${not empty wrong}">		            
 		                        	<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">				                   	
 				                    		<c:out value='${wrong}' />
@@ -77,41 +77,21 @@
 											<span aria-hidden="true">&times;</span>
 				                    	</button>
 				                   </div>
-							    </c:if>
-                        	
+							    </c:if>              
+                        	                                               	
                         		<!-- Formulario -->
-                        		<form:form id="formRedSocial" action="guardarRedSocial" method="post" modelAttribute="redSocial" enctype="multipart/form-data">
+                        		<form:form id="formGaleria" action="borrarGaleria" method="post" modelAttribute="galeria">
+                        		                 			
+                        		    <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${galeria.id}"/>
+                            		
+                            		
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
-                                    	<label for="text-input" class=" form-control-label">Nombre</label>
-                                		<form:input id="nombre" path="nombre" class="form-control" placeholder="Nombre de la red social" aria-invalid="false" required = "true"/>
+                                    	<label for="text-input" class=" form-control-label">¿Estás seguro de eliminar la galeria "${galeria.nombre}"?</label>                                		
                                 	</div> 
-                                	<!-- Campo para digitar la url -->
-                                	<div class="form-group">
-                                    	<label for="text-input" class=" form-control-label">URL</label>
-                                		<form:input id="url" path="url" class="form-control" placeholder="URL de la red social" aria-invalid="false" required = "true"/>
-                                	</div> 
-
-                                	<div class="form-group">
                                 	
-                                	
-	                                <label for="text-input" class=" form-control-label">Icono</label>
-	                                
-		                                <select id="logo" name='logo'  style='height: 60px; width: 150px; font-family:Arial, FontAwesome;' class="form-control">
-										
-											<option value='fa-facebook' >&#xf09a; &nbsp; Facebook</option>
-											<option value='fa-twitter'>&#xf099; &nbsp; Twitter</option>
-											<option value='fa-youtube'>&#xf167; &nbsp; Youtube</option>
-											<option value='fa-instagram'>&#xf16d; &nbsp; Instagram</option>
-											<option value='fa-linkedin'>&#xf0e1; &nbsp; LinkedIn</option>
-											<option value='fa-play-circle'>&#xf144; &nbsp; Radio</option>
-											<option value='fa-rss'>&#xf09e; &nbsp; RSS</option>
-																			
-										</select>
-	                            	</div>
-	                            		
-                                	<!-- Boton para registrar los datos -->
-                                	<button type="submit" class="btn btn-success">Registrar</button>                                 
+                                	<!-- Boton para Eliminar los datos -->
+                                	<button type="submit" class="btn btn-danger">Eliminar</button>                                 
                             	 </form:form>                          
                         	</div>
                     	</div>
@@ -128,6 +108,7 @@
 
 	<!-- Carga de los archivos Javascript -->
 	<%@ include file = "../General/scripts.jsp" %>
+
 
 </body>
 </html>

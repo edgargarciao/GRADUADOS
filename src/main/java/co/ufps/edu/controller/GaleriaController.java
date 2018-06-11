@@ -1,14 +1,21 @@
 package co.ufps.edu.controller;
 
+import java.util.List;
+import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import co.ufps.edu.dao.GaleriaDao;
+import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Galeria;
+import co.ufps.edu.dto.Imagen;
 
 /**
  * Controlador de galerias. Las galerias son contenedores de imagenes. Todos los
@@ -51,7 +58,7 @@ public class GaleriaController {
   public String index(Model model) {
     // Cargamos las galerias para poder mostrarlas en el cuadro.
     model.addAttribute("galerias", galeriaDao.getGalerias());
-    return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+    return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
   }
   
   
@@ -65,34 +72,24 @@ public class GaleriaController {
     return "Administrador/Galeria/RegistrarGaleria"; // Nombre del archivo jsp
   }
 
-  
-  /**
-   * Servicio que permite guardar galerias
-   * 
-   * @param galera Objeto con la información a guardar
-   * @param model Modelo con la información necesaria para transportar a los archivos .JSP
-   * @return La página a donde debe redireccionar después de la acción.
-   */
-  @PostMapping(value = "/guardarGaleria")
-  public String guardarGaleria(@ModelAttribute("galeria") Galeria galeria, Model model) {
+  @PostMapping(value = "servicios/guardarGaleria" )
+  public @ResponseBody ResponseEntity<String> guardarGaleria(@RequestBody Galeria galeria) {
 
     // Consulta si tiene todos los campos llenos
     if (galeria.isValidoParaRegistrar()) {
       String mensaje = galeriaDao.registrarGaleria(galeria);
       if (mensaje.equals("Registro exitoso")) {
-        model.addAttribute("result", "Galeria registrada con éxito.");
-        model.addAttribute("galerias", galeriaDao.getGalerias() );
-        return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+        return new ResponseEntity<String>("REGISTRO EXITOSO", HttpStatus.OK);
       } else {
-        model.addAttribute("wrong", mensaje);
-        return "Administrador/Galeria/RegistrarGaleria";
+        return new ResponseEntity<String>("REGISTRO NO EXITOSO", HttpStatus.OK);
       }
       //
     } else {
-      model.addAttribute("wrong", "Debes llenartodos  los campos.");
-      return "Administrador/Galeria/RegistrarGaleria";
+      return new ResponseEntity<String>("CAMPOS INVALIDOS", HttpStatus.OK);
     }
+    
   }
+  
  
   /**
    * Método que obtiene la pagina de actualizar galeria dado un ID.
@@ -106,13 +103,20 @@ public class GaleriaController {
     // Consulto que el Id sea mayor a 0.
     if (idGaleria <= 0) {
       model.addAttribute("galerias", galeriaDao.getGalerias());
-      return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+      return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
     }
     Galeria galeria = galeriaDao.obtenerGaleriaPorId(idGaleria);
     model.addAttribute("galeria", galeria);
     return "Administrador/Galeria/ActualizarGaleria"; // Nombre del archivo jsp
   }
   
+  @PostMapping(value = "servicios/obtenerFotos")
+  public @ResponseBody ResponseEntity<List<Imagen>> getAsosiacionesPorTipoCompletas(
+      @RequestParam("id") long id) {
+    
+    List<Imagen> imagenes = galeriaDao.getImagenesPorIDCompletas(id);
+    return new ResponseEntity<List<Imagen>>(imagenes, HttpStatus.OK);
+  }
   
   /**
    * Servicio que permite editar una galeria.
@@ -121,25 +125,23 @@ public class GaleriaController {
    * @param model Modelo con la información necesaria para transportar a los archivos .JSP
    * @return La página a donde debe redireccionar después de la acción.
    */
-  @PostMapping(value = "/editarGaleria")
-  public String editarGaleria(@ModelAttribute("galeria") Galeria galeria, Model model) {
+
+  @PostMapping(value = "servicios/editarGaleria" )
+  public @ResponseBody ResponseEntity<String> editarGaleria(@RequestBody Galeria galeria) {
 
     // Consulta si tiene todos los campos llenos
     if (galeria.isValidoParaRegistrar()) {
       String mensaje = galeriaDao.editarGaleria(galeria);
       if (mensaje.equals("Actualizacion exitosa")) {
-        model.addAttribute("result", "Información de galeria actualizada con éxito.");
-        model.addAttribute("galerias", galeriaDao.getGalerias());
-        return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+        return new ResponseEntity<String>("ACTUALIZACIÓN EXITOSA", HttpStatus.OK);
       } else {
-        model.addAttribute("wrong", mensaje);
-        return "Administrador/Galeria/ActualizarGaleria";
+        return new ResponseEntity<String>("ACTUALIZACIÓN NO EXITOSA", HttpStatus.OK);
       }
       //
     } else {
-      model.addAttribute("wrong", "Debes llenar todos los campos.");
-      return "Administrador/Galeria/ActualizarGaleria";
+      return new ResponseEntity<String>("CAMPOS INVALIDOS", HttpStatus.OK);
     }
+    
   }
   
   /**
@@ -154,7 +156,7 @@ public class GaleriaController {
     // Consulto que el Id sea mayor a 0.
     if (idGaleria <= 0) {
       model.addAttribute("galerias", galeriaDao.getGalerias());
-      return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+      return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
     }
     Galeria galeria = galeriaDao.obtenerGaleriaPorId(idGaleria);
     model.addAttribute("galeria", galeria);
@@ -177,11 +179,14 @@ public class GaleriaController {
     if (mensaje.equals("Eliminacion exitosa")) {
       model.addAttribute("result", "Galeria eliminada con éxito.");
       model.addAttribute("galerias", galeriaDao.getGalerias());
-      return "Administrador/Galeria/galerias"; // Nombre del archivo jsp
+      return "Administrador/Galeria/Galerias"; // Nombre del archivo jsp
     } else {
       model.addAttribute("wrong", mensaje);
       return "Administrador/Galeria/EliminarGaleria";
     }
 
   }
+  
+  
+  
 }

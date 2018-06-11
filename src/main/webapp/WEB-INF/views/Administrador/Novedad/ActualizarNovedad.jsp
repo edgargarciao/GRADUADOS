@@ -75,9 +75,10 @@
 				                   </div>
 							    </c:if>
                         		<!-- Formulario -->
-                        		<form:form id="formNovedad" action="editarNovedad" method="post" modelAttribute="novedad">
+                        		<form:form id="formNovedad" action="editarNovedad" method="post" modelAttribute="novedad" enctype="multipart/form-data">
                         		                 			
                         		    <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${novedad.id}"/>
+                            		<form:hidden id="im1Base64image" path="imBase64image" class="form-control"  aria-invalid="false" value="Lleno"/>
                             		
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
@@ -90,6 +91,18 @@
                                     	<label for="text-input" class=" form-control-label">Fecha</label>
                                 		<form:input id="fecha" type="date" path="fecha" class="form-control" aria-invalid="false" required = "true" value="${novedad.fecha}"/>
                                 	</div> 
+                                	                               
+			                         </br> 
+   	 								<!-- Campo para digitar la imagen 1 -->
+                                	<div id ="divim1" class="form-group btn btn-primary btn-sm">
+                                    	<label for="text-input" class=" form-control-label">Imagen</label>
+                                		<form:input type="file" path="imagen" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')"/>
+                                	</div>
+                                	</br>
+                                	<div id = "divimagen1" class="form-group">
+                                		<img id = "img1" src="${novedad.imBase64image}" height="200" alt="Imagen">
+                                	</div>
+                                	</br>                                   	
                                 	
                                 	<!-- Boton para Actualizar los datos -->
                                 	<button type="submit" class="btn btn-success">Actualizar</button>                                 
@@ -110,6 +123,40 @@
 	<!-- Carga de los archivos Javascript -->
 	<%@ include file = "../General/scripts.jsp" %>
 
+	<!-- <script src="resources/assets/js/archivos.js"></script>  -->
+	<script type="text/javascript">
+	function revisarArchivos(id){
+		var el = document.getElementById("Imagen"+id).files;
+		if(el!=null && el.length==0){
+			document.getElementById("divim"+id).setAttribute('class', 'btn btn-danger btn-sm');
+			previewFile(id);
+		}else{
+			document.getElementById("divim"+id).setAttribute('class', 'btn btn-primary btn-sm');
+			previewFile(id);
+		}
+	}
+	
+	/*
+	* Metodo que permite pintar una imagen recien 
+	*/
+	function previewFile(id) {
+		  var preview = document.getElementById('img'+id);
+		  var file    = document.getElementById('Imagen'+id).files[0];
+		  var reader  = new FileReader();
 
+		  reader.onloadend = function () {
+		    preview.src = reader.result;
+		    document.getElementById('im'+id+'Base64image').value = "Lleno";
+		  }
+
+		  if (file) {
+		    reader.readAsDataURL(file);
+		  } else {
+			  			  
+		    preview.src = "";
+		    document.getElementById('im'+id+'Base64image').value = "";
+		  }
+		}	
+	</script>
 </body>
 </html>

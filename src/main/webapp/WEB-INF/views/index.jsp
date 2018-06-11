@@ -149,13 +149,13 @@
 					<div class="parallax-quote-in" style="padding: 0px;">
 						<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-5">
-								<a href="./index.php"> <img id="logo-header"
-									src="resources/rsc/img/logo_vertical_ingsistemas_ht180.png"
-									alt="Logo Programa de Ingenier�a de Sistemas"
+								<a href="${contextPath}/"> <img id="logo-header"
+									src="${logoHorizontal.imBase64image}"
+									alt=""
 									style="max-height: 180px;">
 								</a>
 							</div>
-							<div class="col-md-2 col-ms-1 col-xs-2 pull-right">
+							<div class="col-md-8 col-ms-8 col-xs-8">
 								<a href="http://www.ufps.edu.co/"><img class="header-banner"
 									src="resources/rsc/img/logo_ufps.png"
 									style="max-height: 160px;"
@@ -196,18 +196,35 @@
 								<ul class="dropdown-menu">
 									<c:forEach var="subcategoria" items="${categoria.subcategorias}">
 										<li>
-											<a href="${contextPath}/servicios/subcategoria?id=${subcategoria.id}">
-												${subcategoria.nombre}
-											</a>
+											<c:choose>
+												<c:when test="${not empty subcategoria.contenido}">
+													<c:choose>
+														<c:when test="${subcategoria.contenido.tipoContenido.id == 2}">
+															<a href="${subcategoria.contenido.contenido}">
+																${subcategoria.nombre}
+															</a>																	
+														</c:when>
+														<c:otherwise>
+															<a href="${contextPath}/servicios/componente?id=${subcategoria.id}&componente=subcategoria">
+																${subcategoria.nombre}
+															</a>
+														</c:otherwise>		
+													</c:choose>		
+												    
+												</c:when>
+												<c:otherwise>
+												    <a>
+														${subcategoria.nombre}
+													</a>
+											 	</c:otherwise>
+											</c:choose>
+																		
+											
 										</li>
 									</c:forEach>
 								</ul>
 							</li>
-						</c:forEach>
-					
-					
-            
-
+						</c:forEach>			         
 					</ul>
 				</div>
 			</div>
@@ -218,8 +235,10 @@
 			
 			<c:forEach var="noticia" items="${noticias}">
 				<li>
+					<a href="${contextPath}/servicios/componente?id=${noticia.id}&componente=noticia">
 					<img
 					src="${noticia.im1Base64image}" alt="">
+					</a>
 					<span	style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">
 						${noticia.descripcion}
 					</span>
@@ -245,87 +264,31 @@
 					<div class="col-md-12">
 						<div class="row equal-height-columns margin-bottom-10">
 							<div class="container">
-								<ul class="row block-grid-v2">
-									
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal148')" src="" alt=""
-												style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">2 de Abril de
-												2018</div>
-										</div>										
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=148">Curso
-														de Profundizaci�n de Desarrollo de Software</a></b>
-											</h5>
-										
-										</div>
-									</li>
-									
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal146')"
-												src="resources/rsc/img/clp_WhatsApp Image 2017-11-28 at 21.59.17 (1).jpeg"
-												alt="" style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">28 de
-												Noviembre de 2017</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=146">D�a
-														Internacional de la Seguridad Inform�tica</a></b>
-											</h5>
-										</div>
-									</li>
-									
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal144')"
-												src="resources/rsc/img/clp_20171111_085650.jpg" alt=""
-												style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">15 de
-												Noviembre de 2017</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=144">Marat�n
-														Latinoamericana de Programaci�n 2017 ICPC / ACIS -
-														2017-11-15</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-3 col-sm-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<img onclick="openModalImage('modal143')"
-												src="resources/rsc/img/clp_ponencia semilleros2.png" alt=""
-												style="cursor: zoom-in;">
-											<div class="easy-block-v1-badge rgba-red">23 de Octubre
-												de 2017</div>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=verinformacion&idinfo=143">Participaci�n
-														de Semilleros Ingenier�a de sistemas UFPS - 2017/10/23
-														Bucaramanga</a></b>
-											</h5>
-										</div>
-									</li>
-									
+								<ul class="row block-grid-v2">									
+									<c:forEach var="novedad" items="${novedades}">										
+										<li class="col-md-3 col-sm-6 md-margin-bottom-30" style="padding-left: 14px;">										
+											<div class="easy-block-v1">
+												<img onclick="openModalImage('modal148')" src=" ${novedad.imBase64image}" alt=""
+													style="cursor: zoom-in;">
+												<div class="easy-block-v1-badge rgba-red"> ${novedad.fechaEnFormato} </div>
+											</div>										
+											<div
+												class="block-grid-v2-info rounded-bottom  bloques_eventos">
+												<h5>
+													<b>
+														<a href="${contextPath}/servicios/componente?id=${novedad.id}&componente=novedad">
+															${novedad.nombre}													
+														</a>
+													</b>
+												</h5>											
+											</div>
+										</li>
+									</c:forEach>
 								</ul>
 								<a href="./index.php?modulo=principal"
 									class="btn-u btn-u-sm pull-right tooltips"
 									data-toggle="tooltip" data-placement="left"
-									data-original-title="Ver m&aacute;s novedades">Ver m�s <i
+									data-original-title="Ver m&aacute;s novedades">Ver más<i
 									class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
 							</div>
 						</div>
@@ -344,24 +307,32 @@
 						<span class="bordered-icon"><i class="fa fa-calendar-o"
 							aria-hidden="true"></i></span>
 					</div>
-					<div class="col-sm-3">
-						<div class="service-block-v1 md-margin-bottom-50"
-							style="background: #fff; border-top: 5px solid #f1c40f;">
-							<i
-								class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark"
-								style="background: #fff;"></i>
-							<h5 class="title-v3-bg text-uppercase">
-								<b></b>
-							</h5>
-							<p>Esta actividad se desarrollar&aacute; el 27 de abril</p>
+					
+					<c:forEach var="actividad" items="${actividades}">																					
+						<div class="col-sm-3">
+							<div class="service-block-v1 md-margin-bottom-50"
+								style="background: #fff; border-top: 5px solid #f1c40f;">
+								<i
+									class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark"
+									style="background: #fff;"></i>
+								<h5 class="title-v3-bg text-uppercase">
+									<b></b>
+								</h5>
+								<p>Actividad: ${actividad.nombre}</p>
+								<p>Lugar: ${actividad.lugar}</p>
+								<p>Fecha: ${actividad.fechaInicial}</p>
+							</div>
 						</div>
-					</div>
+					</c:forEach>					
+	
 				</div>
+				
+				
 				<!--/row-->
 				<a href="./index.php?modulo=calendarios"
 					class="btn-u btn-u-sm pull-right tooltips" data-toggle="tooltip"
 					data-placement="left"
-					data-original-title="Ingresar a Calendario de Eventos">Ver m�s
+					data-original-title="Ingresar a Calendario de Eventos">Ver más
 					<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
 				</a>
 			</div>
@@ -383,98 +354,22 @@
 						<div class="row equal-height-columns margin-bottom-10">
 							<div class="container">
 								<ul class="row block-grid-v2">
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=22"> <img
-												src="resources/rsc/img/20171202_003306.jpg" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=22">Cena
-														de Graduados 2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=21"> <img
-												src="resources/rsc/img/WhatsApp Image 2017-12-07 at 17.20.46.jpeg"
-												alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=21">Novena
-														de Aguinaldos 2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=20"> <img
-												src="resources/rsc/img/encuentro1.png" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=20">2do
-														Encuentro Acad�mico-Investigaci�n 2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=18"> <img
-												src="resources/rsc/img/WhatsApp Image 2017-11-30 at 18.44.43.jpeg"
-												alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=18">D�a
-														Internacional de la Seguridad Inform�tica</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=19"> <img
-												src="resources/rsc/img/feriabanner.jpg" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=19">Feria
-														de Proyectos de Aula 2.0 29/11/2017</a></b>
-											</h5>
-										</div>
-									</li>
-									<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30"
-										style="padding-left: 14px;">
-										<div class="easy-block-v1">
-											<a href="./index.php?modulo=detallegaleria&idgale=17"> <img
-												src="resources/rsc/img/20171026_192324 dos.jpg" alt="">
-											</a>
-										</div>
-										<div
-											class="block-grid-v2-info rounded-bottom  bloques_eventos">
-											<h5>
-												<b><a href="index.php?modulo=detallegaleria&idgale=17">Visita
-														de Pares Acad�micos </a></b>
-											</h5>
-										</div>
-									</li>
+								
+									<c:forEach var="galeria" items="${galerias}">																					
+										<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30" style="padding-left: 14px;">
+											<div class="easy-block-v1">
+												<a href="./index.php?modulo=detallegaleria&idgale=22"> 
+													<img src="${galeria.primeraImagen}" alt="">
+												</a>
+											</div>
+											<div class="block-grid-v2-info rounded-bottom  bloques_eventos">
+												<h5>
+													<b><a href="index.php?modulo=detallegaleria&idgale=22">${galeria.nombre}</a></b>
+												</h5>
+											</div>
+										</li>
+									
+									</c:forEach>	
 								</ul>
 								<a href="./index.php?modulo=galerias"
 									class="btn-u btn-u-sm pull-right tooltips"
@@ -490,31 +385,7 @@
 		</div>
 		<!-- FIN EVENTOS -->
 		<!-- ICONOS REDES SOCIALES -->
-		<div id="idcuadroredes" class="cuadroredes" style="height: 190px">
-			<div
-				style="text-align: center; vertical-align: middle; font-size: 1.25em; cursor: pointer; margin: 4px; padding: 0px; border-bottom: 1px dotted #666;"
-				onclick="document.getElementById('idcuadroredes').style.display='none';">
-				<i class="icon-close"></i>
-			</div>
-			<ul class="social-icons social-icons-color margin-top-10">
-				<li class="tooltips" data-toggle="tooltip" data-placement="bottom"
-					data-original-title="S�guenos en Facebook"><a
-					href="https://www.facebook.com/UFPS-C%C3%BAcuta-553833261409690"
-					class="rounded social_facebook"></a></li>
-				<li class="tooltips" data-toggle="tooltip" data-placement="bottom"
-					data-original-title="S�guenos en Twitter"><a
-					href="https://twitter.com/UFPSCUCUTA"
-					class="rounded social_twitter"></a></li>
-				<li class="tooltips" data-toggle="tooltip" data-placement="bottom"
-					data-original-title="S�guenos en YouTube"><a
-					href="https://www.youtube.com/channel/UCgPz-qqaAk4lbHfr0XH3k2"
-					class="rounded social_youtube"></a></li>
-				<li class="tooltips" data-toggle="tooltip" data-placement="bottom"
-					data-original-title="S�guenos en Instagram"><a
-					href="https://www.instagram.com/ufpscucuta/"
-					class="rounded social_instagram"></a></li>
-			</ul>
-		</div>
+		
 		<!-- FIN ICONOS REDES SOCIALES -->
 		<div id="modal148" class="ufps-image-modal">
 			<span class="ufps-image-modal-close">&times;</span> <img
@@ -554,9 +425,9 @@
 					<!-- About -->
 					<div class="col-md-3 col-sm-4 md-margin-bottom-40">
 						<div class="footer-main">
-							<a href="./"><img id="logo-footer" class="img-responsive"
-								src="resources/rsc/img/logo_ingsistemas_vertical_invertido.png"
-								alt="Logo Pie de P�gina"></a>
+							<a href="${contextPath}/"><img id="logo-footer" class="img-responsive"
+								src="${logoVertical.imBase64image}"
+								alt="Logo Pie de Página"></a>
 						</div>
 					</div>
 					<!--/col-md-3-->
@@ -579,24 +450,16 @@
 					<!-- Link List -->
 					<div class="col-md-3 col-sm-4  md-margin-bottom-40">
 						<div class="headline" style="border-bottom: #272727;">
-							<h2>Enlaces de Inter�s</h2>
+							<h2>Enlaces de Interés</h2>
 						</div>
 						<ul class="list-unstyled latest-list">
-							<li><a href="javascript:;">Sitio Web-Departamento de
-									Sistemas</a></li>
-							<li><a href="http://biblioteca.ufps.edu.co" target="_blank">Biblioteca
-									Eduardo Cote Lamus</a></li>
-							<li><a href="http://200.93.148.47/bienestar/"
-								target="_blank">Vicerrector�a de Bienestar Universitario</a></li>
-							<li><a href="./index.php?id=27">Cronograma del Comit�
-									Curricular</a></li>
-							<li><a href="http://php.net/" target="_blank">Recursos
-									PHP</a></li>
-							<li><a href="https://www.facebook.com/IngSistUFPS/?fref=ts">Facebook</a></li>
-							<li><a href="http://200.93.148.29/ingsistemas_viejo/">Ir
-									a versi�n Anterior</a></li>
-							<li><a href="http://www.youtube.com" target="_blank">Canal
-									UFPS en YouTube</a></li>
+							<c:forEach var="enlace" items="${enlaces}">		
+								<li>
+									<a href="${enlace.url}" target="_blank">
+										${enlace.nombre}
+									</a>
+								</li>
+							</c:forEach>
 						</ul>
 					</div>
 					<!--/col-md-3-->
@@ -607,12 +470,12 @@
 							<h2>Contactos</h2>
 						</div>
 						<address class="md-margin-bottom-40">
-							Programa de Ingenier�a de Sistemas de la Universidad Francisco de
-							Paula Santander<br>Acreditaci�n de alta calidad seg�n
-							resoluci�n No. 15757 del Ministerio de Educaci�n Nacional<br>Avenida
-							Gran Colombia No. 12E-96 Barrio Colsag, C�cuta, Colombia<br>Tel�fono
-							(57) 7 5776655 Extensiones 201 y 203<br>Correo electr�nico:
-							ingsistemas@ufps.edu.co
+						
+							<c:forEach var="contacto" items="${contactos}">																					
+								${contacto.nombre}
+								<br>
+							</c:forEach>
+
 						</address>
 					</div>
 					<!--/col-md-3-->
@@ -620,39 +483,32 @@
 				</div>
 			</div>
 		</div>
+		
+		
 		<!--/footer-->
 		<div class="copyright">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8">
 						<p>
-							2016 � All Rights Reserved. Desarrollado por: <a href="#">VAVM
-								- Divisi�n de Sistemas</a>
+							2018� All Rights Reserved. Desarrollado por: <a href="#">VAVM
+								- Departamento de Sistemas</a>
 						</p>
 					</div>
 					<!-- Social Links -->
 					<div class="col-md-4">
 						<ul class="list-inline dark-social pull-right space-bottom-0">
-							<li><a data-placement="top" data-toggle="tooltip"
-								class="tooltips" data-original-title="Facebook"
-								href="https://www.facebook.com/UFPS-C%C3%BAcuta-553833261409690">
-									<i class="fa fa-facebook" style="color: #fff;"></i>
-							</a></li>
-							<li><a data-placement="top" data-toggle="tooltip"
-								class="tooltips" data-original-title="Twitter"
-								href="https://twitter.com/UFPSCUCUTA"> <i
-									class="fa fa-twitter" style="color: #fff;"></i>
-							</a></li>
-							<li><a data-placement="top" data-toggle="tooltip"
-								class="tooltips" data-original-title="Youtube"
-								href="https://www.youtube.com/channel/UCgPz-qqaAk4lbHfr0XH3k2">
-									<i class="fa fa-youtube" style="color: #fff;"></i>
-							</a></li>
-							<li><a data-placement="top" data-toggle="tooltip"
-								class="tooltips" data-original-title="Instagram"
-								href="https://www.instagram.com/ufpscucuta/"> <i
-									class="fa fa-instagram" style="color: #fff;"></i>
-							</a></li>
+							<c:forEach var="red" items="${redes}">																					
+								<li>
+									<a data-placement="top" data-toggle="tooltip" class="tooltips" data-original-title="${red.nombre}"
+										href="${red.url}">
+											<i class="fa ${red.logo}" style="color: #fff;"></i>
+									</a>
+								</li>
+								
+							</c:forEach>
+							
+							
 						</ul>
 					</div>
 					<!-- End Social Links -->

@@ -104,7 +104,7 @@
 											<th scope="col" style="width: 2%;display:none">Id</th>
 											<th scope="col" style="width: 26%">Nombre</th>
 											<th scope="col" style="width: 26%">URL</th>
-											<th scope="col" style="width: 26%">logo</th>
+											
 											<th scope="col" style="width: 27%">Acción</th>
 										</tr>
 									</thead>
@@ -113,12 +113,7 @@
 											<tr>
 												<th style="display:none">${redSocial.id}</th>
 												<td>${redSocial.nombre}</td>
-												<td>${redSocial.url}</td>
-												<td>
-													<figure>
-	                                        			<img id = "img1" src="${redSocial.imBase64image}"  width="50" height="50">                                        
-	                                    			</figure> 		
-												</td>												
+												<td>${redSocial.url}</td>	
 												<td><a
 													href="${contextPath}/actualizarRedSocial?id=${redSocial.id}">
 														<button class="btn btn-outline-primary">

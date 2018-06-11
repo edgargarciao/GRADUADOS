@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.util.JwtUtil;
 
 /**
@@ -45,24 +46,33 @@ public class SessionManager implements HandlerInterceptor {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
 
-    // Se extrae el token de sesion
-    String token = request.getSession().getAttribute("token").toString();
-    
-    // Se valida el token
-    boolean permission = validarToken(token);
-    
-    // Si el token es valido se permite la continuidad
-    if (permission) {
-      return true;
-    // Si el token no es valido se envia un mensaje de no autorizado. 
-    } else {
+    if(request.getSession().getAttribute("token") == null)
+    {
       response.setStatus(HttpStatus.UNAUTHORIZED.value());
+      response.sendRedirect("/"+Constantes.RUTA+"/admin");
       return false;
-      // Above code will send a 401 with no response body.
-      // If you need a 401 view, do a redirect instead of
-      // returning false.
-      // response.sendRedirect("/401"); // assuming you have a handler mapping for 401
-
+    }
+    else {
+      // Se extrae el token de sesion
+      String token = request.getSession().getAttribute("token").toString();
+      
+      // Se valida el token
+      boolean permission = validarToken(token);
+      
+      // Si el token es valido se permite la continuidad
+      if (permission) {
+        return true;
+      // Si el token no es valido se envia un mensaje de no autorizado. 
+      } else {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.sendRedirect("/"+Constantes.RUTA+"/admin");
+        return false;
+        // Above code will send a 401 with no response body.
+        // If you need a 401 view, do a redirect instead of
+        // returning false.
+        // response.sendRedirect("/401"); // assuming you have a handler mapping for 401
+  
+      }
     }
   }
 

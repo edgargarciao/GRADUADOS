@@ -144,7 +144,7 @@ public class ActividadController {
   }    
   
   /**
-   * Método que obtiene la pagina de actualizar actividad dado un ID.
+   * Método que obtiene la pagina de eliminar actividad dado un ID.
    * 
    * @param idActividad Identificador de la actividad
    * @param model Objeto para enviar información a los archivos .JSP

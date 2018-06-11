@@ -6,4 +6,5 @@ public class Constantes {
   public static final String ACTIVIDAD = "Actividad";
   public static final String NOTICIA = "Noticia";
   public static final String SUBCATEGORIA = "Subcategoria";
+  public static final String RUTA = "ufps-graduados";
 }

@@ -78,6 +78,7 @@
                         		<form:form id="formRedSocial" action="editarRedSocial" method="post" modelAttribute="redSocial" enctype="multipart/form-data">
                         		                 			
                         		    <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${redSocial.id}"/>
+                        		    <input id="log" name ="log" type="hidden" value="${redSocial.logo}" />
                             		
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
@@ -90,14 +91,25 @@
                                     	<label for="text-input" class=" form-control-label">URL</label>
                                 		<form:input id="url" path="url" class="form-control" aria-invalid="false" required = "true" value="${redSocial.url}"/>
                                 	</div> 
-                                	
                                 	<div class="form-group">
-	                                	<figure>
-	                                    	<img id = "img1" src="${redSocial.imBase64image}" alt="Logo" width="50" height="50">                                        
-	                                    </figure>                                    
-	                                    <form:input type="file" path="contenido" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')" required = "true"/>
-	                            	</div> 
                                 	
+                                	
+	                                	<label for="text-input" class=" form-control-label">Icono</label>
+	                                
+		                                <select id="logo" name='logo'  style='height: 60px; width: 150px; font-family:Arial, FontAwesome;' class="form-control">
+												
+											<option value='fa-facebook' >&#xf09a; &nbsp; Facebook</option>
+											<option value='fa-twitter'>&#xf099; &nbsp; Twitter</option>
+											<option value='fa-youtube'>&#xf167; &nbsp; Youtube</option>
+											<option value='fa-instagram'>&#xf16d; &nbsp; Instagram</option>
+											<option value='fa-linkedin'>&#xf0e1; &nbsp; LinkedIn</option>
+											<option value='fa-play-circle'>&#xf144; &nbsp; Radio</option>
+											<option value='fa-rss'>&#xf09e; &nbsp; RSS</option>
+																			
+																
+										</select>
+	                            	</div>
+	                            		
                                 	<!-- Boton para Actualizar los datos -->
                                 	<button type="submit" class="btn btn-success">Actualizar</button>                                 
                             	 </form:form>                          
@@ -118,40 +130,11 @@
 	<%@ include file = "../General/scripts.jsp" %>
 	
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#bootstrap-data-table-export').DataTable();
-		});
+		cambiarSeleccion();
 		
-		function revisarArchivos(id){
-			var el = document.getElementById("Imagen"+id).files;
-			if(el!=null && el.length==0){
-				previewFile(id);
-			}else{
-				previewFile(id);
-			}
+		function cambiarSeleccion(){
+			document.getElementById('logo').value = document.getElementById('log').value;
 		}
-		
-		/*
-		* Metodo que permite pintar una imagen recien 
-		*/
-		function previewFile(id) {
-			  var preview = document.getElementById('img'+id);
-			  var file    = document.getElementById('Imagen'+id).files[0];
-			  var reader  = new FileReader();
-
-			  reader.onloadend = function () {
-			    preview.src = reader.result;
-			    document.getElementById('im'+id+'Base64image').value = "Lleno";
-			  }
-
-			  if (file) {
-			    reader.readAsDataURL(file);
-			  } else {
-				  			  
-			    preview.src = "";
-			    document.getElementById('im'+id+'Base64image').value = "";
-			  }
-			}	
 	</script>
 
 </body>
