@@ -358,13 +358,13 @@
 									<c:forEach var="galeria" items="${galerias}">																					
 										<li class="col-md-2 col-sm-3 col-xs-6 md-margin-bottom-30" style="padding-left: 14px;">
 											<div class="easy-block-v1">
-												<a href="./index.php?modulo=detallegaleria&idgale=22"> 
+												<a href="${contextPath}/servicios/galeria?id=${galeria.id}"> 
 													<img src="${galeria.primeraImagen}" alt="">
 												</a>
 											</div>
 											<div class="block-grid-v2-info rounded-bottom  bloques_eventos">
 												<h5>
-													<b><a href="index.php?modulo=detallegaleria&idgale=22">${galeria.nombre}</a></b>
+													<b><a href="${contextPath}/servicios/galeria?id=${galeria.id}">${galeria.nombre}</a></b>
 												</h5>
 											</div>
 										</li>

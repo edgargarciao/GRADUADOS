@@ -26,6 +26,7 @@ import co.ufps.edu.dao.NovedadDao;
 import co.ufps.edu.dao.RedSocialDao;
 import co.ufps.edu.dao.SubCategoriaDao;
 import co.ufps.edu.dto.Contenido;
+import co.ufps.edu.dto.Galeria;
 import co.ufps.edu.dto.Login;
 import co.ufps.edu.dto.VisitaDao;
 import co.ufps.edu.util.JwtUtil;
@@ -260,11 +261,11 @@ public class AdminController {
   }
   
   /**
-   * Método que obtiene la pagina de actualizar categoria dado un ID.
+   * Método que obtiene la pagina de obtener un componente dado un ID.
    * 
-   * @param idCategoria Identificador de la categoria
+   * @param idCategoria Identificador del componente
    * @param model Objeto para enviar información a los archivos .JSP
-   * @return La pagina con la información de la categoria cargada.
+   * @return La pagina con la información del contenido cargado.
    */
   @GetMapping(value = "/servicios/componente")
   public String obtenerContenido(@RequestParam("id") long idComponente,@RequestParam("componente") String tipo, Model model) {
@@ -280,6 +281,26 @@ public class AdminController {
     model.addAttribute("codigo",(contenido == null)?"":contenido.getContenido());
     return "contenido"; // Nombre del archivo jsp
   }
+  
+  /**
+   * Método que obtiene la pagina de una galeria dado un ID.
+   * 
+   * @param idGaleria Identificador de la galeria
+   * @param model Objeto para enviar información a los archivos .JSP
+   * @return La pagina con la información de la galeria cargada.
+   */
+  @GetMapping(value = "/servicios/galeria")
+  public String obtenerContenido(@RequestParam("id") long idGaleria, Model model) {
+    // Consulto que el Id sea mayor a 0.
+    if (idGaleria <= 0) {
+      return "index";
+    }
+    Galeria galeria = galeriaDao.obtenerGaleriaPorId(idGaleria);
+    
+    cargarModelo(model);
+    model.addAttribute("galeria",galeria);
+    return "galeria"; // Nombre del archivo jsp
+  }  
 
 
 }

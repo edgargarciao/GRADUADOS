@@ -195,28 +195,9 @@
 								<ul class="dropdown-menu">
 									<c:forEach var="subcategoria" items="${categoria.subcategorias}">
 										<li>
-											<c:choose>
-												<c:when test="${not empty subcategoria.contenido}">
-													<c:choose>
-														<c:when test="${subcategoria.contenido.tipoContenido.id == 2}">
-															<a href="${subcategoria.contenido.contenido}">
-																${subcategoria.nombre}
-															</a>																	
-														</c:when>
-														<c:otherwise>
-															<a href="${contextPath}/servicios/componente?id=${subcategoria.id}&componente=subcategoria">
-																${subcategoria.nombre}
-															</a>
-														</c:otherwise>		
-													</c:choose>		
-												    
-												</c:when>
-												<c:otherwise>
-												    <a>
-														${subcategoria.nombre}
-													</a>
-											 	</c:otherwise>
-											</c:choose>
+											<a href="${contextPath}/servicios/componente?id=${subcategoria.id}&componente=subcategoria">
+												${subcategoria.nombre}
+											</a>
 										</li>
 									</c:forEach>
 								</ul>
@@ -236,18 +217,28 @@
              </div>
             	<div id="informacionContent" class="col-md-8 mb-margin-bottom-30 shadow-wrapper">
               		<div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom:20px; border-bottom: 3px solid #aa1916; padding: 0;">
-                		<h1 class="pull-left" style="font-size:36px;">${titulo}</h1>
+                		<h1 class="pull-left" style="font-size:36px;">Galerías de imágenes</h1>
               </div>
               
-              ${codigo}
+              <h1 class="tituloGaleria">
+                    ${galeria.nombre}         
+               </h1>
+              <div style="clear:both; margin-bottom:15px;"></div>
+              	<c:set var="count" value="0" scope="page" />
+            	<c:forEach var="imagen" items="${galeria.imagenes}">
+					<div class="img-intro-right30 img-intro-right">
+              			<img onclick="openModalImage('modal${count}')" src="${imagen.imagen}" class="imgInformacion" alt="">
+              			<c:set var="count" value="${count + 1}" scope="page"/>
+            		</div>
+				</c:forEach>
               
-
-<p style="text-align: left;">&nbsp;</p>
-<p style="text-align: left;">&nbsp;</p>
-<p style="text-align: left;">&nbsp;</p>            
-<div style="clear:both; min-height:30px;"></div>
-
-
+				<div style="clear:both"></div>
+				<p class="readmore-center readmore">
+				   <a href="./index.php?modulo=galerias">
+				   	Ir a las galerías</a>
+				</p>
+				<div style="clear:both"></div>
+				<div style="min-height:30px;"></div>
             </div><!--informacionContent-->
             <div class="col-md-4">
             <div class="gdl-custom-sidebar">
@@ -338,6 +329,35 @@
             </div><!--col-md-4-->
           </div><!-- row margin-bottom-30-->
         </div><!--container content profile-->		
+		
+		
+		<c:set var="cou" value="0" scope="page" />
+		<c:forEach var="imagen" items="${galeria.imagenes}">
+			
+			<div id="modal${cou}" class="ufps-image-modal">
+				<span class="ufps-image-modal-close">×</span>
+				<c:choose>
+					<c:when test="${cou == 0}">
+						<span class="ufps-image-modal-prev" onclick="MyShow('modal${count-1}')">&lt;</span>
+						<span class="ufps-image-modal-next" onclick="MyShow('modal${cou+1}')">&gt;</span>
+					</c:when>		
+					<c:when test="${cou == count-1}">
+						<span class="ufps-image-modal-prev" onclick="MyShow('modal${count-1}')">&lt;</span>
+						<span class="ufps-image-modal-next" onclick="MyShow('modal0')">&gt;</span>
+					</c:when>									
+					<c:otherwise>
+						<span class="ufps-image-modal-prev" onclick="MyShow('modal${cou-1}')">&lt;</span>
+						<span class="ufps-image-modal-next" onclick="MyShow('modal${cou+1}')">&gt;</span>
+					</c:otherwise>
+				</c:choose>
+				
+					
+				
+				<img class="ufps-image-modal-content" src="${imagen.imagen}"><div class="ufps-image-modal-caption">${imagen.descripcion}</div>
+			</div>
+			<c:set var="cou" value="${cou + 1}" scope="page"/>
+		</c:forEach>
+		
 		
 		<!-- ICONOS REDES SOCIALES -->
 		<div id="idcuadroredes" class="cuadroredes" style="height: 190px">
