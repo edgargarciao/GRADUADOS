@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.config.SessionManager;
+import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.dao.ActividadDao;
 import co.ufps.edu.dao.CategoriaDao;
 import co.ufps.edu.dao.ComponenteDao;
@@ -91,7 +92,7 @@ public class AdminController {
     model.addAttribute("contactos", contactoDao.getContactos());
     model.addAttribute("logoHorizontal", logoDao.getLogo("LogoHorizontal"));
     model.addAttribute("logoVertical", logoDao.getLogo("LogoVertical"));
-
+    model.addAttribute("dependencia",Constantes.RUTA);
     
   }
 
