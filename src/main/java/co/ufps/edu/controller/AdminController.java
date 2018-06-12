@@ -2,6 +2,7 @@ package co.ufps.edu.controller;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ import co.ufps.edu.dao.SubCategoriaDao;
 import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Galeria;
 import co.ufps.edu.dto.Login;
+import co.ufps.edu.dto.Novedad;
 import co.ufps.edu.dto.VisitaDao;
 import co.ufps.edu.util.JwtUtil;
 
@@ -304,4 +306,18 @@ public class AdminController {
   }  
 
 
+  /**
+   * Método que obtiene la pagina de todas las novedades.
+   *
+   * @param model Objeto para enviar información a los archivos .JSP
+   * @return La pagina con la información de las novedades cargada.
+   */
+  @GetMapping(value = "/servicios/novedades")
+  public String obtenerNovedades(Model model) {
+    
+    List<Novedad> novedades= novedadDao.getNovedades();    
+    cargarModelo(model);
+    model.addAttribute("novedades",novedades);
+    return "novedades"; // Nombre del archivo jsp
+  }  
 }

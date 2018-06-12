@@ -82,7 +82,7 @@
 								<a href="./index.php?modulo=principal"
 									class="btn-u btn-u-sm pull-right tooltips"
 									data-toggle="tooltip" data-placement="left"
-									data-original-title="Ver m&aacute;s novedades">Ver más<i
+									data-original-title="Ver m&aacute;s novedades">Ver m&aacute;s<i
 									class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
 							</div>
 						</div>
@@ -126,7 +126,7 @@
 				<a href="./index.php?modulo=calendarios"
 					class="btn-u btn-u-sm pull-right tooltips" data-toggle="tooltip"
 					data-placement="left"
-					data-original-title="Ingresar a Calendario de Eventos">Ver más
+					data-original-title="Ingresar a Calendario de Eventos">Ver m&aacute;s
 					<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
 				</a>
 			</div>
@@ -172,8 +172,8 @@
 								<a href="./index.php?modulo=galerias"
 									class="btn-u btn-u-sm pull-right tooltips"
 									data-toggle="tooltip" data-placement="left"
-									data-original-title="Ver m&aacute;s galer&iacute;as">Ver
-									m�s <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+									data-original-title="Ver m&aacute;s galer&iacute;as">
+									Ver m&aacute;s<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
 								</a>
 							</div>
 						</div>
