@@ -265,7 +265,11 @@
 				
 			
 			
-			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	if ( (window.location.pathname).indexOf('ufps') != -1 ){
+	    		var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	}else{
+	    		var url = window.location.protocol + "//" + window.location.host;
+	    	}
 			var formData = {
 					nombre: 			nombre,
 					descripcion: 		descripcion,
@@ -274,7 +278,7 @@
 					imagenes:			imagenes
 			};
 			
-			console.log("form -> "+JSON.stringify(formData));
+			console.log("urlS -> "+url + "/servicios/guardarGaleria");
 				
 			$.ajax({
 				type : "POST",

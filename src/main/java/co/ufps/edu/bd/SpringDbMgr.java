@@ -44,7 +44,7 @@ public class SpringDbMgr {
 		p.setProperty("password", "");
 		p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
 
-		dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8", p);
+		dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC", p);
 		//jdbc:mysql://localhost:3306/dbname
 	}
 
@@ -151,28 +151,4 @@ public class SpringDbMgr {
 		this.dataSource = dataSource;
 	}
 
-	public static void main(String[] args) {
-		SpringDbMgr s = new SpringDbMgr();
-		SqlRowSet r = s.executeQuery("select * from contenido");
-		r.next();
-		byte []a = (byte[]) r.getObject("contenido");
-		String res = new String(a,Charsets.UTF_8);
-		System.out.println("res --> \n "+res);
-		
-		/*MapSqlParameterSource map = new MapSqlParameterSource();
-		map.addValue("codigo", 1550967);
-		map.addValue("nombre", "juan");
-		map.addValue("apellido", "perez");
-		map.addValue("correo", "juan.perez@gmail.com");
-		map.addValue("telefono", 555);
-		map.addValue("semestre", 7);
-		map.addValue("contrasena", 1234);
-		
-		
-		
-		String query = "insert into estudiante(codigo,nombre,apellido,correo,telefono,semestre,contrasena) "
-							  + "values(:codigo,:nombre,:apellido,:correo,:telefono,:semestre,:contrasena)";
-				
-		int result = s.executeDml(query, map);*/
-	}
 }

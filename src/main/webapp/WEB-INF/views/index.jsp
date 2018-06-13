@@ -79,7 +79,7 @@
 										<c:set var="count" value="${count + 1}" scope="page"/>
 									</c:forEach>
 								</ul>
-								<a href="./index.php?modulo=principal"
+								<a href="${contextPath}/servicios/novedades"
 									class="btn-u btn-u-sm pull-right tooltips"
 									data-toggle="tooltip" data-placement="left"
 									data-original-title="Ver m&aacute;s novedades">Ver m&aacute;s<i
@@ -104,24 +104,21 @@
 					
 					<c:forEach var="actividad" items="${actividades}">																					
 						<div class="col-sm-3">
-							<div class="service-block-v1 md-margin-bottom-50"
-								style="background: #fff; border-top: 5px solid #f1c40f;">
-								<i
-									class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark"
-									style="background: #fff;"></i>
-								<h5 class="title-v3-bg text-uppercase">
-									<b></b>
-								</h5>
-								<p>Actividad: ${actividad.nombre}</p>
-								<p>Lugar: ${actividad.lugar}</p>
-								<p>Fecha: ${actividad.fechaInicial}</p>
-							</div>
+							<a href="${contextPath}/servicios/componente?id=${actividad.id}&componente=proximaactividad">
+								<div class="service-block-v1 md-margin-bottom-50" style="background: #fff; border-top: 5px solid #f1c40f;">									
+									<i class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark" style="background: #fff;"></i>
+									<h5 class="title-v3-bg text-uppercase">
+										Actividad: ${actividad.nombre}
+										<b></b>
+									</h5>
+									
+									<p>Lugar: ${actividad.lugar}</p>
+									<p>Fecha: ${actividad.fechaInicial}</p>
+								</div>
+							</a>
 						</div>
 					</c:forEach>					
-	
 				</div>
-				
-				
 				<!--/row-->
 				<a href="./index.php?modulo=calendarios"
 					class="btn-u btn-u-sm pull-right tooltips" data-toggle="tooltip"
@@ -169,7 +166,7 @@
 									
 									</c:forEach>	
 								</ul>
-								<a href="./index.php?modulo=galerias"
+								<a href="${contextPath}/servicios/galerias"
 									class="btn-u btn-u-sm pull-right tooltips"
 									data-toggle="tooltip" data-placement="left"
 									data-original-title="Ver m&aacute;s galer&iacute;as">

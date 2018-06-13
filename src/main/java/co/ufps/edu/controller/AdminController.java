@@ -94,7 +94,7 @@ public class AdminController {
     model.addAttribute("contactos", contactoDao.getContactos());
     model.addAttribute("logoHorizontal", logoDao.getLogo("LogoHorizontal"));
     model.addAttribute("logoVertical", logoDao.getLogo("LogoVertical"));
-    model.addAttribute("dependencia",Constantes.RUTA);
+    model.addAttribute("dependencia",Constantes.PROYECTO);
     
   }
 
@@ -183,13 +183,12 @@ public class AdminController {
    * @return La pagina a donde fue redireccionado.
    */
   @PostMapping("/autenticar")
-  public String authenticateUser(@ModelAttribute("login") Login login, Model model,
+  public String authenticateUser(@ModelAttribute("login") Login login,Model model,
       HttpServletRequest request) {
 
     /*
      * Consulto si los datos no vienen nulos
      */
-
     if (!StringUtils.isEmpty(login.getCorreoInstitucional())
         && !StringUtils.isEmpty(login.getContraseña())) {
       // Consulto en base de datos si se encuentra ese correo y esa contraseña
@@ -282,7 +281,11 @@ public class AdminController {
     cargarModelo(model);
     model.addAttribute("titulo",(contenido == null)?"":contenido.getNombre());
     model.addAttribute("codigo",(contenido == null)?"":contenido.getContenido());
-    return "contenido"; // Nombre del archivo jsp
+    if(contenido.getId() != 0) {
+      return "contenido"; // Nombre del archivo jsp
+    }else {
+      return "index";
+    }
   }
   
   /**
@@ -305,7 +308,6 @@ public class AdminController {
     return "galeria"; // Nombre del archivo jsp
   }  
 
-
   /**
    * Método que obtiene la pagina de todas las novedades.
    *
@@ -317,7 +319,22 @@ public class AdminController {
     
     List<Novedad> novedades= novedadDao.getNovedades();    
     cargarModelo(model);
-    model.addAttribute("novedades",novedades);
+    model.addAttribute("novedadesCom",novedades);
     return "novedades"; // Nombre del archivo jsp
   }  
+  
+  /**
+   * Método que obtiene la pagina de todas las galerias.
+   *
+   * @param model Objeto para enviar información a los archivos .JSP
+   * @return La pagina con la información de las galerias cargada.
+   */
+  @GetMapping(value = "/servicios/galerias")
+  public String obtenerGalerias(Model model) {
+    
+    List<Galeria> galerias = galeriaDao.getGalerias();    
+    cargarModelo(model);
+    model.addAttribute("galeriasCom" , galerias);
+    return "galerias"; // Nombre del archivo jsp
+  }    
 }

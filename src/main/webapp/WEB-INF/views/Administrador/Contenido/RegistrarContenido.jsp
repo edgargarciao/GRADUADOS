@@ -138,7 +138,7 @@
 										<input id="url" name="url" type="text"
 											class="form-control" path="url"
 											placeholder="http://gidis.ufps.edu.co:8080/SeGre/"
-											aria-required="true" aria-invalid="false">
+											aria-required="true" aria-invalid="false" value="http://">
 									</div>
 									
 									<div style="display: none;">
@@ -278,7 +278,11 @@
 			
 		}	
 			
-			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	if ( (window.location.pathname).indexOf('ufps') != -1 ){
+	    		var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	}else{
+	    		var url = window.location.protocol + "//" + window.location.host;
+	    	}
 			var formData = {
 					  tipoAsociacion: 	selectedValueTA,
 			          asociacion: 		selectedValueA,
@@ -338,7 +342,11 @@
 			var selectedValue = selectBox.options[selectBox.selectedIndex].value;
 
 			// DO POST
-			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+			if ( (window.location.pathname).indexOf('ufps') != -1 ){
+	    		var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	}else{
+	    		var url = window.location.protocol + "//" + window.location.host;
+	    	}
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",

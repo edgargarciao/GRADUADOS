@@ -98,12 +98,6 @@
 							</script>
 							<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 						</li>
-						<li class="cd-log_reg home">
-							<a href="http://200.93.148.29/ingsistemas_viejo/">
-								<i class="fa fa-reply"></i> 
-								Versi&Oacute;n Anterior
-							</a>
-						</li>
 					</ul>
 				</div>
 			</div>
