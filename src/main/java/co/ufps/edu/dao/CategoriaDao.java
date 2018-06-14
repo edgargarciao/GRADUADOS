@@ -350,15 +350,15 @@ public class CategoriaDao {
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", subCategoria.getId());
  // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    categoria.id                    idContenido,            "
-                                                  + "           categoria.contenido             contenido,              "
-                                                  + "           categoria.TipoContenido_id      tipoContenido,          "                                                  
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    contenido.id                    idContenido,            "
+                                                  + "           contenido.contenido             contenido,              "
+                                                  + "           contenido.TipoContenido_id      tipoContenido,          "                                                  
                                                   + "           subcategoria.id                 idSubcategoria,         "
                                                   + "           subcategoria.nombre             nombreSubCategoria,     "
                                                   + "           subcategoria.descripcion        descripcionSubCategoria,"
                                                   + "           subcategoria.orden              ordenSubCategoria       "
                                                   + "   FROM    subcategoria                                            "
-                                                  + "INNER JOIN categoria  ON categoria.asociacion = subcategoria.id "
+                                                  + "INNER JOIN contenido  ON contenido.asociacion = subcategoria.id "
                                                   + "WHERE subcategoria.id = :id",map);
 
     // Recorre cada registro obtenido de base de datos

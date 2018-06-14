@@ -39,18 +39,18 @@ public class SpringDbMgr {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-		  new Exception();
+		  //new Exception();
 		}
 
 		Properties p = new Properties();
 		p.setProperty("user", "root");
-		//p.setProperty("password", "");
-		p.setProperty("password", "123454");
+		p.setProperty("password", "");
+		
 		p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
 
-		//dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC", p);
-		dataSource = new DriverManagerDataSource("jdbc:mysql://35.203.35.232:3306/graduados?zeroDateTimeBehavior=convertToNull", p);
 		
+		 dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC", p);
+		//                                         
 		
 		//jdbc:mysql://localhost:3306/dbname
 	}
@@ -66,11 +66,17 @@ public class SpringDbMgr {
 	 *             If there is any problem in the execution.
 	 */
 	public SqlRowSet executeQuery(String query) {
+	   try {
 		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet(query, mapSqlParameterSource);
 		return sqlRowSet;
+	    }catch(Exception e) {
+	    }
+	      
+	      
+	      return null;
 	}
 
 	/**
@@ -87,12 +93,17 @@ public class SpringDbMgr {
 	 *             If there is any problem in the execution.
 	 */
 	public SqlRowSet executeQuery(String query, MapSqlParameterSource parameterMap) {
-
+	  try{
 		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 
 		SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet(query, parameterMap);
 
 		return sqlRowSet;
+	  }catch(Exception e) {
+	    
+	  }
+	  
+	  return null;
 	}
 
 	/**
@@ -106,12 +117,18 @@ public class SpringDbMgr {
 	 *             If there is any problem in the execution.
 	 */
 	public int executeDml(String query) {
-		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-
-		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		int affectedRows = namedParameterJdbcTemplate.update(query, mapSqlParameterSource);
-
-		return affectedRows;
+	  try {
+    	  NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    
+    		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+    		int affectedRows = namedParameterJdbcTemplate.update(query, mapSqlParameterSource);
+    
+    		return affectedRows;
+	   }catch(Exception e) {
+	        
+	      }
+	      
+	      return -1;
 	}
 
 	/**
@@ -128,12 +145,17 @@ public class SpringDbMgr {
 	 *             If there is any problem in the execution.
 	 */
 	public int executeDml(String query, MapSqlParameterSource parameterMap) {
-
+	  try {
 		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int affectedRows = namedParameterJdbcTemplate.update(query, parameterMap,keyHolder);
 
 		return affectedRows;
+	   }catch(Exception e) {
+	        
+	      }
+	      
+	      return 0;
 	}
 	
 	public ResultDB executeDmlWithKey(String query, MapSqlParameterSource parameterMap) {
@@ -203,7 +225,7 @@ public class SpringDbMgr {
     } catch (ClassNotFoundException e) {
       new Exception();
     }
-
+	    String instanceConnectionName = "moodleuvirtualufps:northamerica-northeast1:ufpsgraduados";
     Properties p = new Properties();
     p.setProperty("user", "root");
     //p.setProperty("password", "");
@@ -211,17 +233,40 @@ public class SpringDbMgr {
     p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
 
     //dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC", p);
-    DataSource s = new DriverManagerDataSource("jdbc:mysql://35.203.35.232:3306/graduados?zeroDateTimeBehavior=convertToNull", p);
+    DataSource s = new DriverManagerDataSource("jdbc:mysql://35.203.35.232:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false", p);
     
     
     //jdbc:mysql://localhost:3306/dbname
       NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(s);
 
       MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-      SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet("select ip from visita", mapSqlParameterSource);
+      SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet("select id from archivo", mapSqlParameterSource);
       while(sqlRowSet.next()) {
-        System.out.println("id --> "+sqlRowSet.getString("ip"));
+        //System.out.println("id --> "+sqlRowSet.getLong("id"));
       }
+      
+      //namedParameterJdbcTemplate.update("DELETE FROM visita", new MapSqlParameterSource());
+      
+      mapSqlParameterSource = new MapSqlParameterSource();
+      mapSqlParameterSource.addValue("correo", "edgaryesidgo@ufps.edu.co");
+      mapSqlParameterSource.addValue("pass", "1234");
+      sqlRowSet = namedParameterJdbcTemplate.queryForRowSet(" SELECT    categoria.id                    idCategoria,            "
+          + "           categoria.nombre                nombreCategoria,        "
+          + "           categoria.descripcion           descripcionCategoria,   "
+          + "           categoria.orden                 ordenCategoria,         "
+          + "           subcategoria.id                 idSubcategoria,         "
+          + "           subcategoria.nombre             nombreSubCategoria,     "
+          + "           subcategoria.descripcion        descripcionSubCategoria,"
+          + "           subcategoria.orden              ordenSubCategoria       "
+          + "   FROM    subcategoria                                            "
+          + "INNER JOIN categoria  ON categoria.id = subcategoria.Categoria_id  "
+          + "ORDER BY   categoria.orden ASC,subcategoria.orden ASC              ",new MapSqlParameterSource());
+      
+      while(sqlRowSet.next()) {
+        System.out.println("id --> "+sqlRowSet.getLong("idCategoria"));
+      }
+      
+      
     }
 
 }

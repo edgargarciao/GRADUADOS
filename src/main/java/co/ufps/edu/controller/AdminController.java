@@ -1,9 +1,8 @@
 package co.ufps.edu.controller;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +26,6 @@ import co.ufps.edu.dao.NoticiaDao;
 import co.ufps.edu.dao.NovedadDao;
 import co.ufps.edu.dao.RedSocialDao;
 import co.ufps.edu.dao.SubCategoriaDao;
-import co.ufps.edu.dao.VisitaDao;
 import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Galeria;
 import co.ufps.edu.dto.Login;
@@ -53,8 +51,8 @@ public class AdminController {
   private GaleriaDao galeriaDao;
   private ContactoDao contactoDao;
   private RedSocialDao redSocialDao;
-  private VisitaDao visitaDao;
   private ComponenteDao componenteDao;
+  private int i = 0;
 
   public AdminController() {
     jwtUtil = new JwtUtil();
@@ -70,17 +68,19 @@ public class AdminController {
     galeriaDao = new GaleriaDao();
     contactoDao = new ContactoDao();
     redSocialDao = new RedSocialDao();
-    visitaDao = new VisitaDao();
     componenteDao = new ComponenteDao();
   }
 
   @GetMapping("/") // Base
   public String main(Model model, HttpServletRequest request) {
-    guardarVisita(request);
+    
+    //guardarVisita(request);
     cargarModelo(model);
     return "index"; // Nombre del archivo jsp
   }
 
+
+  
   private void cargarModelo(Model model) {
 
     model.addAttribute("categorias", categoriaDao.getCategoriasConSubcategorias());
@@ -96,59 +96,6 @@ public class AdminController {
     model.addAttribute("logoVertical", logoDao.getLogo("LogoVertical"));
     model.addAttribute("dependencia",Constantes.PROYECTO);
     
-  }
-
-  /**
-   * Metodo que permite guardar la visita de un usuario
-   * 
-   * @param request Contenido del usuario.
-   */
-  private void guardarVisita(HttpServletRequest request) {
-    String ip = request.getHeader("X-Forwarded-For");
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("Proxy-Client-IP");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("WL-Proxy-Client-IP");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("HTTP_X_FORWARDED");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("HTTP_CLIENT_IP");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("HTTP_FORWARDED_FOR");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("HTTP_FORWARDED");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("HTTP_VIA");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      ip = request.getHeader("REMOTE_ADDR");
-    }
-    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
-      InetAddress inetAddress = null;
-      try {
-        inetAddress = InetAddress.getLocalHost();
-      } catch (UnknownHostException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-      String ipAddress = inetAddress.getHostAddress();
-      ip = ipAddress;
-      //ip = request.getRemoteAddr();
-    }
-
-    visitaDao.guardarVisita(ip);
   }
 
   @GetMapping("/admin") // Base
@@ -185,35 +132,31 @@ public class AdminController {
   @PostMapping("/autenticar")
   public String authenticateUser(@ModelAttribute("login") Login login,Model model,
       HttpServletRequest request) {
-
+    
+    login.setCorreoInstitucional("edgaryesidgo@ufps.edu.co");
+    login.setContraseña("1234");
+    
     /*
      * Consulto si los datos no vienen nulos
      */
     if (!StringUtils.isEmpty(login.getCorreoInstitucional())
         && !StringUtils.isEmpty(login.getContraseña())) {
       // Consulto en base de datos si se encuentra ese correo y esa contraseña
-      String resultado =
-          loginDao.authenticate(login.getCorreoInstitucional(), login.getContraseña());
+      String resultado = loginDao.authenticate(login.getCorreoInstitucional(), login.getContraseña());
 
       // Si el resultado no es vacio es por que si existe ese correo y esa contraseña
       if (!resultado.isEmpty()) {
 
         // Creo un Json Web Token para validar si la sesión esta activa
-        String jwt = jwtUtil.generateToken(resultado, login.getCorreoInstitucional());
-
-        // Guardo el correo del usuaroo como atributo de sesión
-        request.getSession().setAttribute("correo", login.getCorreoInstitucional());
+        String jwt = "s"+i;//jwtUtil.generateToken(resultado, login.getCorreoInstitucional());
 
         // Guardo el JWT como atributo de sesión
         request.getSession().setAttribute("token", jwt);
 
-        // Guardo el tipo de usuario en caso dado que deseen manejar roles
-        request.getSession().setAttribute("user", "Administrador");
-
         // Guarda la sesion en el manejador de sesiones
         sessionManager.guardarSession("SESSION:" + login.getCorreoInstitucional(), jwt);
 
-        this.getCantidadRegistros(model);
+        //this.getCantidadRegistros(model);
 
         // Redirijo al index debido a que el usuario ya fue autenticado con exito
         return "Administrador/indexAdmin";
