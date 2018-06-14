@@ -1,28 +1,18 @@
 package co.ufps.edu.dao;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.support.SqlLobValue;
-import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-
 import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.dto.RedSocial;
-import co.ufps.edu.util.ImagenUtil;
 
 public class RedSocialDao {
 
 	private SpringDbMgr springDbMgr;
-	private ImagenUtil imagenUtil;
 	
 	public RedSocialDao() {
 	  springDbMgr = new SpringDbMgr();
-	  imagenUtil = new ImagenUtil();
 	}
 	
 	/**
@@ -36,7 +26,7 @@ public class RedSocialDao {
 	    List<RedSocial> redesSociales = new LinkedList<>();
 
 	    // Consulta para realizar en base de datos
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM REDSOCIAL ");
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM redsocial ");
 
 	    // Recorre cada registro obtenido de base de datos
 	    while (sqlRowSet.next()) {
@@ -63,7 +53,6 @@ public class RedSocialDao {
 	   * @return El resultado de la acción.
 	   */
 	public String registrarRedSocial(RedSocial redSocial) {
-	    SpringDbMgr springDbMgr = new SpringDbMgr();
 
 	    // Agrego los datos del registro (nombreColumna/Valor)
 	    MapSqlParameterSource map = new MapSqlParameterSource();
@@ -72,7 +61,7 @@ public class RedSocialDao {
 	    map.addValue("logo",redSocial.getLogo());
 
 	    // Armar la sentencia de actualización debase de datos
-	    String query = "INSERT INTO REDSOCIAL(nombre, url, logo) VALUES(:nombre, :url, :logo)";
+	    String query = "INSERT INTO redsocial(nombre, url, logo) VALUES(:nombre, :url, :logo)";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -101,7 +90,7 @@ public class RedSocialDao {
 	    // Consulta para realizar en base de datos
 	    MapSqlParameterSource map = new MapSqlParameterSource();
 	    map.addValue("id", idRedSocial);
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM REDSOCIAL WHERE id = :id", map);
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM redsocial WHERE id = :id", map);
 
 	    // Consulto si la red social existe
 	    if (sqlRowSet.next()) {
@@ -125,7 +114,6 @@ public class RedSocialDao {
 	   * @return Mesaje de confirmación del proceso.
 	   */
 	  public String editarRedSocial(RedSocial redSocial) {
-	    SpringDbMgr springDbMgr = new SpringDbMgr();
 
 	    // Agrego los datos del registro (nombreColumna/Valor)
 
@@ -136,7 +124,7 @@ public class RedSocialDao {
 	    map.addValue("logo", redSocial.getLogo());
 
 	    // Armar la sentencia de actualización debase de datos
-	    String query = "UPDATE REDSOCIAL SET nombre = :nombre, url = :url, logo = :logo   WHERE id = :id";
+	    String query = "UPDATE redsocial SET nombre = :nombre, url = :url, logo = :logo   WHERE id = :id";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -159,14 +147,13 @@ public class RedSocialDao {
 	   * @return Mesaje de confirmación del proceso.
 	   */
 	  public String eliminarRedSocial(RedSocial redSocial) {
-		    SpringDbMgr springDbMgr = new SpringDbMgr();
 
 		    // Agrego los datos de la eliminación (nombreColumna/Valor)
 		    MapSqlParameterSource map = new MapSqlParameterSource();
 		    map.addValue("id", redSocial.getId());
 
 		    // Armar la sentencia de eliminación debase de datos
-		    String query = "DELETE FROM REDSOCIAL WHERE id = :id";
+		    String query = "DELETE FROM redsocial WHERE id = :id";
 
 		    // Ejecutar la sentencia
 		    int result = 0;
@@ -189,7 +176,7 @@ public class RedSocialDao {
 	  public int getCantidadRedesSociales() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
-		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM REDSOCIAL"); 
+		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM redsocial"); 
 		    
 		    if (sqlRowSet.next()) {
 		    	cant = sqlRowSet.getInt("cantidad");

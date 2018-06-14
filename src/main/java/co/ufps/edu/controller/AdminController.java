@@ -27,11 +27,11 @@ import co.ufps.edu.dao.NoticiaDao;
 import co.ufps.edu.dao.NovedadDao;
 import co.ufps.edu.dao.RedSocialDao;
 import co.ufps.edu.dao.SubCategoriaDao;
+import co.ufps.edu.dao.VisitaDao;
 import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Galeria;
 import co.ufps.edu.dto.Login;
 import co.ufps.edu.dto.Novedad;
-import co.ufps.edu.dto.VisitaDao;
 import co.ufps.edu.util.JwtUtil;
 
 @Controller

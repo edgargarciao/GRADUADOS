@@ -15,7 +15,11 @@ import co.ufps.edu.dto.Contacto;
  */
 public class ContactoDao {
 
-	SpringDbMgr springDbMgr = new SpringDbMgr();
+	private SpringDbMgr springDbMgr;
+	
+	public ContactoDao() {
+	  springDbMgr = new SpringDbMgr();
+	}
 	
 	/**
 	 * Metodo que consulta en base de datos todos los contactos existentes.
@@ -28,7 +32,7 @@ public class ContactoDao {
 	    List<Contacto> contactos = new LinkedList<>();
 
 	    // Consulta para realizar en base de datos
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CONTACTO ");
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM contacto ");
 
 	    // Recorre cada registro obtenido de base de datos
 	    while (sqlRowSet.next()) {
@@ -60,7 +64,7 @@ public class ContactoDao {
 	    map.addValue("nombre", contacto.getNombre());
 
 	    // Armar la sentencia de actualización debase de datos
-	    String query = "INSERT INTO CONTACTO(nombre) VALUES(:nombre)";
+	    String query = "INSERT INTO contacto(nombre) VALUES(:nombre)";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -90,7 +94,7 @@ public class ContactoDao {
 	    // Consulta para realizar en base de datos
 	    MapSqlParameterSource map = new MapSqlParameterSource();
 	    map.addValue("id", idContacto);
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CONTACTO WHERE id = :id", map);
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM contacto WHERE id = :id", map);
 
 	    // Consulto si el contacto existe
 	    if (sqlRowSet.next()) {
@@ -120,7 +124,7 @@ public class ContactoDao {
 	    map.addValue("nombre", contacto.getNombre());
 
 	    // Armar la sentencia de actualización debase de datos
-	    String query = "UPDATE CONTACTO SET nombre = :nombre  WHERE id = :id";
+	    String query = "UPDATE contacto SET nombre = :nombre  WHERE id = :id";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -144,7 +148,7 @@ public class ContactoDao {
 		    map.addValue("id", contacto.getId());
 
 		    // Armar la sentencia de eliminación debase de datos
-		    String query = "DELETE FROM CONTACTO WHERE id = :id";
+		    String query = "DELETE FROM contacto WHERE id = :id";
 
 		    // Ejecutar la sentencia
 		    int result = 0;
@@ -166,7 +170,7 @@ public class ContactoDao {
 	  public int getCantidadContactos() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
-		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM CONTACTO "); 
+		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM contacto "); 
 		    
 		    if (sqlRowSet.next()) {
 		    	cant = sqlRowSet.getInt("cantidad");

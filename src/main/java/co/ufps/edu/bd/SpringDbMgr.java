@@ -1,5 +1,8 @@
 package co.ufps.edu.bd;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Properties;
 import javax.sql.DataSource;
@@ -41,10 +44,14 @@ public class SpringDbMgr {
 
 		Properties p = new Properties();
 		p.setProperty("user", "root");
-		p.setProperty("password", "");
+		//p.setProperty("password", "");
+		p.setProperty("password", "123454");
 		p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
 
-		dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC", p);
+		//dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC", p);
+		dataSource = new DriverManagerDataSource("jdbc:mysql://35.203.35.232:3306/graduados?zeroDateTimeBehavior=convertToNull", p);
+		
+		
 		//jdbc:mysql://localhost:3306/dbname
 	}
 
@@ -150,5 +157,71 @@ public class SpringDbMgr {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
+	
+	public void main2(String[] args) {
+      
+	  try {
+        Class.forName("com.mysql.jdbc.Driver");
+    } catch (ClassNotFoundException e) {
+      new Exception();
+    }
+
+    Properties p = new Properties();
+    p.setProperty("user", "root");
+    p.setProperty("password", "123454");
+    p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
+
+    String instanceConnectionName = "moodleuvirtualufps:northamerica-northeast1:ufpsgraduados";
+    
+    // TODO: fill this in
+    // The database from which to list tables.
+    String databaseName = "mysql";
+    
+    DataSource dataSource = new DriverManagerDataSource(String.format(
+        "jdbc:mysql://google/%s?cloudSqlInstance=%s&amp"
+            + "socketFactory=com.google.cloud.sql.mysql.SocketFactory",
+        databaseName,
+        instanceConnectionName), p);
+    //jdbc:mysql://localhost:3306/dbname
+    
+    try (Statement statement = dataSource.getConnection().createStatement()) {
+      ResultSet resultSet = statement.executeQuery("SHOW TABLES");
+      while (resultSet.next()) {
+        System.out.println(resultSet.getString(1));
+      }
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+	  
+    }
+	
+	public static void main(String[] args) {
+	  try {
+        Class.forName("com.mysql.jdbc.Driver");
+    } catch (ClassNotFoundException e) {
+      new Exception();
+    }
+
+    Properties p = new Properties();
+    p.setProperty("user", "root");
+    //p.setProperty("password", "");
+    p.setProperty("password", "123454");
+    p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
+
+    //dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC", p);
+    DataSource s = new DriverManagerDataSource("jdbc:mysql://35.203.35.232:3306/graduados?zeroDateTimeBehavior=convertToNull", p);
+    
+    
+    //jdbc:mysql://localhost:3306/dbname
+      NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(s);
+
+      MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+      SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet("select ip from visita", mapSqlParameterSource);
+      while(sqlRowSet.next()) {
+        System.out.println("id --> "+sqlRowSet.getString("ip"));
+      }
+    }
 
 }
