@@ -338,15 +338,6 @@ public class CategoriaDao {
       // Guarda el registro para ser retornado
       categoria.agregarSubcategoria(subCategoria);
     }
-    
-    for(Categoria cat:categorias) {
-      for(SubCategoria subs : cat.getSubcategorias()) {
-        Contenido co = subs.getContenido();
-        if(co!=null){
-          System.out.println("id --> "+co.getTipoContenido().getId());
-        }
-      }
-    }
 
     // Retorna todos las categorias desde base de datos
     return categorias;

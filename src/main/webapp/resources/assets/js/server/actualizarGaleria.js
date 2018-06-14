@@ -4,8 +4,11 @@
 		function cargarImagenes(){
 			// Aqui se obtiene el nombre o titlo
 			var id = document.getElementById("id").value;
-			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
-				
+	    	if ( (window.location.pathname).indexOf('ufps') != -1 ){
+	    		var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	}else{
+	    		var url = window.location.protocol + "//" + window.location.host;
+	    	}
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",
@@ -322,9 +325,11 @@
 			// Aqui se obtiene la fecha
 			var fecha = document.getElementById("fecha").value;			
 				
-			
-			
-			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	if ( (window.location.pathname).indexOf('ufps') != -1 ){
+	    		var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	}else{
+	    		var url = window.location.protocol + "//" + window.location.host;
+	    	}
 			var formData = {
 					nombre: 			nombre,
 					descripcion: 		descripcion,

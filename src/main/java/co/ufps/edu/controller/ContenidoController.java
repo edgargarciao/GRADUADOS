@@ -112,9 +112,16 @@ public class ContenidoController {
       return "Administrador/Contenido/Contenidos"; // Nombre del archivo jsp
     }
     Contenido contenido = contenidoDao.obtenerContenidoPorId(idContenido);
+    
+    if(contenido.getTipoContenido().getId() == 2) {      
+      contenido.setUrl(contenido.getContenido());
+      contenido.setContenido("");
+    }
+   
     model.addAttribute("tiposAsociacion", getAsosiaciones());
     model.addAttribute("tiposContenido", tipoContenidoDao.getContenidos());
     model.addAttribute("contenido", contenido);
+
     return "Administrador/Contenido/ActualizarContenido"; // Nombre del archivo jsp
   }  
     

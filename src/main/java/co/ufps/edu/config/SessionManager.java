@@ -45,11 +45,15 @@ public class SessionManager implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
-
+      
+    request.setCharacterEncoding("ISO-8859-15");
+    
+    response.setCharacterEncoding("ISO-8859-15");
+    
     if(request.getSession().getAttribute("token") == null)
     {
       response.setStatus(HttpStatus.UNAUTHORIZED.value());
-      response.sendRedirect("/"+Constantes.RUTA+"/admin");
+      response.sendRedirect(Constantes.RUTA+"/admin");
       return false;
     }
     else {
@@ -65,7 +69,7 @@ public class SessionManager implements HandlerInterceptor {
       // Si el token no es valido se envia un mensaje de no autorizado. 
       } else {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.sendRedirect("/"+Constantes.RUTA+"/admin");
+        response.sendRedirect(Constantes.SERVER+Constantes.RUTA+"/admin");
         return false;
         // Above code will send a 401 with no response body.
         // If you need a 401 view, do a redirect instead of
