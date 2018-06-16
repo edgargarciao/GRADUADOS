@@ -5,12 +5,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 
 /**
  * Clase que permite realizar la configuración web del sistema.
@@ -28,14 +30,25 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   }
 
   @Bean
+  public ViewResolver resourceBundleViewResolver() {
+      ResourceBundleViewResolver viewResolver = new ResourceBundleViewResolver();
+      viewResolver.setBasename("views");
+      viewResolver.setOrder(1);
+      return viewResolver;
+  }
+  
+  @Bean
   public InternalResourceViewResolver resolver() {
     // 2. Registra los jsp
     InternalResourceViewResolver resolver = new InternalResourceViewResolver();
     resolver.setViewClass(JstlView.class);
     resolver.setPrefix("/WEB-INF/views/");
     resolver.setSuffix(".jsp");
+    resolver.setOrder(2);
     return resolver;
   }
+  
+  
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {

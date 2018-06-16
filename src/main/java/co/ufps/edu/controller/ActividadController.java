@@ -40,7 +40,7 @@ public class ActividadController {
   public String index(Model model) {
     // Cargamos los contenidos para poder mostrarlas en el cuadro.
     model.addAttribute("actividades", actividadDao.getActividades());
-    return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
+    return "Administrador/Actividad/actividades"; // Nombre del archivo jsp
   }
 
   /**
@@ -78,7 +78,7 @@ public class ActividadController {
       if (mensaje.equals("Registro exitoso")) {
         model.addAttribute("result", "Actividad registrada con éxito.");
         model.addAttribute("actividades", actividadDao.getActividades());
-        return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
+        return "Administrador/Actividad/actividades"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         return "Administrador/Actividad/RegistrarActividad"; // Nombre del archivo jsp
@@ -125,7 +125,7 @@ public class ActividadController {
       if (mensaje.equals("Actualizacion exitosa")) {
         model.addAttribute("result", "Actividad actualizada con éxito.");
         model.addAttribute("actividades", actividadDao.getActividades());
-        return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
+        return "Administrador/Actividad/actividades"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         Actividad Acti = actividadDao.obtenerActividadPorId(actividad.getId());
@@ -155,7 +155,7 @@ public class ActividadController {
     // Consulto que el Id sea mayor a 0.
     if (idActividad <= 0) {
       model.addAttribute("actividades", actividadDao.getActividades());
-      return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
+      return "Administrador/Actividad/actividades"; // Nombre del archivo jsp
     }
     Actividad actividad = actividadDao.obtenerActividadPorId(idActividad);
     model.addAttribute("actividad", actividad);
@@ -176,7 +176,7 @@ public class ActividadController {
     if (mensaje.equals("Eliminacion exitosa")) {
       model.addAttribute("result", "Actividad eliminada con éxito.");
       model.addAttribute("actividades", actividadDao.getActividades());
-      return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
+      return "Administrador/Actividad/atividades"; // Nombre del archivo jsp
     } else {
       model.addAttribute("wrong", mensaje);
       return "Administrador/Actividad/EliminarActividad";

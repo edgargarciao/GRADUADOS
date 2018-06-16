@@ -1,7 +1,11 @@
 package co.ufps.edu.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +33,7 @@ import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Login;
 import co.ufps.edu.dto.VisitaDao;
 import co.ufps.edu.util.JwtUtil;
+
 
 @Controller
 public class AdminController {
@@ -84,7 +89,6 @@ public class AdminController {
     model.addAttribute("novedades", novedadDao.getUltimasNovedades());
     model.addAttribute("actividades", actividadDao.getUltimasActividades());
     model.addAttribute("galerias", galeriaDao.getGalerias());
-    
     model.addAttribute("redes", redSocialDao.getRedesSociales());
     model.addAttribute("enlaces", enlaceDeInteresDao.getEnlacesDeInteres());
     model.addAttribute("contactos", contactoDao.getContactos());
@@ -279,6 +283,11 @@ public class AdminController {
     model.addAttribute("titulo",(contenido == null)?"":contenido.getNombre());
     model.addAttribute("codigo",(contenido == null)?"":contenido.getContenido());
     return "contenido"; // Nombre del archivo jsp
+  }
+  
+  @GetMapping("/generarInforme")
+  private String generarInforme() {
+	  return "xlsView"; // Nombre del archivo java
   }
 
 
