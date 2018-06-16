@@ -19,8 +19,8 @@ import co.ufps.edu.dto.ResultDB;
  * Class with basic operations to interact with Database System.
  * 
  * <p>
- * This class contains specific implementation using Spring-JDBC Project. For
- * more information check Spring Framework Reference Documentation.
+ * This class contains specific implementation using Spring-JDBC Project. For more information check
+ * Spring Framework Reference Documentation.
  * 
  * @see <a href=
  *      "https://docs.spring.io/spring/docs/current/spring-framework-reference/html/spring-data-tier.html">
@@ -29,161 +29,138 @@ import co.ufps.edu.dto.ResultDB;
  */
 public class SpringDbMgr {
 
-	private DataSource dataSource;
+  private DataSource dataSource;
 
-	public SpringDbMgr() {
-		initDataSource();
-	}
+  public SpringDbMgr() {
+    initDataSource();
+  }
 
-	private void initDataSource() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-		  //new Exception();
-		}
-
-		Properties p = new Properties();
-		p.setProperty("user", "root");
-		p.setProperty("password", "");
-		
-		p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
-
-		
-		 dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC", p);
-		//                                         
-		
-		//jdbc:mysql://localhost:3306/dbname
-	}
-
-	/**
-	 * This method implements SELECT query execution logic without parameters in
-	 * Database System using Spring-JDBC.
-	 * 
-	 * @param query
-	 *            Text that represents query to be executed.
-	 * @return Set of rows returned by the query.
-	 * @throws AppException
-	 *             If there is any problem in the execution.
-	 */
-	public SqlRowSet executeQuery(String query) {
-	   try {
-		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-
-		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet(query, mapSqlParameterSource);
-		return sqlRowSet;
-	    }catch(Exception e) {
-	    }
-	      
-	      
-	      return null;
-	}
-
-	/**
-	 * This method implements SELECT query execution logic in Database System
-	 * using Spring-JDBC.
-	 * 
-	 * @param query
-	 *            Text that represents query to be executed.
-	 * @param parameterMap
-	 *            Object containing all parameters required to bind SQL
-	 *            variables.
-	 * @return Set of rows returned by the query.
-	 * @throws AppException
-	 *             If there is any problem in the execution.
-	 */
-	public SqlRowSet executeQuery(String query, MapSqlParameterSource parameterMap) {
-	  try{
-		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-
-		SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet(query, parameterMap);
-
-		return sqlRowSet;
-	  }catch(Exception e) {
-	    
-	  }
-	  
-	  return null;
-	}
-
-	/**
-	 * This method implements INSERT/UPDATE/DELETE query execution logic without
-	 * parameters in Database System using Spring-JDBC.
-	 * 
-	 * @param query
-	 *            Text that represents query to be executed.
-	 * @return the number of rows affected.
-	 * @throws AppException
-	 *             If there is any problem in the execution.
-	 */
-	public int executeDml(String query) {
-	  try {
-    	  NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+  private void initDataSource() {
     
-    		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-    		int affectedRows = namedParameterJdbcTemplate.update(query, mapSqlParameterSource);
-    
-    		return affectedRows;
-	   }catch(Exception e) {
-	        
-	      }
-	      
-	      return -1;
-	}
+    dataSource = new DriverManagerDataSource(System.getProperty("cloudsql"));
+    //dataSource = new DriverManagerDataSource("jdbc:mysql://35.203.35.232:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false");
+  }
 
-	/**
-	 * This method implements INSERT/UPDATE/DELETE query execution logic in
-	 * Database System using Spring-JDBC.
-	 * 
-	 * @param query
-	 *            Text that represents DML to be executed.
-	 * @param parameterMap
-	 *            Object containing all parameters required to bind SQL
-	 *            variables.
-	 * @return the number of rows affected.
-	 * @throws AppException
-	 *             If there is any problem in the execution.
-	 */
-	public int executeDml(String query, MapSqlParameterSource parameterMap) {
-	  try {
-		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int affectedRows = namedParameterJdbcTemplate.update(query, parameterMap,keyHolder);
+  /**
+   * This method implements SELECT query execution logic without parameters in Database System using
+   * Spring-JDBC.
+   * 
+   * @param query Text that represents query to be executed.
+   * @return Set of rows returned by the query.
+   * @throws AppException If there is any problem in the execution.
+   */
+  public SqlRowSet executeQuery(String query) {
+    try {
+      NamedParameterJdbcTemplate namedParameterJdbcTemplate =
+          new NamedParameterJdbcTemplate(dataSource);
 
-		return affectedRows;
-	   }catch(Exception e) {
-	        
-	      }
-	      
-	      return 0;
-	}
-	
-	public ResultDB executeDmlWithKey(String query, MapSqlParameterSource parameterMap) {
+      MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+      SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet(query, mapSqlParameterSource);
+      return sqlRowSet;
+    } catch (Exception e) {
+    }
 
-		ResultDB resultDB = new ResultDB();
-		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int affectedRows = namedParameterJdbcTemplate.update(query, parameterMap,keyHolder);
-		Long generatedId = keyHolder.getKey().longValue();
-		resultDB.setResult(affectedRows);
-		resultDB.setKey(generatedId);
-		return resultDB;
-	}
 
-	/**
-	 * This method set a dataSource.
-	 * 
-	 * @param dataSource
-	 *            for set
-	 */
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-	
-	public void main2(String[] args) {
-      
-	  try {
-        Class.forName("com.mysql.jdbc.Driver");
+    return null;
+  }
+
+  /**
+   * This method implements SELECT query execution logic in Database System using Spring-JDBC.
+   * 
+   * @param query Text that represents query to be executed.
+   * @param parameterMap Object containing all parameters required to bind SQL variables.
+   * @return Set of rows returned by the query.
+   * @throws AppException If there is any problem in the execution.
+   */
+  public SqlRowSet executeQuery(String query, MapSqlParameterSource parameterMap) {
+    try {
+      NamedParameterJdbcTemplate namedParameterJdbcTemplate =
+          new NamedParameterJdbcTemplate(dataSource);
+
+      SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet(query, parameterMap);
+
+      return sqlRowSet;
+    } catch (Exception e) {
+
+    }
+
+    return null;
+  }
+
+  /**
+   * This method implements INSERT/UPDATE/DELETE query execution logic without parameters in
+   * Database System using Spring-JDBC.
+   * 
+   * @param query Text that represents query to be executed.
+   * @return the number of rows affected.
+   * @throws AppException If there is any problem in the execution.
+   */
+  public int executeDml(String query) {
+    try {
+      NamedParameterJdbcTemplate namedParameterJdbcTemplate =
+          new NamedParameterJdbcTemplate(dataSource);
+
+      MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+      int affectedRows = namedParameterJdbcTemplate.update(query, mapSqlParameterSource);
+
+      return affectedRows;
+    } catch (Exception e) {
+
+    }
+
+    return -1;
+  }
+
+  /**
+   * This method implements INSERT/UPDATE/DELETE query execution logic in Database System using
+   * Spring-JDBC.
+   * 
+   * @param query Text that represents DML to be executed.
+   * @param parameterMap Object containing all parameters required to bind SQL variables.
+   * @return the number of rows affected.
+   * @throws AppException If there is any problem in the execution.
+   */
+  public int executeDml(String query, MapSqlParameterSource parameterMap) {
+    try {
+      NamedParameterJdbcTemplate namedParameterJdbcTemplate =
+          new NamedParameterJdbcTemplate(dataSource);
+      KeyHolder keyHolder = new GeneratedKeyHolder();
+      int affectedRows = namedParameterJdbcTemplate.update(query, parameterMap, keyHolder);
+
+      return affectedRows;
+    } catch (Exception e) {
+
+    }
+
+    return 0;
+  }
+
+  public ResultDB executeDmlWithKey(String query, MapSqlParameterSource parameterMap) {
+
+    ResultDB resultDB = new ResultDB();
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate =
+        new NamedParameterJdbcTemplate(dataSource);
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+    int affectedRows = namedParameterJdbcTemplate.update(query, parameterMap, keyHolder);
+    Long generatedId = keyHolder.getKey().longValue();
+    resultDB.setResult(affectedRows);
+    resultDB.setKey(generatedId);
+    return resultDB;
+  }
+
+  /**
+   * This method set a dataSource.
+   * 
+   * @param dataSource for set
+   */
+  public void setDataSource(DataSource dataSource) {
+    this.dataSource = dataSource;
+  }
+
+  public void main2(String[] args) {
+
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
     } catch (ClassNotFoundException e) {
       new Exception();
     }
@@ -194,18 +171,17 @@ public class SpringDbMgr {
     p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
 
     String instanceConnectionName = "moodleuvirtualufps:northamerica-northeast1:ufpsgraduados";
-    
+
     // TODO: fill this in
     // The database from which to list tables.
     String databaseName = "mysql";
-    
+
     DataSource dataSource = new DriverManagerDataSource(String.format(
         "jdbc:mysql://google/%s?cloudSqlInstance=%s&amp"
             + "socketFactory=com.google.cloud.sql.mysql.SocketFactory",
-        databaseName,
-        instanceConnectionName), p);
-    //jdbc:mysql://localhost:3306/dbname
-    
+        databaseName, instanceConnectionName), p);
+    // jdbc:mysql://localhost:3306/dbname
+
     try (Statement statement = dataSource.getConnection().createStatement()) {
       ResultSet resultSet = statement.executeQuery("SHOW TABLES");
       while (resultSet.next()) {
@@ -216,57 +192,67 @@ public class SpringDbMgr {
       e.printStackTrace();
     }
 
-	  
-    }
-	
-	public static void main(String[] args) {
-	  try {
-        Class.forName("com.mysql.jdbc.Driver");
+
+  }
+
+  public static void main(String[] args) {
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
     } catch (ClassNotFoundException e) {
       new Exception();
     }
-	    String instanceConnectionName = "moodleuvirtualufps:northamerica-northeast1:ufpsgraduados";
+    String instanceConnectionName = "moodleuvirtualufps:northamerica-northeast1:ufpsgraduados";
     Properties p = new Properties();
     p.setProperty("user", "root");
-    //p.setProperty("password", "");
+    // p.setProperty("password", "");
     p.setProperty("password", "123454");
     p.setProperty("driverClassName", "com.mysql.jdbc.Driver");
 
-    //dataSource = new DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC", p);
-    DataSource s = new DriverManagerDataSource("jdbc:mysql://35.203.35.232:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false", p);
-    
-    
-    //jdbc:mysql://localhost:3306/dbname
-      NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(s);
+    // dataSource = new
+    // DriverManagerDataSource("jdbc:mysql://localhost:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC",
+    // p);
+    DataSource s = new DriverManagerDataSource(
+        "jdbc:mysql://35.203.35.232:3306/graduados?useUnicode=true&amp;characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false",
+        p);
 
-      MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-      SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet("select id from archivo", mapSqlParameterSource);
-      while(sqlRowSet.next()) {
-        //System.out.println("id --> "+sqlRowSet.getLong("id"));
-      }
-      
-      //namedParameterJdbcTemplate.update("DELETE FROM visita", new MapSqlParameterSource());
-      
-      mapSqlParameterSource = new MapSqlParameterSource();
-      mapSqlParameterSource.addValue("correo", "edgaryesidgo@ufps.edu.co");
-      mapSqlParameterSource.addValue("pass", "1234");
-      sqlRowSet = namedParameterJdbcTemplate.queryForRowSet(" SELECT    categoria.id                    idCategoria,            "
-          + "           categoria.nombre                nombreCategoria,        "
-          + "           categoria.descripcion           descripcionCategoria,   "
-          + "           categoria.orden                 ordenCategoria,         "
-          + "           subcategoria.id                 idSubcategoria,         "
-          + "           subcategoria.nombre             nombreSubCategoria,     "
-          + "           subcategoria.descripcion        descripcionSubCategoria,"
-          + "           subcategoria.orden              ordenSubCategoria       "
-          + "   FROM    subcategoria                                            "
-          + "INNER JOIN categoria  ON categoria.id = subcategoria.Categoria_id  "
-          + "ORDER BY   categoria.orden ASC,subcategoria.orden ASC              ",new MapSqlParameterSource());
-      
-      while(sqlRowSet.next()) {
-        System.out.println("id --> "+sqlRowSet.getLong("idCategoria"));
-      }
-      
-      
+
+    // jdbc:mysql://localhost:3306/dbname
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(s);
+
+    MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+    String rest = "INSERT INTO subcategoria VALUES (nombre,descripcion,orden,Categoria_id) \n";
+    SqlRowSet sqlRowSet = namedParameterJdbcTemplate.queryForRowSet("select * from subcategoria",
+        mapSqlParameterSource);
+    while (sqlRowSet.next()) {
+      // System.out.println("id --> "+sqlRowSet.getLong("id"));
+      rest += "('" + sqlRowSet.getString("nombre") + "','" + sqlRowSet.getString("nombre") + "',"
+          + sqlRowSet.getString("orden");
     }
+
+    // namedParameterJdbcTemplate.update("DELETE FROM visita", new MapSqlParameterSource());
+
+    mapSqlParameterSource = new MapSqlParameterSource();
+    mapSqlParameterSource.addValue("correo", "edgaryesidgo@ufps.edu.co");
+    mapSqlParameterSource.addValue("pass", "1234");
+    sqlRowSet = namedParameterJdbcTemplate.queryForRowSet(
+        " SELECT    categoria.id                    idCategoria,            "
+            + "           categoria.nombre                nombreCategoria,        "
+            + "           categoria.descripcion           descripcionCategoria,   "
+            + "           categoria.orden                 ordenCategoria,         "
+            + "           subcategoria.id                 idSubcategoria,         "
+            + "           subcategoria.nombre             nombreSubCategoria,     "
+            + "           subcategoria.descripcion        descripcionSubCategoria,"
+            + "           subcategoria.orden              ordenSubCategoria       "
+            + "   FROM    subcategoria                                            "
+            + "INNER JOIN categoria  ON categoria.id = subcategoria.Categoria_id  "
+            + "ORDER BY   categoria.orden ASC,subcategoria.orden ASC              ",
+        new MapSqlParameterSource());
+
+    while (sqlRowSet.next()) {
+      System.out.println("id --> " + sqlRowSet.getLong("idCategoria"));
+    }
+
+
+  }
 
 }

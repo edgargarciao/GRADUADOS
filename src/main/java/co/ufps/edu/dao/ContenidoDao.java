@@ -128,8 +128,9 @@ public class ContenidoDao {
     Map<Integer, String> asociaciones = new HashMap<>();
     String tabla = (tipoAsociacion.equalsIgnoreCase(Constantes.ACTIVIDAD)) ? "proximaactividad"
         : tipoAsociacion;
+    tabla = tabla.toLowerCase();
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM " + tabla + " WHERE ID NOT IN (SELECT ASOCIACION FROM contenido)");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM " + tabla + " WHERE ID NOT IN (SELECT asociacion FROM contenido)");
 
     while (sqlRowSet.next()) {
       asociaciones.put(sqlRowSet.getInt("id"), sqlRowSet.getString("nombre"));
@@ -142,12 +143,12 @@ public class ContenidoDao {
 
     Map<Integer, String> asociaciones = new HashMap<>();
     String tabla = (tipoAsociacion.equalsIgnoreCase(Constantes.ACTIVIDAD)) ? "proximaactividad": tipoAsociacion;
-    
+    tabla = tabla.toLowerCase();
     MapSqlParameterSource map = new MapSqlParameterSource();
    // map.addValue("tabla", tabla);
     map.addValue("id", idAsociacion);
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM "+tabla+" WHERE ID NOT IN (SELECT ASOCIACION FROM contenido) OR ID = :id",map );
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM "+tabla+" WHERE ID NOT IN (SELECT asociacion FROM contenido) OR ID = :id",map );
 
     while (sqlRowSet.next()) {
       asociaciones.put(sqlRowSet.getInt("id"), sqlRowSet.getString("nombre"));

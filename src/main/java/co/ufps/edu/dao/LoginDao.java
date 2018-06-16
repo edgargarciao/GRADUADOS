@@ -20,7 +20,7 @@ public class LoginDao {
     		mapSqlParameterSource.addValue("correo", correo);
     		mapSqlParameterSource.addValue("pass", contraseña);
     		SqlRowSet sqlRowSet = springDbMgr.executeQuery("SELECT id FROM usuario "
-    				+ "	WHERE correoInstitucional = :correo AND pass = :pass", mapSqlParameterSource);
+    				+ "	WHERE correoInstitucional = :correo AND Contraseña = :pass", mapSqlParameterSource);
     				
     		
     		if ((sqlRowSet.next())) {

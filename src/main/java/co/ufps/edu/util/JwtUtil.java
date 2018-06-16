@@ -14,7 +14,15 @@ public class JwtUtil {
 
 	// @Value("${jwt.secret}")
 	private String secret = "secret";
-
+	private static JwtUtil jwtUtil;
+	
+	public static JwtUtil getInstancia() {
+	  if(jwtUtil == null) {
+	    jwtUtil = new JwtUtil();
+	  }
+	  return jwtUtil;
+	}
+	
 	/**
 	 * Tries to parse specified String as a JWT token. If successful, returns User
 	 * object with username, id and role prefilled (extracted from token). If

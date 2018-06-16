@@ -133,9 +133,6 @@ public class AdminController {
   public String authenticateUser(@ModelAttribute("login") Login login,Model model,
       HttpServletRequest request) {
     
-    login.setCorreoInstitucional("edgaryesidgo@ufps.edu.co");
-    login.setContraseña("1234");
-    
     /*
      * Consulto si los datos no vienen nulos
      */
@@ -148,7 +145,7 @@ public class AdminController {
       if (!resultado.isEmpty()) {
 
         // Creo un Json Web Token para validar si la sesión esta activa
-        String jwt = "s"+i;//jwtUtil.generateToken(resultado, login.getCorreoInstitucional());
+        String jwt = jwtUtil.generateToken(resultado, login.getCorreoInstitucional());
 
         // Guardo el JWT como atributo de sesión
         request.getSession().setAttribute("token", jwt);
@@ -156,7 +153,7 @@ public class AdminController {
         // Guarda la sesion en el manejador de sesiones
         sessionManager.guardarSession("SESSION:" + login.getCorreoInstitucional(), jwt);
 
-        //this.getCantidadRegistros(model);
+        this.getCantidadRegistros(model);
 
         // Redirijo al index debido a que el usuario ya fue autenticado con exito
         return "Administrador/indexAdmin";
