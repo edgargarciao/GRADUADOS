@@ -276,5 +276,11 @@ public class AdminController {
     cargarModelo(model);
     model.addAttribute("galeriasCom" , galerias);
     return "galerias"; // Nombre del archivo jsp
-  }    
+  }   
+  
+ 
+  @GetMapping("/generarInforme")
+  private String generarInforme() {
+	  return "xlsView"; // Nombre del archivo jsp
+  }
 }
