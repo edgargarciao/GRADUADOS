@@ -72,8 +72,9 @@
                     <div class="page-header float-right">
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
-                                
-                                <button type="button" class="btn btn-primary">Descargar informe de conteo</button>
+                                 
+                                 <a class="btn btn-primary" href="${contextPath}/generarInforme">Descargar informe de conteo</a>
+                               
                             </ol>
                         </div>
                     </div>

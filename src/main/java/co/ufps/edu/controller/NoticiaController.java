@@ -42,7 +42,7 @@ public class NoticiaController {
   public String index(Model model) {
     // Cargamos los contenidos para poder mostrarlas en el cuadro.
     model.addAttribute("noticias", noticiaDao.getNoticias());
-    return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
+    return "Administrador/Noticia/noticias"; // Nombre del archivo jsp
   }
   
   /**
@@ -81,7 +81,7 @@ public class NoticiaController {
       if (mensaje.equals("Registro exitoso")) {
         model.addAttribute("result", "Noticia registrada con éxito.");
         model.addAttribute("noticias", noticiaDao.getNoticias());
-        return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
+        return "Administrador/Noticia/noticias"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         return "Administrador/Noticia/RegistrarNoticia"; // Nombre del archivo jsp
@@ -110,7 +110,7 @@ public class NoticiaController {
     // Cargar noticias en model
     model.addAttribute("noticias", noticiaDao.getNoticias());
 
-    return "Administrador/Noticia/Noticias";
+    return "Administrador/Noticia/noticias";
   }
 
   /**
@@ -155,7 +155,7 @@ public class NoticiaController {
     // Cargar noticias en model
     model.addAttribute("noticias", noticiaDao.getNoticias());
 
-    return "Administrador/Noticia/Noticias";
+    return "Administrador/Noticia/noticias";
   }
 
   /**
@@ -193,7 +193,7 @@ public class NoticiaController {
     // Consulto que el Id sea mayor a 0.
     if (idNoticia <= 0) {
       model.addAttribute("noticias", noticiaDao.getNoticias());
-      return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
+      return "Administrador/Noticia/noticias"; // Nombre del archivo jsp
     }
     Noticia noticia = noticiaDao.obtenerNoticiaPorId(idNoticia);
     model.addAttribute("noticia", noticia);
@@ -216,7 +216,7 @@ public class NoticiaController {
       if (mensaje.equals("Actualizacion exitosa")) {
         model.addAttribute("result", "Noticia actualizada con éxito.");
         model.addAttribute("noticias", noticiaDao.getNoticias());
-        return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
+        return "Administrador/Noticia/noticias"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         Noticia noti = noticiaDao.obtenerNoticiaPorId(noticia.getId());
@@ -249,7 +249,7 @@ public class NoticiaController {
     // Consulto que el Id sea mayor a 0.
     if (idNoticia <= 0) {
       model.addAttribute("noticias", noticiaDao.getNoticias());
-      return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
+      return "Administrador/Noticia/noticias"; // Nombre del archivo jsp
     }
     Noticia noticia = noticiaDao.obtenerNoticiaPorId(idNoticia);
     model.addAttribute("noticia", noticia);
@@ -271,7 +271,7 @@ public class NoticiaController {
     if (mensaje.equals("Eliminacion exitosa")) {
       model.addAttribute("result", "Noticia eliminada con éxito.");
       model.addAttribute("noticias", noticiaDao.getNoticias());
-      return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
+      return "Administrador/Noticia/noticias"; // Nombre del archivo jsp
     } else {
       model.addAttribute("wrong", mensaje);
       return "Administrador/Noticia/EliminarNoticia";
