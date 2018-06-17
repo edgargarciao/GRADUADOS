@@ -102,7 +102,7 @@ public class ActividadController {
     // Consulto que el Id sea mayor a 0.
     if (idActividad <= 0) {
       model.addAttribute("actividades", actividadDao.getActividades());
-      return "Administrador/Actividad/actividades"; // Nombre del archivo jsp
+      return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
     }
     Actividad actividad = actividadDao.obtenerActividadPorId(idActividad);
     model.addAttribute("actividad", actividad);
