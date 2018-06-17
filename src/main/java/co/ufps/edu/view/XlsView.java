@@ -34,7 +34,7 @@ import co.ufps.edu.dto.Noticia;
 import co.ufps.edu.dto.Novedad;
 import co.ufps.edu.dto.RedSocial;
 import co.ufps.edu.dto.SubCategoria;
-import co.ufps.edu.dto.VisitaDao;
+
 
 public class XlsView extends AbstractXlsView {
 

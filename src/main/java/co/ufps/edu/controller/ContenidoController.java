@@ -58,7 +58,7 @@ public class ContenidoController {
   public String index(Model model) {
     // Cargamos los contenidos para poder mostrarlas en el cuadro.
     model.addAttribute("contenidos", contenidoDao.getContenidos());
-    return "Administrador/Contenido/contenidos"; // Nombre del archivo jsp
+    return "Administrador/Contenido/Contenidos"; // Nombre del archivo jsp
   }
 
   /**
@@ -109,7 +109,7 @@ public class ContenidoController {
     // Consulto que el Id sea mayor a 0.
     if (idContenido <= 0) {
       model.addAttribute("contenidos", contenidoDao.getContenidos());
-      return "Administrador/Contenido/contenidos"; // Nombre del archivo jsp
+      return "Administrador/Contenido/Contenidos"; // Nombre del archivo jsp
     }
     Contenido contenido = contenidoDao.obtenerContenidoPorId(idContenido);
     
@@ -237,7 +237,7 @@ public class ContenidoController {
     if (idContenido <= 0) {
       // Cargamos los contenidos para poder mostrarlas en el cuadro.
       model.addAttribute("contenidos", contenidoDao.getContenidos());
-      return "Administrador/Contenido/contenidos"; // Nombre del archivo jsp
+      return "Administrador/Contenido/Contenidos"; // Nombre del archivo jsp
     }
     Contenido contenido = contenidoDao.obtenerContenidoPorId(idContenido);
     model.addAttribute("contenido", contenido);
@@ -260,7 +260,7 @@ public class ContenidoController {
     if (mensaje.equals("Eliminacion exitosa")) {
       model.addAttribute("result", "Contenido eliminado con éxito.");
       model.addAttribute("contenidos", contenidoDao.getContenidos());
-      return "Administrador/Contenido/contenidos"; // Nombre del archivo jsp
+      return "Administrador/Contenido/Contenidos"; // Nombre del archivo jsp
     } else {
       model.addAttribute("wrong", mensaje);
       return "Administrador/Contenido/EliminarContenido"; // Nombre del archivo jsp
