@@ -62,7 +62,7 @@ public class ContactoController {
   public String index(Model model) {
     // Cargamos los contactos para poder mostrarlos en el cuadro.
     model.addAttribute("contactos", contactoDao.getContactos());
-    return "Administrador/Contacto/contactos"; // Nombre del archivo jsp
+    return "Administrador/Contacto/Contactos"; // Nombre del archivo jsp
   }
   
   
@@ -82,7 +82,7 @@ public class ContactoController {
       if (mensaje.equals("Registro exitoso")) {
         model.addAttribute("result", "Contacto registrado con éxito.");
         model.addAttribute("contactos", contactoDao.getContactos());
-        return "Administrador/Contacto/contactos"; // Nombre del archivo jsp
+        return "Administrador/Contacto/Contactos"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         return "Administrador/Contacto/RegistrarContacto";
@@ -107,7 +107,7 @@ public class ContactoController {
     // Consulto que el Id sea mayor a 0.
     if (idContacto <= 0) {
       model.addAttribute("contactos", contactoDao.getContactos());
-      return "Administrador/Contacto/contactos"; // Nombre del archivo jsp
+      return "Administrador/Contacto/Contactos"; // Nombre del archivo jsp
     }
     Contacto contacto = contactoDao.obtenerContactoPorId(idContacto);
     model.addAttribute("contacto", contacto);
@@ -130,7 +130,7 @@ public class ContactoController {
       if (mensaje.equals("Actualizacion exitosa")) {
         model.addAttribute("result", "Información de contacto actualizada con éxito.");
         model.addAttribute("contactos", contactoDao.getContactos());
-        return "Administrador/Contacto/contactos"; // Nombre del archivo jsp
+        return "Administrador/Contacto/Contactos"; // Nombre del archivo jsp
       } else {
         model.addAttribute("wrong", mensaje);
         return "Administrador/Contacto/ActualizarContacto";
@@ -155,7 +155,7 @@ public class ContactoController {
     // Consulto que el Id sea mayor a 0.
     if (idContacto <= 0) {
       model.addAttribute("contactos", contactoDao.getContactos());
-      return "Administrador/Contacto/contactos"; // Nombre del archivo jsp
+      return "Administrador/Contacto/Contactos"; // Nombre del archivo jsp
     }
     Contacto contacto = contactoDao.obtenerContactoPorId(idContacto);
     model.addAttribute("contacto", contacto);
@@ -176,7 +176,7 @@ public class ContactoController {
     if (mensaje.equals("Eliminacion exitosa")) {
       model.addAttribute("result", "Contacto eliminado con éxito.");
       model.addAttribute("contactos", contactoDao.getContactos());
-      return "Administrador/Contacto/contactos"; // Nombre del archivo jsp
+      return "Administrador/Contacto/Contactos"; // Nombre del archivo jsp
     } else {
       model.addAttribute("wrong", mensaje);
       return "Administrador/Contacto/EliminarContacto";
