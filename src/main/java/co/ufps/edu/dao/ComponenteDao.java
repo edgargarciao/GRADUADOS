@@ -24,21 +24,23 @@ public class ComponenteDao {
     // Lista para retornar con los datos
     Contenido contenido = new Contenido();
 
+    tipo = tipo.toLowerCase();
+    
     // Consulta para realizar en base de datos
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", idComponente);
     SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    "+tipo+".ID                     id         ,"
                                                   + "           "+tipo+".NOMBRE                 nombre     ,"
                                                   
-                                                  + "           CONTENIDO.id                    idContenido            ,"
-                                                  + "           CONTENIDO.contenido             contenido              ,"
-                                                  + "           CONTENIDO.TipoContenido_id      tipoContenido          ,"
-                                                  + "           CONTENIDO.asociacion            asociacion             ,"
-                                                  + "           CONTENIDO.tipoasociacion        tipoasociacion         ,"
-                                                  + "           CONTENIDO.titulo                titulo                 "
+                                                  + "           contenido.id                    idContenido            ,"
+                                                  + "           contenido.contenido             contenido              ,"
+                                                  + "           contenido.TipoContenido_id      tipoContenido          ,"
+                                                  + "           contenido.asociacion            asociacion             ,"
+                                                  + "           contenido.tipoasociacion        tipoasociacion         ,"
+                                                  + "           contenido.titulo                titulo                 "
                                                   
                                                   + "   FROM    "+tipo+"                                               "
-                                                  + "INNER JOIN CONTENIDO  ON CONTENIDO.asociacion = "+tipo+".id    "
+                                                  + "INNER JOIN contenido  ON contenido.asociacion = "+tipo+".id    "
                                                   + "WHERE      "+tipo+".ID = :id                                   ", map);
 
     // Consulto si la categoria existe

@@ -17,7 +17,7 @@ public class Constantes {
   // For development
   //public static final String SERVER = "/";
   // For production
-  public static final String SERVER = getServer();
+  public static final String SERVER = "";
   
   private static String getServer() {
     try {

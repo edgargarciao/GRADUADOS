@@ -27,7 +27,7 @@ public class LogoDao {
   public int getCantidadLogos() {
     int cant = 0;
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM LOGO ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM logo ");
 
     if (sqlRowSet.next()) {
       cant = sqlRowSet.getInt("cantidad");
@@ -44,7 +44,7 @@ public class LogoDao {
     map.addValue("tipo", tipo);
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM LOGO WHERE tipo = :tipo", map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM logo WHERE tipo = :tipo", map);
 
     // Recorre cada registro obtenido de base de datos
     if (sqlRowSet.next()) {
@@ -76,7 +76,7 @@ public class LogoDao {
     }
 
     // Armar la sentencia de actualización debase de datos
-    String query = "INSERT INTO LOGO(tipo,contenido) VALUES(:tipo,:contenido)";
+    String query = "INSERT INTO logo(tipo,contenido) VALUES(:tipo,:contenido)";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -108,7 +108,7 @@ public class LogoDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "UPDATE LOGO SET tipo = :tipo , contenido = :contenido  WHERE id = :id";
+        "UPDATE logo SET tipo = :tipo , contenido = :contenido  WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;

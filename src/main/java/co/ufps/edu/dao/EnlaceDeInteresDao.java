@@ -11,7 +11,11 @@ import co.ufps.edu.dto.EnlaceDeInteres;
 
 public class EnlaceDeInteresDao {
 
-	SpringDbMgr springDbMgr = new SpringDbMgr();
+	private SpringDbMgr springDbMgr;
+	
+	public EnlaceDeInteresDao() {
+	  springDbMgr = new SpringDbMgr();
+	}
 	
 
 	/**
@@ -24,7 +28,7 @@ public class EnlaceDeInteresDao {
 		// Lista para retornar con los datos
 	    List<EnlaceDeInteres> enlacesDeInteres = new LinkedList<>();
 	    // Consulta para realizar en base de datos
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM ENLACEINTERES ");
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM enlaceinteres ");
 	    
 	    // Recorre cada registro obtenido de base de datos
 	    while (sqlRowSet.next()) {
@@ -47,8 +51,7 @@ public class EnlaceDeInteresDao {
 	   * @param enlaceDeInteres Objeto con todos los datos del enlace a registrar.
 	   * @return El resultado de la acción.
 	   */
-	public String registrarEnlaceDeInteres(EnlaceDeInteres enlaceDeInteres) {
-	    SpringDbMgr springDbMgr = new SpringDbMgr();
+	public String registrarEnlaceDeInteres(EnlaceDeInteres enlaceDeInteres) {	    
 
 	    // Agrego los datos del registro (nombreColumna/Valor)
 	    MapSqlParameterSource map = new MapSqlParameterSource();
@@ -56,7 +59,7 @@ public class EnlaceDeInteresDao {
 	    map.addValue("url", enlaceDeInteres.getUrl());
 	    
 	    // Armar la sentencia de actualización de base de datos
-	    String query = "INSERT INTO ENLACEINTERES(nombre, url) VALUES(:nombre, :url)";
+	    String query = "INSERT INTO enlaceinteres(nombre, url) VALUES(:nombre, :url)";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -85,7 +88,7 @@ public class EnlaceDeInteresDao {
 	    // Consulta para realizar en base de datos
 	    MapSqlParameterSource map = new MapSqlParameterSource();
 	    map.addValue("id", idEnlaceDeInteres);
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM ENLACEINTERES WHERE id = :id", map);
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM enlaceinteres WHERE id = :id", map);
 	    
 	    // Consulto si la novedad existe
 	    if (sqlRowSet.next()) {
@@ -107,7 +110,7 @@ public class EnlaceDeInteresDao {
 	   * @return La informacion de un enlace de interes en un objeto.
 	   */
 	  public String editarEnlaceDeInteres(EnlaceDeInteres enlaceDeInteres) {
-	    SpringDbMgr springDbMgr = new SpringDbMgr();
+	    
 
 	    // Agrego los datos del registro (nombreColumna/Valor)
 
@@ -117,7 +120,7 @@ public class EnlaceDeInteresDao {
 	    map.addValue("url", enlaceDeInteres.getUrl());
 
 	    // Armar la sentencia de actualización debase de datos
-	    String query = "UPDATE ENLACEINTERES SET nombre = :nombre, url = :url  WHERE id = :id";
+	    String query = "UPDATE enlaceinteres SET nombre = :nombre, url = :url  WHERE id = :id";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -134,14 +137,14 @@ public class EnlaceDeInteresDao {
 	  
 	  
 	  public String eliminarEnlaceDeInteres(EnlaceDeInteres enlaceDeInteres) {
-		    SpringDbMgr springDbMgr = new SpringDbMgr();
+		    
 
 		    // Agrego los datos de la eliminación (nombreColumna/Valor)
 		    MapSqlParameterSource map = new MapSqlParameterSource();
 		    map.addValue("id", enlaceDeInteres.getId());
 
 		    // Armar la sentencia de eliminación debase de datos
-		    String query = "DELETE FROM ENLACEINTERES WHERE id = :id";
+		    String query = "DELETE FROM enlaceinteres WHERE id = :id";
 
 		    // Ejecutar la sentencia
 		    int result = 0;
@@ -162,7 +165,7 @@ public class EnlaceDeInteresDao {
 	  public int getCantidadEnlacesDeInteres() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
-		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM ENLACEINTERES "); 
+		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM enlaceinteres "); 
 		    
 		    if (sqlRowSet.next()) {
 		    	cant = sqlRowSet.getInt("cantidad");

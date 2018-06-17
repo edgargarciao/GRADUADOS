@@ -3,13 +3,8 @@ package co.ufps.edu.dao;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.TextStyle;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
@@ -41,7 +36,7 @@ public class ActividadDao {
     int cant = 0;
     // Consulta para realizar en base de datos
     SqlRowSet sqlRowSet =
-        springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM PROXIMAACTIVIDAD ");
+        springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM proximaactividad ");
 
     if (sqlRowSet.next()) {
       cant = sqlRowSet.getInt("cantidad");
@@ -61,7 +56,7 @@ public class ActividadDao {
     List<Actividad> actividades = new LinkedList<>();
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM PROXIMAACTIVIDAD ORDER BY id DESC ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM proximaactividad ORDER BY id DESC ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
@@ -101,7 +96,7 @@ public class ActividadDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "INSERT INTO PROXIMAACTIVIDAD(nombre,lugar,fechaInicial,fechaFinal,imagen) VALUES(:nombre,:lugar,:fechaInicial,:fechaFinal,:imagen)";
+        "INSERT INTO proximaactividad(nombre,lugar,fechaInicial,fechaFinal,imagen) VALUES(:nombre,:lugar,:fechaInicial,:fechaFinal,:imagen)";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -129,7 +124,7 @@ public class ActividadDao {
     // Consulta para realizar en base de datos
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", idActividad);
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM PROXIMAACTIVIDAD WHERE id = :id", map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM proximaactividad WHERE id = :id", map);
 
     // Consulto si la actividad existe
     if (sqlRowSet.next()) {
@@ -173,7 +168,7 @@ public class ActividadDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "UPDATE PROXIMAACTIVIDAD SET nombre = :nombre, lugar = :lugar, fechaInicial = :fechaInicial, fechaFinal = :fechaFinal  "
+        "UPDATE proximaactividad SET nombre = :nombre, lugar = :lugar, fechaInicial = :fechaInicial, fechaFinal = :fechaFinal  "
             + sqlImagen + " WHERE id = :id";
 
     // Ejecutar la sentencia
@@ -196,7 +191,7 @@ public class ActividadDao {
     map.addValue("id", actividad.getId());
 
     // Armar la sentencia de actualización debase de datos
-    String query = "DELETE FROM PROXIMAACTIVIDAD WHERE id = :id";
+    String query = "DELETE FROM proximaactividad WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -217,7 +212,7 @@ public class ActividadDao {
     List<Actividad> actividades = new LinkedList<>();
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM PROXIMAACTIVIDAD ORDER BY fechaInicial DESC LIMIT 0, 4 ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM proximaactividad ORDER BY fechaInicial DESC LIMIT 0, 4 ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {

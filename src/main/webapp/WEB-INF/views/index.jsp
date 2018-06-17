@@ -120,7 +120,7 @@
 					</c:forEach>					
 				</div>
 				<!--/row-->
-				<a href="./index.php?modulo=calendarios"
+				<a href="${contextPath}/servicios/eventos"
 					class="btn-u btn-u-sm pull-right tooltips" data-toggle="tooltip"
 					data-placement="left"
 					data-original-title="Ingresar a Calendario de Eventos">Ver m&aacute;s

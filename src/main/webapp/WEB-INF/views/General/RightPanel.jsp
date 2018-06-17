@@ -3,17 +3,17 @@
     	<h3 class="gdl-custom-sidebar-title-m">Secciones</h3>
     </div>
     <div class="gdl-custom-sidebar">
-    	<a href="">
+    	<a>
     		<button class="ufps-btn-accordionlike">
     			Noticias
     		</button>
     	</a>
-        <a href="./index.php?modulo=principal&idtipoi=2">
+        <a href="${contextPath}/servicios/novedades">
         	<button class="ufps-btn-accordionlike">
         		Novedades
         	</button>
         </a>
-        <a href="./index.php?modulo=principal&idtipoi=3">
+        <a href="${contextPath}/servicios/eventos">
         	<button class="ufps-btn-accordionlike">
         		Eventos
         	</button>

@@ -36,7 +36,7 @@ public class NovedadDao {
 		// Lista para retornar con los datos
 	    List<Novedad> novedades = new LinkedList<>();
 	    // Consulta para realizar en base de datos
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOVEDAD ");
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM novedad ");
 	    
 	    // Recorre cada registro obtenido de base de datos
 	    while (sqlRowSet.next()) {
@@ -62,7 +62,6 @@ public class NovedadDao {
 	   * @return El resultado de la acción.
 	   */
 	public String registrarNovedad(Novedad novedad) {
-	    SpringDbMgr springDbMgr = new SpringDbMgr();
 
 	    // Agrego los datos del registro (nombreColumna/Valor)
 	    MapSqlParameterSource map = new MapSqlParameterSource();
@@ -78,7 +77,7 @@ public class NovedadDao {
 	    }
 
 	    // Armar la sentencia de actualización de base de datos
-	    String query = "INSERT INTO NOVEDAD(nombre, fecha, imagen) VALUES(:nombre, :fecha, :imagen)";
+	    String query = "INSERT INTO novedad(nombre, fecha, imagen) VALUES(:nombre, :fecha, :imagen)";
 	    
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -107,7 +106,7 @@ public class NovedadDao {
 	    // Consulta para realizar en base de datos
 	    MapSqlParameterSource map = new MapSqlParameterSource();
 	    map.addValue("id", idNovedad);
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOVEDAD WHERE id = :id", map);
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM novedad WHERE id = :id", map);
 	    
 	    // Consulto si la novedad existe
 	    if (sqlRowSet.next()) {
@@ -132,7 +131,6 @@ public class NovedadDao {
 	   * @return La informacion de una novedad en un objeto.
 	   */
 	  public String editarNovedad(Novedad novedad) {
-	    SpringDbMgr springDbMgr = new SpringDbMgr();
 
 	    // Agrego los datos del registro (nombreColumna/Valor)
 
@@ -154,7 +152,7 @@ public class NovedadDao {
 	    }
 	    
 	    // Armar la sentencia de actualización debase de datos
-	    String query = "UPDATE NOVEDAD SET nombre = :nombre, fecha = :fecha "+ sqlImagen + "  WHERE id = :id";
+	    String query = "UPDATE novedad SET nombre = :nombre, fecha = :fecha "+ sqlImagen + "  WHERE id = :id";
 
 	    // Ejecutar la sentencia
 	    int result = 0;
@@ -171,14 +169,13 @@ public class NovedadDao {
 	  
 	  
 	  public String eliminarNovedad(Novedad novedad) {
-		    SpringDbMgr springDbMgr = new SpringDbMgr();
 
 		    // Agrego los datos de la eliminación (nombreColumna/Valor)
 		    MapSqlParameterSource map = new MapSqlParameterSource();
 		    map.addValue("id", novedad.getId());
 
 		    // Armar la sentencia de eliminación debase de datos
-		    String query = "DELETE FROM NOVEDAD WHERE id = :id";
+		    String query = "DELETE FROM novedad WHERE id = :id";
 
 		    // Ejecutar la sentencia
 		    int result = 0;
@@ -199,7 +196,7 @@ public class NovedadDao {
 	  public int getCantidadNovedades() {
 		  	int cant = 0;
 		    // Consulta para realizar en base de datos
-		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM NOVEDAD "); 
+		    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM novedad "); 
 		    
 		    if (sqlRowSet.next()) {
 		    	cant = sqlRowSet.getInt("cantidad");
@@ -212,7 +209,7 @@ public class NovedadDao {
       // Lista para retornar con los datos
       List<Novedad> novedades = new LinkedList<>();
       // Consulta para realizar en base de datos
-      SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOVEDAD ORDER BY FECHA DESC LIMIT 0, 4 ");
+      SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM novedad ORDER BY FECHA DESC LIMIT 0, 4 ");
       
       // Recorre cada registro obtenido de base de datos
       while (sqlRowSet.next()) {

@@ -2,7 +2,6 @@ package co.ufps.edu.dao;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,10 +15,8 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.web.multipart.MultipartFile;
 import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.constantes.Constantes;
-import co.ufps.edu.dto.Actividad;
 import co.ufps.edu.dto.Archivo;
 import co.ufps.edu.dto.Contenido;
-import co.ufps.edu.dto.Noticia;
 import co.ufps.edu.dto.ResultDB;
 import co.ufps.edu.dto.TipoContenido;
 import co.ufps.edu.util.ImagenUtil;
@@ -90,7 +87,7 @@ public class ContenidoDao {
   public int getCantidadContenidos() {
     int cant = 0;
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM CONTENIDO ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM contenido ");
 
     if (sqlRowSet.next()) {
       cant = sqlRowSet.getInt("cantidad");
@@ -111,7 +108,7 @@ public class ContenidoDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "INSERT INTO CONTENIDO(titulo,tipoasociacion,TipoContenido_id,asociacion,contenido) VALUES(:titulo,:tipoasociacion,:TipoContenido_id,:asociacion,:contenido)";
+        "INSERT INTO contenido(titulo,tipoasociacion,TipoContenido_id,asociacion,contenido) VALUES(:titulo,:tipoasociacion,:TipoContenido_id,:asociacion,:contenido)";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -129,10 +126,11 @@ public class ContenidoDao {
   public Map<Integer, String> getAsociaciones(String tipoAsociacion) {
 
     Map<Integer, String> asociaciones = new HashMap<>();
-    String tabla = (tipoAsociacion.equalsIgnoreCase(Constantes.ACTIVIDAD)) ? "PROXIMAACTIVIDAD"
+    String tabla = (tipoAsociacion.equalsIgnoreCase(Constantes.ACTIVIDAD)) ? "proximaactividad"
         : tipoAsociacion;
+    tabla = tabla.toLowerCase();
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM " + tabla + " WHERE ID NOT IN (SELECT ASOCIACION FROM CONTENIDO)");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM " + tabla + " WHERE ID NOT IN (SELECT asociacion FROM contenido)");
 
     while (sqlRowSet.next()) {
       asociaciones.put(sqlRowSet.getInt("id"), sqlRowSet.getString("nombre"));
@@ -144,13 +142,13 @@ public class ContenidoDao {
   public Map<Integer, String> getAsociacionesCompletas(String tipoAsociacion,long idAsociacion) {
 
     Map<Integer, String> asociaciones = new HashMap<>();
-    String tabla = (tipoAsociacion.equalsIgnoreCase(Constantes.ACTIVIDAD)) ? "PROXIMAACTIVIDAD": tipoAsociacion;
-    
+    String tabla = (tipoAsociacion.equalsIgnoreCase(Constantes.ACTIVIDAD)) ? "proximaactividad": tipoAsociacion;
+    tabla = tabla.toLowerCase();
     MapSqlParameterSource map = new MapSqlParameterSource();
    // map.addValue("tabla", tabla);
     map.addValue("id", idAsociacion);
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM "+tabla+" WHERE ID NOT IN (SELECT ASOCIACION FROM CONTENIDO) OR ID = :id",map );
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM "+tabla+" WHERE ID NOT IN (SELECT asociacion FROM contenido) OR ID = :id",map );
 
     while (sqlRowSet.next()) {
       asociaciones.put(sqlRowSet.getInt("id"), sqlRowSet.getString("nombre"));
@@ -179,7 +177,7 @@ public class ContenidoDao {
     
     // Armar la sentencia de actualización debase de datos
     String query =
-        "INSERT INTO ARCHIVO(nombre,contenido,tamaño,tipo) VALUES(:nombre,:contenido,:tamaño,:tipo)";
+        "INSERT INTO archivo(nombre,contenido,tamaño,tipo) VALUES(:nombre,:contenido,:tamaño,:tipo)";
 
     // Ejecutar la sentencia
     ResultDB result = null;
@@ -199,7 +197,7 @@ public class ContenidoDao {
     // Consulta para realizar en base de datos
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("tipo", tipo);
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM ARCHIVO WHERE nombre = :tipo", map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM archivo WHERE nombre = :tipo", map);
 
     // Consulto si la noticia existe
     if (sqlRowSet.next()) {
@@ -219,7 +217,7 @@ public class ContenidoDao {
     // Consulta para realizar en base de datos
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", id);
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM ARCHIVO WHERE id = :id", map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM archivo WHERE id = :id", map);
 
     // Consulto si la noticia existe
     if (sqlRowSet.next()) {
@@ -248,7 +246,7 @@ public class ContenidoDao {
     // Consulta para realizar en base de datos
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", idContenido);
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CONTENIDO WHERE id = :id", map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM contenido WHERE id = :id", map);
 
     // Consulto si la actividad existe
     if (sqlRowSet.next()) {
@@ -283,7 +281,7 @@ public class ContenidoDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "UPDATE CONTENIDO SET titulo = :titulo,tipoasociacion = :tipoasociacion,TipoContenido_id = :TipoContenido_id,asociacion = :asociacion,contenido = :contenido WHERE id = :id";
+        "UPDATE contenido SET titulo = :titulo,tipoasociacion = :tipoasociacion,TipoContenido_id = :TipoContenido_id,asociacion = :asociacion,contenido = :contenido WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -305,7 +303,7 @@ public class ContenidoDao {
     map.addValue("id", contenido.getId());
 
     // Armar la sentencia de actualización debase de datos
-    String query = "DELETE FROM CONTENIDO WHERE id = :id";
+    String query = "DELETE FROM contenido WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;

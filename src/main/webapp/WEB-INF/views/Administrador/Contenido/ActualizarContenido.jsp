@@ -18,7 +18,7 @@
 
     <link href='https://fonts.googleapis.com/css?family=Dosis|Candal' rel='stylesheet' type='text/css'>
     <link href='resources/assets/css/editor.css' rel='stylesheet' type='text/css'>
-    <link href='http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+    <link href='resources/assets/css/font-awesome.css' rel='stylesheet' type='text/css'>
 
 
 <%@ include file="../General/css.jsp"%>
@@ -238,7 +238,7 @@
 
 	<!-- Carga de los archivos Javascript -->
 	
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="resources/assets/js/jquery.min.js"></script>
 	<script src="resources/assets/js/editor.js"></script>	
 	
 	<%@ include file="../General/scripts.jsp"%>
