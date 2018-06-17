@@ -20,8 +20,12 @@ import co.ufps.edu.dto.TipoContenido;
  */
 public class CategoriaDao {
 
-  SpringDbMgr springDbMgr = new SpringDbMgr();
+  private SpringDbMgr springDbMgr;
 
+  public CategoriaDao() {
+    springDbMgr = new SpringDbMgr();
+  }
+  
   /**
    * Metodo que consulta en base de datos todas las categorias existentes y las devuelve
    * ordenadamente
@@ -34,7 +38,7 @@ public class CategoriaDao {
     List<Categoria> categorias = new LinkedList<>();
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CATEGORIA ORDER BY ORDEN ASC ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM categoria ORDER BY ORDEN ASC ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
@@ -61,7 +65,6 @@ public class CategoriaDao {
    * @return El resultado de la acción.
    */
   public String registrarCategoria(Categoria categoria) {
-    SpringDbMgr springDbMgr = new SpringDbMgr();
 
     // Agrego los datos del registro (nombreColumna/Valor)
 
@@ -72,7 +75,7 @@ public class CategoriaDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "INSERT INTO CATEGORIA(nombre,descripcion,orden) VALUES(:nombre,:descripcion,:orden)";
+        "INSERT INTO categoria(nombre,descripcion,orden) VALUES(:nombre,:descripcion,:orden)";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -97,7 +100,7 @@ public class CategoriaDao {
   public int getUltimoNumeroDeOrden() {
 
     // Consulta en base de datos el ultimo numero de ordenamiento
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CATEGORIA ORDER BY ORDEN DESC ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM categoria ORDER BY ORDEN DESC ");
 
     // Si existe al menos una categoria retorna el numero
     if (sqlRowSet.next()) {
@@ -140,7 +143,7 @@ public class CategoriaDao {
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("orden", orden);
     SqlRowSet sqlRowSet =
-        springDbMgr.executeQuery(" SELECT * FROM CATEGORIA WHERE orden = :orden ", map);
+        springDbMgr.executeQuery(" SELECT * FROM categoria WHERE orden = :orden ", map);
 
     // Si existe al menos una categoria retorna el numero
     if (sqlRowSet.next()) {
@@ -166,7 +169,7 @@ public class CategoriaDao {
     map.addValue("orden", orden);
 
     // Armar la sentencia de actualización debase de datos
-    String query = "UPDATE CATEGORIA SET orden = :orden WHERE id = :id";
+    String query = "UPDATE categoria SET orden = :orden WHERE id = :id";
 
     // Ejecutar la sentencia
     try {
@@ -209,7 +212,7 @@ public class CategoriaDao {
     // Consulta para realizar en base de datos
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", idCategoria);
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CATEGORIA WHERE id = :id", map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM categoria WHERE id = :id", map);
 
     // Consulto si la categoria existe
     if (sqlRowSet.next()) {
@@ -225,7 +228,7 @@ public class CategoriaDao {
   }
 
   public String editarCategoria(Categoria categoria) {
-    SpringDbMgr springDbMgr = new SpringDbMgr();
+    
 
     // Agrego los datos del registro (nombreColumna/Valor)
 
@@ -236,7 +239,7 @@ public class CategoriaDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "UPDATE CATEGORIA SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";
+        "UPDATE categoria SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -252,14 +255,14 @@ public class CategoriaDao {
   }
 
   public String eliminarCategoria(Categoria categoria) {
-    SpringDbMgr springDbMgr = new SpringDbMgr();
+    
 
     // Agrego los datos de la eliminación (nombreColumna/Valor)
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", categoria.getId());
 
     // Armar la sentencia de actualización debase de datos
-    String query = "DELETE FROM CATEGORIA WHERE id = :id";
+    String query = "DELETE FROM categoria WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -279,7 +282,7 @@ public class CategoriaDao {
     Map<Long,String> categorias = new HashMap<Long, String>();
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM CATEGORIA ORDER BY ORDEN ASC ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM categoria ORDER BY ORDEN ASC ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
@@ -297,7 +300,7 @@ public class CategoriaDao {
 
 	  	int cant = 0;
 	    // Consulta para realizar en base de datos
-	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM CATEGORIA "); 
+	    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM categoria "); 
 	    
 	    if (sqlRowSet.next()) {
 	    	cant = sqlRowSet.getInt("cantidad");
@@ -310,17 +313,17 @@ public class CategoriaDao {
     List<Categoria> categorias = new LinkedList<>();
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    CATEGORIA.ID                    idCategoria,            "
-                                                  + "           CATEGORIA.NOMBRE                nombreCategoria,        "
-                                                  + "           CATEGORIA.DESCRIPCION           descripcionCategoria,   "
-                                                  + "           CATEGORIA.ORDEN                 ordenCategoria,         "
-                                                  + "           SUBCATEGORIA.ID                 idSubcategoria,         "
-                                                  + "           SUBCATEGORIA.NOMBRE             nombreSubCategoria,     "
-                                                  + "           SUBCATEGORIA.DESCRIPCION        descripcionSubCategoria,"
-                                                  + "           SUBCATEGORIA.ORDEN              ordenSubCategoria       "
-                                                  + "   FROM    SUBCATEGORIA                                            "
-                                                  + "INNER JOIN CATEGORIA  ON CATEGORIA.id = SUBCATEGORIA.Categoria_id  "
-                                                  + "ORDER BY   CATEGORIA.ORDEN ASC,SUBCATEGORIA.ORDEN ASC              ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    categoria.id                    idCategoria,            "
+                                                  + "           categoria.nombre                nombreCategoria,        "
+                                                  + "           categoria.descripcion           descripcionCategoria,   "
+                                                  + "           categoria.orden                 ordenCategoria,         "
+                                                  + "           subcategoria.id                 idSubcategoria,         "
+                                                  + "           subcategoria.nombre             nombreSubCategoria,     "
+                                                  + "           subcategoria.descripcion        descripcionSubCategoria,"
+                                                  + "           subcategoria.orden              ordenSubCategoria       "
+                                                  + "   FROM    subcategoria                                            "
+                                                  + "INNER JOIN categoria  ON categoria.id = subcategoria.Categoria_id  "
+                                                  + "ORDER BY   categoria.orden ASC,subcategoria.orden ASC              ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
@@ -347,16 +350,16 @@ public class CategoriaDao {
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", subCategoria.getId());
  // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    CONTENIDO.ID                    idContenido,            "
-                                                  + "           CONTENIDO.CONTENIDO             contenido,              "
-                                                  + "           CONTENIDO.TipoContenido_id      tipoContenido,          "                                                  
-                                                  + "           SUBCATEGORIA.ID                 idSubcategoria,         "
-                                                  + "           SUBCATEGORIA.NOMBRE             nombreSubCategoria,     "
-                                                  + "           SUBCATEGORIA.DESCRIPCION        descripcionSubCategoria,"
-                                                  + "           SUBCATEGORIA.ORDEN              ordenSubCategoria       "
-                                                  + "   FROM    SUBCATEGORIA                                            "
-                                                  + "INNER JOIN CONTENIDO  ON CONTENIDO.ASOCIACION = SUBCATEGORIA.ID "
-                                                  + "WHERE SUBCATEGORIA.ID = :id",map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    contenido.id                    idContenido,            "
+                                                  + "           contenido.contenido             contenido,              "
+                                                  + "           contenido.TipoContenido_id      tipoContenido,          "                                                  
+                                                  + "           subcategoria.id                 idSubcategoria,         "
+                                                  + "           subcategoria.nombre             nombreSubCategoria,     "
+                                                  + "           subcategoria.descripcion        descripcionSubCategoria,"
+                                                  + "           subcategoria.orden              ordenSubCategoria       "
+                                                  + "   FROM    subcategoria                                            "
+                                                  + "INNER JOIN contenido  ON contenido.asociacion = subcategoria.id "
+                                                  + "WHERE subcategoria.id = :id",map);
 
     // Recorre cada registro obtenido de base de datos
     if (sqlRowSet.next()) {

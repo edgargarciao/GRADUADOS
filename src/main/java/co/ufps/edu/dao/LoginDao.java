@@ -15,18 +15,24 @@ public class LoginDao {
 	SpringDbMgr springDbMgr = new SpringDbMgr();
 
 	public String authenticate(String correo, String contraseña) {
+		try{
+    		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+    		mapSqlParameterSource.addValue("correo", correo);
+    		mapSqlParameterSource.addValue("pass", contraseña);
+    		SqlRowSet sqlRowSet = springDbMgr.executeQuery("SELECT id FROM usuario "
+    				+ "	WHERE correoInstitucional = :correo AND Contraseña = :pass", mapSqlParameterSource);
+    				
+    		
+    		if ((sqlRowSet.next())) {
+    			return "admin";
+    		}
+		}catch(Exception e) {
+		  
+		}
 		
-		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		mapSqlParameterSource.addValue("correo", correo);
-		mapSqlParameterSource.addValue("contraseña", contraseña);
-		SqlRowSet sqlRowSet = springDbMgr.executeQuery("SELECT id " + "	FROM usuario "
-				+ "	WHERE correoInstitucional = :correo " + " AND Contraseña = :contraseña", mapSqlParameterSource);
-				
 		
-		if ((sqlRowSet.next())) {
-			return "admin";
-		} 
 		return "";
+		
 	}
 
 }

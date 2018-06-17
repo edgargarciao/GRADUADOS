@@ -37,7 +37,7 @@ public class NoticiaDao {
   public int getCantidadNoticias() {
     int cant = 0;
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM NOTICIA ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM noticia ");
 
     if (sqlRowSet.next()) {
       cant = sqlRowSet.getInt("cantidad");
@@ -56,7 +56,7 @@ public class NoticiaDao {
     List<Noticia> noticias = new LinkedList<>();
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOTICIA ORDER BY ORDEN ASC ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM noticia ORDER BY ORDEN ASC ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
@@ -84,7 +84,6 @@ public class NoticiaDao {
    * @return El resultado de la acción.
    */
   public String registrarNoticia(Noticia noticia) {
-    SpringDbMgr springDbMgr = new SpringDbMgr();
 
     // Agrego los datos del registro (nombreColumna/Valor)
 
@@ -111,7 +110,7 @@ public class NoticiaDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "INSERT INTO NOTICIA(nombre,descripcion,orden,fecha,imagen1,imagen2) VALUES(:nombre,:descripcion,:orden,:fecha,:imagen1,:imagen2)";
+        "INSERT INTO noticia(nombre,descripcion,orden,fecha,imagen1,imagen2) VALUES(:nombre,:descripcion,:orden,:fecha,:imagen1,:imagen2)";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -130,7 +129,7 @@ public class NoticiaDao {
   public void cambiarOrden() {
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOTICIA ORDER BY ORDEN DESC ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM noticia ORDER BY ORDEN DESC ");
 
     // Obtenemos el maximo orden
     int ultimoNumeroDeOrden = getUltimoNumeroDeOrden();
@@ -143,7 +142,6 @@ public class NoticiaDao {
 
   }
 
-
   /**
    * Metodo que consulta en la base de datos cual es el ultimo de numero de ordenamiento que hay
    * entre todas las noticias
@@ -153,7 +151,7 @@ public class NoticiaDao {
   public int getUltimoNumeroDeOrden() {
 
     // Consulta en base de datos el ultimo numero de ordenamiento
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOTICIA ORDER BY ORDEN DESC ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM noticia ORDER BY ORDEN DESC ");
 
     // Si existe al menos una noticias retorna el numero
     if (sqlRowSet.next()) {
@@ -180,7 +178,7 @@ public class NoticiaDao {
     map.addValue("orden", orden);
 
     // Armar la sentencia de actualización debase de datos
-    String query = "UPDATE NOTICIA SET orden = :orden WHERE id = :id";
+    String query = "UPDATE noticia SET orden = :orden WHERE id = :id";
 
     // Ejecutar la sentencia
     try {
@@ -222,7 +220,7 @@ public class NoticiaDao {
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("orden", orden);
     SqlRowSet sqlRowSet =
-        springDbMgr.executeQuery(" SELECT * FROM NOTICIA WHERE orden = :orden ", map);
+        springDbMgr.executeQuery(" SELECT * FROM noticia WHERE orden = :orden ", map);
 
     // Si existe al menos una noticia retorna el numero
     if (sqlRowSet.next()) {
@@ -267,7 +265,7 @@ public class NoticiaDao {
     // Consulta para realizar en base de datos
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", idNoticia);
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOTICIA WHERE id = :id", map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM noticia WHERE id = :id", map);
 
     // Consulto si la noticia existe
     if (sqlRowSet.next()) {
@@ -326,7 +324,7 @@ public class NoticiaDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "UPDATE NOTICIA SET nombre = :nombre, descripcion = :descripcion, fecha = :fecha "
+        "UPDATE noticia SET nombre = :nombre, descripcion = :descripcion, fecha = :fecha "
             + sqlImagen1 + sqlImagen2 + " WHERE id = :id";
 
     // Ejecutar la sentencia
@@ -350,7 +348,7 @@ public class NoticiaDao {
     map.addValue("id", noticia.getId());
 
     // Armar la sentencia de actualización debase de datos
-    String query = "DELETE FROM NOTICIA WHERE id = :id";
+    String query = "DELETE FROM noticia WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -370,7 +368,7 @@ public class NoticiaDao {
     List<Noticia> noticias = new LinkedList<>();
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM NOTICIA ORDER BY ORDEN ASC LIMIT 0, 4");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM noticia ORDER BY ORDEN ASC LIMIT 0, 4");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {

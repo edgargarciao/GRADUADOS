@@ -30,7 +30,7 @@ public class TipoContenidoDao {
     Map<Long,String> mapaDeTiposDeContenido = new HashMap<>();
     
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM TIPOCONTENIDO");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM tipocontenido");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {

@@ -9,7 +9,6 @@ import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.dto.Galeria;
 import co.ufps.edu.dto.Imagen;
 import co.ufps.edu.dto.ResultDB;
-import co.ufps.edu.util.ImagenUtil;
 
 /**
  * Clase que permite acceder a la capa de datos en el entorno de galerias.
@@ -35,7 +34,7 @@ public class GaleriaDao {
     // Lista para retornar con los datos
     List<Galeria> galerias = new LinkedList<>();
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM GALERIA ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM galeria ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
@@ -61,7 +60,7 @@ public class GaleriaDao {
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", galeria.getId());
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM FOTO WHERE Galeria_id = :id LIMIT 0,1 ",map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM foto WHERE Galeria_id = :id LIMIT 0,1 ",map);
 
     // Recorre cada registro obtenido de base de datos
     if (sqlRowSet.next()) {
@@ -89,7 +88,7 @@ public class GaleriaDao {
 
     // Armar la sentencia de actualización de base de datos
     String query =
-        "INSERT INTO GALERIA(nombre, descripcion, fecha) VALUES(:nombre, :descripcion, :fecha)";
+        "INSERT INTO galeria(nombre, descripcion, fecha) VALUES(:nombre, :descripcion, :fecha)";
 
     // Ejecutar la sentencia
     ResultDB result = null;
@@ -119,7 +118,7 @@ public class GaleriaDao {
 
       // Armar la sentencia de actualización de base de datos
       String query =
-          "INSERT INTO FOTO(Galeria_id, descripcion, contenido) VALUES(:Galeria_id, :descripcion, :contenido)";
+          "INSERT INTO foto(Galeria_id, descripcion, contenido) VALUES(:Galeria_id, :descripcion, :contenido)";
 
       // Ejecutar la sentencia
       int result = 0;
@@ -146,7 +145,7 @@ public class GaleriaDao {
     // Consulta para realizar en base de datos
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", idGaleria);
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM GALERIA WHERE id = :id", map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM galeria WHERE id = :id", map);
 
     // Consulto si la galeria existe
     if (sqlRowSet.next()) {
@@ -173,7 +172,6 @@ public class GaleriaDao {
    * @return La informacion de una galeria en un objeto.
    */
   public String editarGaleria(Galeria galeria) {
-    SpringDbMgr springDbMgr = new SpringDbMgr();
 
     // Agrego los datos del registro (nombreColumna/Valor)
 
@@ -185,7 +183,7 @@ public class GaleriaDao {
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "UPDATE GALERIA SET nombre = :nombre, descripcion = :descripcion, fecha = :fecha  WHERE id = :id";
+        "UPDATE galeria SET nombre = :nombre, descripcion = :descripcion, fecha = :fecha  WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -209,7 +207,7 @@ public class GaleriaDao {
     map.addValue("id", id);
 
     // Armar la sentencia de eliminación debase de datos
-    String query = "DELETE FROM FOTO WHERE Galeria_id = :id";
+    String query = "DELETE FROM foto WHERE Galeria_id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -230,7 +228,7 @@ public class GaleriaDao {
     map.addValue("id", galeria.getId());
 
     // Armar la sentencia de eliminación debase de datos
-    String query = "DELETE FROM GALERIA WHERE id = :id";
+    String query = "DELETE FROM galeria WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -250,7 +248,7 @@ public class GaleriaDao {
   public int getCantidadGalerias() {
     int cant = 0;
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM GALERIA ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT COUNT(*) cantidad FROM galeria ");
 
     if (sqlRowSet.next()) {
       cant = sqlRowSet.getInt("cantidad");
@@ -268,7 +266,7 @@ public class GaleriaDao {
     map.addValue("id",id );
     
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM FOTO WHERE Galeria_id = :id",map);
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM foto WHERE Galeria_id = :id",map);
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
