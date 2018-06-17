@@ -46,6 +46,8 @@ public class NovedadDao {
 	      novedad.setId(sqlRowSet.getLong("id"));
 	      novedad.setNombre(sqlRowSet.getString("nombre"));
 	      novedad.setFecha(sqlRowSet.getDate("fecha"));
+	      Object imagen1Blob = sqlRowSet.getObject("imagen");
+	      novedad.setImBase64image(imagenUtil.convertirImagen((byte[]) imagen1Blob));   
 	      // Guarda el registro para ser retornado
 	      novedades.add(novedad);
 	    }

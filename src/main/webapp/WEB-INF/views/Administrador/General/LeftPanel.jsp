@@ -6,10 +6,6 @@
 	-->
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<%
-  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-  response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-%>
 
 <!-- Left Panel -->
 

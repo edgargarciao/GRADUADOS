@@ -145,7 +145,7 @@
 										<input id="url" name="url" type="text"
 											class="form-control" path="url"
 											placeholder="http://gidis.ufps.edu.co:8080/SeGre/"
-											aria-required="true" aria-invalid="false">
+											aria-required="true" aria-invalid="false" value="${contenido.url}">
 									</div>
 									
 									<div style="display: none;">
@@ -249,7 +249,7 @@
 	
 	cambiarDeTipoDeAsosiacion();
 	cambiarTDA();
-	
+	cambiarDeTipoDeContenido();
 	function cambiarTDA(){
 		
 		document.getElementById('asociacion').value = document.getElementById('asoc').value;
@@ -296,7 +296,12 @@
 			
 		}	
 			
-			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+		
+    	if ( (window.location.pathname).indexOf('ufps') != -1 ){
+    		var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+    	}else{
+    		var url = window.location.protocol + "//" + window.location.host;
+    	}
 			var formData = {
 					  tipoAsociacion: 	selectedValueTA,
 			          asociacion: 		selectedValueA,
@@ -343,8 +348,11 @@
 			
 			var idAsociacion = document.getElementById("asoc").value;
 			
-			// DO POST
-			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	if ( (window.location.pathname).indexOf('ufps') != -1 ){
+	    		var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	}else{
+	    		var url = window.location.protocol + "//" + window.location.host;
+	    	}
 			$.ajax({
 				type : "POST",
 				contentType : "application/json",

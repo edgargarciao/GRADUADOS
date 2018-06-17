@@ -156,7 +156,11 @@ public class GaleriaDao {
       galeria.setDescripcion(sqlRowSet.getString("descripcion"));
       galeria.setFecha(sqlRowSet.getDate("fecha"));
     }
-
+    
+    List<Imagen> imagenes = getImagenesPorIDCompletas(galeria.getId());
+    
+    galeria.setImagenes(new ArrayList<>(imagenes));
+    
     // Retorna galeria desde base de datos
     return galeria;
   }

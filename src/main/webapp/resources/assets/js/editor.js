@@ -122,10 +122,13 @@
     if (input.files && input.files[0]) {
         // Obtiene el archivo
     	var file = input.files[0];    	
-        
+    	var url = "";
         // Creo la url a consumir
-        var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
-        
+    	if ( (window.location.pathname).indexOf('ufps') != -1 ){
+    		var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+    	}else{
+    		var url = window.location.protocol + "//" + window.location.host;
+    	}
         var formData = new FormData();
         formData.append('archivo', file);
         
@@ -157,8 +160,11 @@
   function pintarImagen(id,fileType){
 	  
 	  	// Creo la url a consumir
-      	var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
-      
+	  	if ( (window.location.pathname).indexOf('ufps') != -1 ){
+			var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+		}else{
+			var url = window.location.protocol + "//" + window.location.host;
+		}
         var formData = new FormData();
         formData.append('tipo', fileType);
       	
@@ -191,8 +197,11 @@
 	    	var file = input.files[0];    	
 	        
 	        // Creo la url a consumir
-	        var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
-	        
+	    	if ( (window.location.pathname).indexOf('ufps') != -1 ){
+	    		var url = window.location.protocol + "//" + window.location.host + "/" + (window.location.pathname).split("/")[1];
+	    	}else{
+	    		var url = window.location.protocol + "//" + window.location.host;
+	    	}
 	        var formData = new FormData();
 	        formData.append('archivo', file);
 	        

@@ -1,11 +1,8 @@
 package co.ufps.edu.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Date;
-
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import co.ufps.edu.config.SessionManager;
+import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.dao.ActividadDao;
 import co.ufps.edu.dao.CategoriaDao;
 import co.ufps.edu.dao.ComponenteDao;
@@ -30,10 +28,11 @@ import co.ufps.edu.dao.NovedadDao;
 import co.ufps.edu.dao.RedSocialDao;
 import co.ufps.edu.dao.SubCategoriaDao;
 import co.ufps.edu.dto.Contenido;
+import co.ufps.edu.dto.Galeria;
 import co.ufps.edu.dto.Login;
+import co.ufps.edu.dto.Novedad;
 import co.ufps.edu.dto.VisitaDao;
 import co.ufps.edu.util.JwtUtil;
-
 
 @Controller
 public class AdminController {
@@ -89,12 +88,13 @@ public class AdminController {
     model.addAttribute("novedades", novedadDao.getUltimasNovedades());
     model.addAttribute("actividades", actividadDao.getUltimasActividades());
     model.addAttribute("galerias", galeriaDao.getGalerias());
+    
     model.addAttribute("redes", redSocialDao.getRedesSociales());
     model.addAttribute("enlaces", enlaceDeInteresDao.getEnlacesDeInteres());
     model.addAttribute("contactos", contactoDao.getContactos());
     model.addAttribute("logoHorizontal", logoDao.getLogo("LogoHorizontal"));
     model.addAttribute("logoVertical", logoDao.getLogo("LogoVertical"));
-
+    model.addAttribute("dependencia",Constantes.PROYECTO);
     
   }
 
@@ -183,13 +183,12 @@ public class AdminController {
    * @return La pagina a donde fue redireccionado.
    */
   @PostMapping("/autenticar")
-  public String authenticateUser(@ModelAttribute("login") Login login, Model model,
+  public String authenticateUser(@ModelAttribute("login") Login login,Model model,
       HttpServletRequest request) {
 
     /*
      * Consulto si los datos no vienen nulos
      */
-
     if (!StringUtils.isEmpty(login.getCorreoInstitucional())
         && !StringUtils.isEmpty(login.getContraseña())) {
       // Consulto en base de datos si se encuentra ese correo y esa contraseña
@@ -264,11 +263,11 @@ public class AdminController {
   }
   
   /**
-   * Método que obtiene la pagina de actualizar categoria dado un ID.
+   * Método que obtiene la pagina de obtener un componente dado un ID.
    * 
-   * @param idCategoria Identificador de la categoria
+   * @param idCategoria Identificador del componente
    * @param model Objeto para enviar información a los archivos .JSP
-   * @return La pagina con la información de la categoria cargada.
+   * @return La pagina con la información del contenido cargado.
    */
   @GetMapping(value = "/servicios/componente")
   public String obtenerContenido(@RequestParam("id") long idComponente,@RequestParam("componente") String tipo, Model model) {
@@ -282,13 +281,60 @@ public class AdminController {
     cargarModelo(model);
     model.addAttribute("titulo",(contenido == null)?"":contenido.getNombre());
     model.addAttribute("codigo",(contenido == null)?"":contenido.getContenido());
-    return "contenido"; // Nombre del archivo jsp
+    if(contenido.getId() != 0) {
+      return "contenido"; // Nombre del archivo jsp
+    }else {
+      return "index";
+    }
   }
   
-  @GetMapping("/generarInforme")
-  private String generarInforme() {
-	  return "xlsView"; // Nombre del archivo java
-  }
+  /**
+   * Método que obtiene la pagina de una galeria dado un ID.
+   * 
+   * @param idGaleria Identificador de la galeria
+   * @param model Objeto para enviar información a los archivos .JSP
+   * @return La pagina con la información de la galeria cargada.
+   */
+  @GetMapping(value = "/servicios/galeria")
+  public String obtenerContenido(@RequestParam("id") long idGaleria, Model model) {
+    // Consulto que el Id sea mayor a 0.
+    if (idGaleria <= 0) {
+      return "index";
+    }
+    Galeria galeria = galeriaDao.obtenerGaleriaPorId(idGaleria);
+    
+    cargarModelo(model);
+    model.addAttribute("galeria",galeria);
+    return "galeria"; // Nombre del archivo jsp
+  }  
 
-
+  /**
+   * Método que obtiene la pagina de todas las novedades.
+   *
+   * @param model Objeto para enviar información a los archivos .JSP
+   * @return La pagina con la información de las novedades cargada.
+   */
+  @GetMapping(value = "/servicios/novedades")
+  public String obtenerNovedades(Model model) {
+    
+    List<Novedad> novedades= novedadDao.getNovedades();    
+    cargarModelo(model);
+    model.addAttribute("novedadesCom",novedades);
+    return "novedades"; // Nombre del archivo jsp
+  }  
+  
+  /**
+   * Método que obtiene la pagina de todas las galerias.
+   *
+   * @param model Objeto para enviar información a los archivos .JSP
+   * @return La pagina con la información de las galerias cargada.
+   */
+  @GetMapping(value = "/servicios/galerias")
+  public String obtenerGalerias(Model model) {
+    
+    List<Galeria> galerias = galeriaDao.getGalerias();    
+    cargarModelo(model);
+    model.addAttribute("galeriasCom" , galerias);
+    return "galerias"; // Nombre del archivo jsp
+  }    
 }

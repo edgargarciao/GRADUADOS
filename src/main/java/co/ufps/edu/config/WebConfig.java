@@ -1,8 +1,10 @@
 package co.ufps.edu.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -72,6 +74,18 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   @Bean(name = "multipartResolver")
   public StandardServletMultipartResolver resolvermu() {
       return new StandardServletMultipartResolver();
+  }
+  
+  @Bean
+  public FilterRegistrationBean<CharacterEncodingFilter> filterRegistrationBean() {
+      CharacterEncodingFilter filter = new CharacterEncodingFilter();
+      filter.setEncoding("ISO-8859-15");
+      filter.setForceEncoding(true);
+
+      FilterRegistrationBean<CharacterEncodingFilter> registrationBean = new FilterRegistrationBean<CharacterEncodingFilter>();
+      registrationBean.setFilter(filter);
+      registrationBean.addUrlPatterns("/*");
+      return registrationBean;
   }
  
 }
