@@ -176,7 +176,7 @@ public class ActividadController {
     if (mensaje.equals("Eliminacion exitosa")) {
       model.addAttribute("result", "Actividad eliminada con éxito.");
       model.addAttribute("actividades", actividadDao.getActividades());
-      return "Administrador/Actividad/Atividades"; // Nombre del archivo jsp
+      return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
     } else {
       model.addAttribute("wrong", mensaje);
       return "Administrador/Actividad/EliminarActividad";
