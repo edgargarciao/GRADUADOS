@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -147,7 +148,9 @@ public class ContenidoController {
 
     // Consulta si tiene todos los campos llenos
     if (contenido.isValidoParaRegistrar()) {
-      String mensaje = contenidoDao.registrarContenido(contenido);
+      guardarContenido(contenido);
+      String mensaje = "Registro exitoso";
+      
       if (mensaje.equals("Registro exitoso")) {
         return new ResponseEntity<String>("REGISTRO EXITOSO", HttpStatus.OK);
       } else {
@@ -158,6 +161,11 @@ public class ContenidoController {
       return new ResponseEntity<String>("CAMPOS INVALIDOS", HttpStatus.OK);
     }
     
+  }
+
+  @Async("threadPoolTaskExecutor")
+  public void guardarContenido(Contenido contenido) {
+    contenidoDao.registrarContenido(contenido);
   }
 
   @PostMapping(value = "servicios/actualizarInformacion" )

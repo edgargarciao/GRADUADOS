@@ -235,10 +235,12 @@
 	<!-- Carga de los archivos Javascript -->
 	
 	
-	<script src="resources/assets/js/editor.js"></script>	
-	<script src="resources/assets/js/jquery.min.js"></script>	
+
+	<!--  <script src="resources/assets/js/jquery.min.js"></script> -->	
 	
 	<%@ include file="../General/scripts.jsp"%>
+	<script src="resources/assets/js/editor.js"></script>	
+
 
 	<script type="text/javascript">
 	

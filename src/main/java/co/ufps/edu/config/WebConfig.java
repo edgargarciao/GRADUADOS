@@ -1,9 +1,14 @@
 package co.ufps.edu.config;
 
+import java.util.concurrent.Executor;
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
@@ -22,8 +27,15 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"co.ufps.edu.*"})
+@EnableAsync
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+  
+  @Bean(name = "threadPoolTaskExecutor")
+  public Executor threadPoolTaskExecutor() {
+      return new ThreadPoolTaskExecutor();
+  }
+  
   @Bean
   public MultipartResolver multipartResolver() {
     return new StandardServletMultipartResolver();
@@ -74,6 +86,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
       registrationBean.addUrlPatterns("/*");
       return registrationBean;
   }
+
  
 }
 
