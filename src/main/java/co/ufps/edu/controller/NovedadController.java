@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import co.ufps.edu.constantes.Constantes;
+import co.ufps.edu.dao.ContenidoDao;
 import co.ufps.edu.dao.NovedadDao;
 import co.ufps.edu.dto.Novedad;
 
@@ -29,6 +31,11 @@ public class NovedadController {
   @Autowired
   private NovedadDao novedadDao;
 
+  @Autowired
+  private ContenidoDao contenidoDao;
+  
+  
+  
   /**
    * Modelo con el que se realizara el formulario
    * @return Un objeto para ser llenado desde el archivo .JSP
@@ -165,18 +172,21 @@ public class NovedadController {
    */
   @PostMapping(value = "/borrarNovedad")
   public String borrarNovedad(@ModelAttribute("novedad") Novedad novedad, Model model) {
-
-    String mensaje = novedadDao.eliminarNovedad(novedad);
-
-    if (mensaje.equals("Eliminacion exitosa")) {
-      model.addAttribute("result", "Novedad eliminada con éxito.");
-      model.addAttribute("novedades", novedadDao.getNovedades());
-      return "Administrador/Novedad/novedades"; // Nombre del archivo jsp
-    } else {
-      model.addAttribute("wrong", mensaje);
+    if(!contenidoDao.tieneContenido(novedad.getId(),Constantes.NOVEDAD)) {
+      String mensaje = novedadDao.eliminarNovedad(novedad);
+  
+      if (mensaje.equals("Eliminacion exitosa")) {
+        model.addAttribute("result", "Novedad eliminada con éxito.");
+        model.addAttribute("novedades", novedadDao.getNovedades());
+        return "Administrador/Novedad/novedades"; // Nombre del archivo jsp
+      } else {
+        model.addAttribute("wrong", mensaje);
+        return "Administrador/Novedad/EliminarNovedad";
+      }
+    }else {
+      model.addAttribute("wrong", "No es posible eliminar la novedad debido a que tiene un contenido registrado.");
       return "Administrador/Novedad/EliminarNovedad";
     }
-
   }
 
 }

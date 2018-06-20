@@ -10,35 +10,32 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class MailUtil {
-  private static String USER_NAME = "edgar.yesid.garcia.ortiz@gmail.com";  // GMail user name (just the part before "@gmail.com")
-  private static String PASSWORD = "94100209440"; // GMail password
-  private static String RECIPIENT = "edgar.yesid.garcia.ortiz@gmail.com";
+  private String USER_NAME;
+  private String PASSWORD;
 
-  public static void main(String[] args) {
-      String from = USER_NAME;
-      String pass = PASSWORD;
-      String[] to = { RECIPIENT }; // list of recipient email addresses
-      String subject = "Java send mail example";
-      String body = "Welcome to JavaMail!";
-
-      sendFromGMail(from, pass, to, subject, body);
+  public MailUtil() {
+    USER_NAME = "edgar.yesid.garcia.ortiz@gmail.com";  // GMail user name (just the part before "@gmail.com")
+    PASSWORD = "94100209440"; // GMail password
   }
+  
+ 
 
-  private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+  public String sendFromGMail(String[] to, String subject, String body) {
       Properties props = System.getProperties();
       String host = "smtp.gmail.com";
       props.put("mail.smtp.starttls.enable", "true");
       props.put("mail.smtp.host", host);
-      props.put("mail.smtp.user", from);
-      props.put("mail.smtp.password", pass);
+      props.put("mail.smtp.user", USER_NAME);
+      props.put("mail.smtp.password", PASSWORD);
       props.put("mail.smtp.port", "587");
       props.put("mail.smtp.auth", "true");
+      props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
       Session session = Session.getDefaultInstance(props);
       MimeMessage message = new MimeMessage(session);
 
       try {
-          message.setFrom(new InternetAddress(from));
+          message.setFrom(new InternetAddress(USER_NAME));
           InternetAddress[] toAddress = new InternetAddress[to.length];
 
           // To get the array of addresses
@@ -53,16 +50,25 @@ public class MailUtil {
           message.setSubject(subject);
           message.setText(body);
           Transport transport = session.getTransport("smtp");
-          transport.connect(host, from, pass);
+          transport.connect(host, USER_NAME, PASSWORD);
           transport.sendMessage(message, message.getAllRecipients());
-          transport.close();
+          transport.close();   
+          return "Actualizacion";
       }
       catch (AddressException ae) {
           ae.printStackTrace();
+          return "no envio";
       }
       catch (MessagingException me) {
           me.printStackTrace();
+          return "no envio";
       }
+   
   }
 
+  
+  public static void main(String[] args) {
+    MailUtil mailUtil = new MailUtil();
+    mailUtil.sendFromGMail(new String[] {"edgar.yesid.garcia.ortiz@gmail.com"}, "sdsdsd", "<p>asasa</p>");
+  }
 }

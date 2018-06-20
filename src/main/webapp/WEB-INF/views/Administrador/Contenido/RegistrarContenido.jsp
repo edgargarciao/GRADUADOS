@@ -22,7 +22,7 @@
 
 
 <%@ include file="../General/css.jsp"%>
-
+	<link rel="stylesheet" href="resources/assets/css/load.css">
 
 
 </head>
@@ -56,21 +56,7 @@
 					</div>
 				</div>
 				<!-- Area en donde se encuentra la foto del usuario y la barra de opciones -->
-				<div class="col-sm-5">
-					<div class="user-area dropdown float-right">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false"> <img
-							class="user-avatar rounded-circle"
-							src="resources/images/admin.jpg" alt="User Avatar">
-						</a>
-						<div class="user-menu dropdown-menu">
-							<a class="nav-link" href="#"><i class="fa fa- user"></i>Mi
-								perfil</a> <a class="nav-link" href="#"><i class="fa fa -cog"></i>Configuración
-								de la cuenta</a> <a class="nav-link" href="${contextPath}/logout"><i
-								class="fa fa-power -off"></i>Salir</a>
-						</div>
-					</div>
-				</div>
+				<%@ include file="../General/Configuracion.jsp"%>
 			</div>
 
 		</header>
@@ -156,63 +142,67 @@
 									<div style="display: none;">
 										<input type="file" id="archivoSom" name="archivoSom" onchange="revisarFraseSombreada(this);" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf">
 									</div>																
-
-									<div id="pagina" class="form-group" >
-										<label for="textarea-input" class=" form-control-label">Contenido</label>
+								 	
+										<div id="pagina" class="form-group" >
+											<label for="textarea-input" class=" form-control-label">Contenido</label>
 										
-									<div class="toolbar">
-									  <a href="#" data-command='undo'><i class='fa fa-undo'></i></a>
-									  <a href="#" data-command='redo'><i class='fa fa-repeat'></i></a>
-									  <div class="fore-wrapper">
-									  	<i class='fa fa-font' style='color:#C96;'></i>
-									  	
-									    <div class="fore-palette">
-									    
-									    </div>
-									  
-									  </div>
-									  <div class="back-wrapper"><i class='fa fa-font' style='background:#C96;'></i>
-									    
-									    <div class="back-palette">
-									    
-									    </div>
-									  
-									  </div>
-									  <a href="#" data-command='bold'><i class='fa fa-bold'></i></a>
-									  <a href="#" data-command='italic'><i class='fa fa-italic'></i></a>
-									  <a href="#" data-command='underline'><i class='fa fa-underline'></i></a>
-									  <a href="#" data-command='strikeThrough'><i class='fa fa-strikethrough'></i></a>
-									  <a href="#" data-command='justifyLeft'><i class='fa fa-align-left'></i></a>
-									  <a href="#" data-command='justifyCenter'><i class='fa fa-align-center'></i></a>
-									  <a href="#" data-command='justifyRight'><i class='fa fa-align-right'></i></a>
-									  <a href="#" data-command='justifyFull'><i class='fa fa-align-justify'></i></a>
-									  <a href="#" data-command='indent'><i class='fa fa-indent'></i></a>
-									  <a href="#" data-command='outdent'><i class='fa fa-outdent'></i></a>
-									  <a href="#" data-command='insertUnorderedList'><i class='fa fa-list-ul'></i></a>
-									  <a href="#" data-command='insertOrderedList'><i class='fa fa-list-ol'></i></a>
-									  <a href="#" data-command='h1'>H1</a>
-									  <a href="#" data-command='h2'>H2</a>
-									  <a href="#" data-command='p'>P</a>
-									  <a href="#" data-command='createlink'><i class='fa fa-link'></i></a>
-									  <a href="#" data-command='unlink'><i class='fa fa-unlink'></i></a>
-									  <a href="#" data-command='insertFileLink'><i class='fa fa-file-text-o'></i></a>
-									  <a href="#" data-command='insertFile'><i class='fa fa-file-archive-o'></i></a>
-									  <a href="#" data-command='insertimageU'><i class='fa fa-file-image-o'></i></a>
-									  <a href="#" data-command='insertVideo'><i class='fa fa-file-video-o'></i></a>
-									  <a href="#" data-command='insertVideoYoutube'><i class='fa fa-youtube'></i></a>
-									  <a href="#" data-command='insertimage'><i class='fa fa-picture-o'></i></a>
-									  		  
-									  <a href="#" data-command='subscript'><i class='fa fa-subscript'></i></a>
-									  <a href="#" data-command='superscript'><i class='fa fa-superscript'></i></a>
-									</div>
-									<div id='editor' contenteditable>
-										<h1>Pagina contenido UFPS.</h1>
-										<p>Aquí podrás agregar el contenido que desees ver en la página</p>
 										
-										<!-- PQWOEIRUTUMZNXBCVB -->
-									</div>									
-										
-									</div>
+											
+											<div class="toolbar">
+											  <a href="#" data-command='undo'><i class='fa fa-undo'></i></a>
+											  <a href="#" data-command='redo'><i class='fa fa-repeat'></i></a>
+											  <div class="fore-wrapper">
+											  	<i class='fa fa-font' style='color:#C96;'></i>
+											  	
+											    <div class="fore-palette">
+											    
+											    </div>
+											  
+											  </div>
+											  <div class="back-wrapper"><i class='fa fa-font' style='background:#C96;'></i>
+											    
+											    <div class="back-palette">
+											    
+											    </div>
+											  
+											  </div>
+											  <a href="#" data-command='bold'><i class='fa fa-bold'></i></a>
+											  <a href="#" data-command='italic'><i class='fa fa-italic'></i></a>
+											  <a href="#" data-command='underline'><i class='fa fa-underline'></i></a>
+											  <a href="#" data-command='strikeThrough'><i class='fa fa-strikethrough'></i></a>
+											  <a href="#" data-command='justifyLeft'><i class='fa fa-align-left'></i></a>
+											  <a href="#" data-command='justifyCenter'><i class='fa fa-align-center'></i></a>
+											  <a href="#" data-command='justifyRight'><i class='fa fa-align-right'></i></a>
+											  <a href="#" data-command='justifyFull'><i class='fa fa-align-justify'></i></a>
+											  <a href="#" data-command='indent'><i class='fa fa-indent'></i></a>
+											  <a href="#" data-command='outdent'><i class='fa fa-outdent'></i></a>
+											  <a href="#" data-command='insertUnorderedList'><i class='fa fa-list-ul'></i></a>
+											  <a href="#" data-command='insertOrderedList'><i class='fa fa-list-ol'></i></a>
+											  <a href="#" data-command='h1'>H1</a>
+											  <a href="#" data-command='h2'>H2</a>
+											  <a href="#" data-command='p'>P</a>
+											  <a href="#" data-command='createlink'><i class='fa fa-link'></i></a>
+											  <a href="#" data-command='unlink'><i class='fa fa-unlink'></i></a>
+											  <a href="#" data-command='insertFileLink'><i class='fa fa-file-text-o'></i></a>
+											  <a href="#" data-command='insertFile'><i class='fa fa-file-archive-o'></i></a>
+											  <a href="#" data-command='insertimageU'><i class='fa fa-file-image-o'></i></a>
+											  <a href="#" data-command='insertVideo'><i class='fa fa-file-video-o'></i></a>
+											  <a href="#" data-command='insertVideoYoutube'><i class='fa fa-youtube'></i></a>
+											  <a href="#" data-command='insertimage'><i class='fa fa-picture-o'></i></a>
+											  		  
+											  <a href="#" data-command='subscript'><i class='fa fa-subscript'></i></a>
+											  <a href="#" data-command='superscript'><i class='fa fa-superscript'></i></a>
+											</div>
+											<div name="tt"> 
+												<div id='editor' contenteditable>
+													<h1>Pagina contenido UFPS.</h1>
+													<p>Aquí podrás agregar el contenido que desees ver en la página</p>
+													
+													<!-- PQWOEIRUTUMZNXBCVB -->
+												</div>									
+											</div>
+										</div>
+									
 									<!-- Boton para registrar los datos -->
 									<button type="button" onclick="enviarDatos()"   class="btn btn-success">Registrar</button>
 								</form:form>
@@ -267,6 +257,9 @@
 		
 		// Variable para guardar el tipo de contenido
 		var tipoCon = "";
+		
+		document.getElementsByName("tt")[0].setAttribute("id","loader");
+		document.getElementById("editor").setAttribute("style","display:none;");
 		
 		// Aqui consulto si es link o pagina normal
 		if(selectedValueTC == 2){
@@ -329,6 +322,7 @@
 					if(result.trim() == 'REGISTRO EXITOSO'){
 						
 						$('#formContenido').trigger("reset");
+				 		
 						cambiarDeTipoDeContenido();
 						pintarRegistroExitoso();
 						document.getElementById('editor').innerHTML = "";
@@ -345,14 +339,19 @@
 						document.getElementById('editor').appendChild(h);
 						document.getElementById('editor').appendChild(p);
 						
+						
+						
 					}else{
 						pintarRegistroNoExitoso(result.trim());
 					}
-				
+					document.getElementsByName("tt")[0].setAttribute("id","");
+			 		document.getElementById("editor").setAttribute("style","block");
 				},
 				error : function(e) {
 					pintarRegistroNoExitoso("Error en el sistema. Contacte al administrador.");
 					console.log("ERROR: ", e);
+					document.getElementsByName("tt")[0].setAttribute("id","");
+			 		document.getElementById("editor").setAttribute("style","block");
 				}
 			});	
 								
@@ -382,12 +381,14 @@
 					for (var i = 0; i < asosiaciones.length; i++) {
 
 						var id = asosiaciones[i].substring(1,asosiaciones[i].length).split(":")[0].replace('\"', '').replace('\"', '');
-						var nombre = asosiaciones[i].substring(1,asosiaciones[i].length).split(":")[1].replace('\"', '').replace('\"', '');
-						if (nombre.indexOf("}") != -1) {
-							nombre = nombre.replace('}', '');
-						}
-						agregarOpcion(document.getElementById("asosiacion"),id, nombre);
-						
+						var te = asosiaciones[i].substring(1,asosiaciones[i].length).split(":")[1];
+						if(te!=""){
+							var nombre = te.replace('\"', '').replace('\"', '');
+							if (nombre.indexOf("}") != -1) {
+								nombre = nombre.replace('}', '');
+							}
+							agregarOpcion(document.getElementById("asosiacion"),id, nombre);
+						}	
 					}
 				},
 				error : function(e) {

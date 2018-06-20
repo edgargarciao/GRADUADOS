@@ -77,13 +77,13 @@ public class Contenido {
   public boolean isValidoParaRegistrar() {
     if(this.tipoContenido.getId() == 1) {
       return (!StringUtils.isEmpty(this.nombre)
-          && !StringUtils.isEmpty(conn.size()>0)
+          && (conn.size()>0)
           && !StringUtils.isEmpty(this.tipoContenido.getNombre())
           && !StringUtils.isEmpty(this.tipoAsociacion) && this.asociacion != 0);
      
     }else {
       return (!StringUtils.isEmpty(this.nombre)
-          && !StringUtils.isEmpty(this.contenido.length()>0)
+          && (this.contenido.length()>0)
           && !StringUtils.isEmpty(this.tipoContenido.getNombre())
           && !StringUtils.isEmpty(this.tipoAsociacion) && this.asociacion != 0);
       

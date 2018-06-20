@@ -8,6 +8,7 @@ import org.apache.commons.io.Charsets;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import co.ufps.edu.bd.SpringDbMgr;
+import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.dto.Categoria;
 import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.SubCategoria;
@@ -70,6 +71,7 @@ public class CategoriaDao {
 
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("nombre", categoria.getNombre());
+    
     map.addValue("descripcion", categoria.getDescripcion());
     map.addValue("orden", getUltimoNumeroDeOrden() + 1);
 
@@ -312,6 +314,8 @@ public class CategoriaDao {
     // Lista para retornar con los datos
     List<Categoria> categorias = new LinkedList<>();
 
+    categorias = getCategorias();
+    
     // Consulta para realizar en base de datos
     SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    categoria.id                    idCategoria,            "
                                                   + "           categoria.nombre                nombreCategoria,        "
@@ -349,6 +353,7 @@ public class CategoriaDao {
   private void cargarContenido(SubCategoria subCategoria) {
     MapSqlParameterSource map = new MapSqlParameterSource();
     map.addValue("id", subCategoria.getId());
+    map.addValue("tipo", Constantes.SUBCATEGORIA);
  // Consulta para realizar en base de datos
     SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    contenido.id                    idContenido,            "
                                                   + "           contenido.contenido             contenido,              "
@@ -359,7 +364,8 @@ public class CategoriaDao {
                                                   + "           subcategoria.orden              ordenSubCategoria       "
                                                   + "   FROM    subcategoria                                            "
                                                   + "INNER JOIN contenido  ON contenido.asociacion = subcategoria.id "
-                                                  + "WHERE subcategoria.id = :id",map);
+                                                  + "WHERE subcategoria.id = :id "
+                                                  + "AND   contenido.tipoasociacion = :tipo",map);
 
     // Recorre cada registro obtenido de base de datos
     if (sqlRowSet.next()) {
@@ -404,6 +410,19 @@ public class CategoriaDao {
     
   }
   
-  
+  public static void main(String[] args) {
+String a =  " SELECT    contenido.id                    idContenido,            "
+    + "           contenido.contenido             contenido,              "
+    + "           contenido.TipoContenido_id      tipoContenido,          "                                                  
+    + "           subcategoria.id                 idSubcategoria,         "
+    + "           subcategoria.nombre             nombreSubCategoria,     "
+    + "           subcategoria.descripcion        descripcionSubCategoria,"
+    + "           subcategoria.orden              ordenSubCategoria       "
+    + "   FROM    subcategoria                                            "
+    + "INNER JOIN contenido  ON contenido.asociacion = subcategoria.id "
+    + "WHERE subcategoria.id = :id"
+    + "AND   contenido.tipoasociacion = :tipo";
+System.out.println(a);
+  }
 
 }

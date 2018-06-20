@@ -15,6 +15,7 @@ public class Novedad {
   private MultipartFile imagen;
   private String imBase64image;
   private String fechaEnFormato;
+  private Contenido contenido;
 
   public long getId() {
     return id;
@@ -38,9 +39,9 @@ public class Novedad {
 
   public void setFecha(Date fecha) {
     this.fecha = fecha;
-    LocalDate today = LocalDate.of(2019, 10, 04);
+    LocalDate today = LocalDate.of(fecha.getYear(), fecha.getMonth()+1, fecha.getDate());
     String mes = today.getMonth().getDisplayName(TextStyle.FULL, new Locale("es","ES"));
-    this.fechaEnFormato = fecha.getDate()+" de "+mes+" de "+fecha.getYear();
+    this.fechaEnFormato = fecha.getDate()+" de "+mes+" de "+(fecha.getYear()+1900);
   }
 
   public boolean isValidoParaRegistrar() {
@@ -78,6 +79,14 @@ public class Novedad {
 
   public void setFechaEnFormato(String fechaEnFormato) {
     this.fechaEnFormato = fechaEnFormato;
+  }
+
+  public Contenido getContenido() {
+    return contenido;
+  }
+
+  public void setContenido(Contenido contenido) {
+    this.contenido = contenido;
   }
   
 }

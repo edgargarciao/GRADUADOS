@@ -45,10 +45,6 @@ public class SessionManager implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
-      
-    request.setCharacterEncoding("ISO-8859-15");
-    
-    response.setCharacterEncoding("ISO-8859-15");
     
     if(request.getSession().getAttribute("token") == null)
     {

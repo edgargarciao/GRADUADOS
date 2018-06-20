@@ -39,18 +39,7 @@
 						</div>    
                 </div>
                	<!-- Area en donde se encuentra la foto del usuario y la barra de opciones -->
-				<div class="col-sm-5">
-	            	<div class="user-area dropdown float-right">
-	                	<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    	<img class="user-avatar rounded-circle" src="resources/images/admin.jpg" alt="User Avatar">
-						</a>
-						<div class="user-menu dropdown-menu">
-	                    	<a class="nav-link" href="#"><i class="fa fa- user"></i>Mi perfil</a>                                  
-	                        <a class="nav-link" href="#"><i class="fa fa -cog"></i>Configuración de la cuenta</a>
-	                        <a class="nav-link" href="${contextPath}/logout"><i class="fa fa-power -off"></i>Salir</a>
-						</div>
-					</div>                        
-				</div>
+				<%@ include file="../General/Configuracion.jsp"%>
             </div>
 
         </header><!-- /header -->
@@ -110,17 +99,7 @@
 										</div>
 										<!--/ Fin de fecha final -->
 		                            </div>	           
-			                        </br>                                	
-                                	 <!-- Campo para digitar la imagen 1 -->
-                                	<div id ="divim1" class="form-group btn btn-danger btn-sm">
-                                    	<label for="text-input" class=" form-control-label">Imagen</label>
-                                		<form:input type="file" path="Imagen" id="Imagen1" name="Imagen1" accept="images/*" onchange="revisarArchivos('1')" required = "true"/>
-                                	</div>
-                                	</br>
-                                	<div id = "divimagen1" class="form-group">
-                                		<img id = "img1" src="" height="200" alt="Imagen">
-                                	</div>
-                                	</br>
+			                                                   	
                                 	                                	                          	
                                 	
                                 	<!-- Boton para registrar los datos -->
@@ -142,41 +121,6 @@
 	<!-- Carga de los archivos Javascript -->
 	<%@ include file = "../General/scripts.jsp" %>
 	
-	<!-- <script src="resources/assets/js/archivos.js"></script>  -->
-	<script type="text/javascript">
-		
-		
-		function revisarArchivos(id){
-			var el = document.getElementById("Imagen"+id).files;
-			if(el!=null && el.length==0){
-				document.getElementById("divim"+id).setAttribute('class', 'btn btn-danger btn-sm');
-				previewFile(id);
-			}else{
-				document.getElementById("divim"+id).setAttribute('class', 'btn btn-primary btn-sm');
-				//document.getElementById("divimagen1").removeAttribute('class');
-				previewFile(id);
-			}
-		}
-		
-		/*
-		* Metodo que permite pintar una imagen recien 
-		*/
-		function previewFile(id) {
-			  var preview = document.getElementById('img'+id);
-			  var file    = document.getElementById('Imagen'+id).files[0];
-			  var reader  = new FileReader();
-
-			  reader.onloadend = function () {
-			    preview.src = reader.result;
-			  }
-
-			  if (file) {
-			    reader.readAsDataURL(file);
-			  } else {
-			    preview.src = "";
-			  }
-			}		
-	</script>
 
 </body>
 </html>

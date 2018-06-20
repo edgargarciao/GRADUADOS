@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.commons.io.Charsets;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
@@ -12,7 +13,11 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import co.ufps.edu.bd.SpringDbMgr;
+import co.ufps.edu.constantes.Constantes;
+import co.ufps.edu.dto.Contenido;
+import co.ufps.edu.dto.Noticia;
 import co.ufps.edu.dto.Novedad;
+import co.ufps.edu.dto.TipoContenido;
 import co.ufps.edu.util.ImagenUtil;
 
 @Component
@@ -226,10 +231,48 @@ public class NovedadDao {
       Object imagen1Blob = sqlRowSet.getObject("imagen");
       novedad.setImBase64image(imagenUtil.convertirImagen((byte[]) imagen1Blob));
 
+      cargarContenido(novedad);
+      
       // Guarda el registro para ser retornado
       novedades.add(novedad);
     }
     // Retorna todos los contactos desde base de datos
     return novedades;
   }
+  
+  private void cargarContenido(Novedad novedad) {
+
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", novedad.getId());
+    map.addValue("tipo", Constantes.NOVEDAD);
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    contenido.id                    idContenido,            "
+                                                  + "           contenido.contenido             contenido,              "
+                                                  + "           contenido.TipoContenido_id      tipoContenido          "                                                  
+                                                  + "   FROM    novedad                                            "
+                                                  + "INNER JOIN contenido  ON contenido.asociacion = novedad.id "
+                                                  + "WHERE novedad.id = :id "
+                                                  + "AND   contenido.tipoasociacion = :tipo",map);
+
+    // Recorre cada registro obtenido de base de datos
+    while (sqlRowSet.next()) {
+      // Objeto en el que sera guardada la informacion del registro
+
+      // Objeto en el que sera guardada la informacion del registro
+      Contenido contenido = new Contenido();
+      
+      contenido.setId(sqlRowSet.getLong("idContenido"));      
+      byte []a = (byte[]) sqlRowSet.getObject("contenido");
+      String res = new String(a,Charsets.UTF_8);
+      contenido.setContenido(res);      
+
+      TipoContenido tipoContenido = new TipoContenido();
+      tipoContenido.setId(sqlRowSet.getLong("tipoContenido"));
+            
+      contenido.setTipoContenido(tipoContenido);
+      
+      // Guarda el registro para ser retornado
+      novedad.setContenido(contenido);
+    }
+  }  
 }

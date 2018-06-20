@@ -40,18 +40,7 @@
 						</div>    
                 </div>
                	<!-- Area en donde se encuentra la foto del usuario y la barra de opciones -->
-				<div class="col-sm-5">
-	            	<div class="user-area dropdown float-right">
-	                	<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    	<img class="user-avatar rounded-circle" src="resources/images/admin.jpg" alt="User Avatar">
-						</a>
-						<div class="user-menu dropdown-menu">
-	                    	<a class="nav-link" href="#"><i class="fa fa- user"></i>Mi perfil</a>                                  
-	                        <a class="nav-link" href="#"><i class="fa fa -cog"></i>Configuración de la cuenta</a>
-	                        <a class="nav-link" href="${contextPath}/logout"><i class="fa fa-power -off"></i>Salir</a>
-						</div>
-					</div>                        
-				</div>
+				<%@ include file="../General/Configuracion.jsp"%>
             </div>
 
         </header><!-- /header -->
@@ -84,7 +73,7 @@
                             		
                             		 <form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${noticia.id}"/>
                             			<form:hidden id="im1Base64image" path="im1Base64image" class="form-control"  aria-invalid="false" value="Lleno"/>
-                            			<form:hidden id="im2Base64image" path="im2Base64image" class="form-control"  aria-invalid="false" value="Lleno"/>
+                            			
                             		
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
@@ -94,7 +83,7 @@
                                 	<!-- Campo para digitar la descripción -->
                                 	<div class="form-group">
                                         <label for="textarea-input" class=" form-control-label">Descripción</label>
-                                		<form:textarea id="descripcion" maxlength="180" name="descripcion" class="form-control" path="descripcion" rows="2" cols="130" required = "true" value="${noticia.descripcion}" /> 
+                                		<form:textarea id="descripcion" maxlength="160" name="descripcion" class="form-control" path="descripcion" rows="2" cols="130" required = "true" value="${noticia.descripcion}" /> 
                                 	</div>   
 
                             		<!-- Campo para digitar la fecha -->
@@ -105,7 +94,7 @@
                                 	
  									<!-- Campo para digitar la imagen 1 -->
                                 	<div id ="divim1" class="form-group btn btn-primary btn-sm">
-                                    	<label for="text-input" class=" form-control-label">Imagen 1</label>
+                                    	<label for="text-input" class=" form-control-label">Imagen (Pref. 1950x550) </label>
                                 		<form:input type="file" path="Imagen1" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')"/>
                                 	</div>
                                 	</br>
@@ -113,17 +102,7 @@
                                 		<img id = "img1" height="200" alt="Imagen" src="${noticia.im1Base64image}">
                                 	</div>
                                 	</br>
-                                	                                	
-                                	 <!-- Campo para digitar la imagen 2 -->
-                                	<div id ="divim2" class="form-group btn btn-primary btn-sm">
-                                    	<label for="text-input" class=" form-control-label">Imagen 2</label>
-                                		<form:input type="file" path="Imagen2" id="Imagen2" name="Imagen2"  onchange="revisarArchivos('2')"/>
-                                	</div>                                		                                                               	                                	                              	
-                                	</br>
-                                	<div id = "divimagen2" class="form-group">
-                                		<img id = "img2" height="200" alt="Imagen" src="${noticia.im2Base64image}">
-                                	</div>
-                                	</br>                                  		                                                               	                                	                              	
+                                	                                	                              		                                                               	                                	                              	
                                 	
                                 	<!-- Boton para actualizar los datos -->
                                 	<button type="submit" class="btn btn-success">Actualizar</button>                                 

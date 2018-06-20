@@ -127,7 +127,8 @@
 
         var formData = new FormData();
         formData.append('archivo', file);
-        
+		document.getElementsByName("tt")[0].setAttribute("id","loader");
+		document.getElementById("editor").setAttribute("style","display:none;");
         // Aca guardo el archivo en base de datos y genero un ID
 		$.ajax({
 			type : "POST",
@@ -141,11 +142,14 @@
 				var id  = result;
 				// Si guardo el archivo lo pintamos en pantalla
 				pintarImagen(id,file.type);    	
-				
+				document.getElementsByName("tt")[0].setAttribute("id","");
+		 		document.getElementById("editor").setAttribute("style","block");
 			},
 			error : function(e) {
 				alert("Error! --> "+String(e));
 				console.log("ERROR: ", e);
+				document.getElementsByName("tt")[0].setAttribute("id","");
+		 		document.getElementById("editor").setAttribute("style","block");
 			}
 		}); 
         
@@ -193,7 +197,8 @@
 
 	        var formData = new FormData();
 	        formData.append('archivo', file);
-	        
+			document.getElementsByName("tt")[0].setAttribute("id","loader");
+			document.getElementById("editor").setAttribute("style","display:none;");
 	        // Aca guardo el archivo en base de datos y genero un ID
 			$.ajax({
 				type : "POST",
@@ -204,15 +209,20 @@
 				url : url + "/servicios/registrarArchivo",
 				data: (formData),
 				success : function(result) {
+
+					document.getElementsByName("tt")[0].setAttribute("id","");
+			 		document.getElementById("editor").setAttribute("style","block"); 	
 					var id  = result;
 					var urlc = url+"/servicios/download?id="+id;
 					document.execCommand("createlink", false, urlc);
-					 	
+
 					
 				},
 				error : function(e) {
 					alert("Error! --> "+String(e));
 					console.log("ERROR: ", e);
+					document.getElementsByName("tt")[0].setAttribute("id","");
+			 		document.getElementById("editor").setAttribute("style","block");
 				}
 			}); 
 	        

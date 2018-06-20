@@ -12,9 +12,8 @@ public class Noticia {
   private Date fecha;
   private int orden;
   private MultipartFile imagen1;
-  private MultipartFile imagen2;
   private String im1Base64image;
-  private String im2Base64image;
+  private Contenido contenido;
   
   public long getId() {
     return id;
@@ -53,7 +52,7 @@ public class Noticia {
   }
   
   public boolean isValidoParaActualizar() {
-    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.descripcion) && !StringUtils.isEmpty(fecha.toString()) && !StringUtils.isEmpty(im1Base64image) && !StringUtils.isEmpty(im2Base64image));
+    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.descripcion) && !StringUtils.isEmpty(fecha.toString()) && !StringUtils.isEmpty(im1Base64image) );
   }
 
 
@@ -79,14 +78,6 @@ public class Noticia {
     this.imagen1 = imagen1;
   }
 
-  public MultipartFile getImagen2() {
-    return imagen2;
-  }
-
-  public void setImagen2(MultipartFile imagen2) {
-    this.imagen2 = imagen2;
-  }
-
   public String getIm1Base64image() {
     return im1Base64image;
   }
@@ -95,12 +86,12 @@ public class Noticia {
     this.im1Base64image = im1Base64image;
   }
 
-  public String getIm2Base64image() {
-    return im2Base64image;
+  public Contenido getContenido() {
+    return contenido;
   }
 
-  public void setIm2Base64image(String im2Base64image) {
-    this.im2Base64image = im2Base64image;
+  public void setContenido(Contenido contenido) {
+    this.contenido = contenido;
   }
   
 }

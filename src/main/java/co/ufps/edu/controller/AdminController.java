@@ -30,6 +30,7 @@ import co.ufps.edu.dao.RedSocialDao;
 import co.ufps.edu.dao.SubCategoriaDao;
 import co.ufps.edu.dao.UsuarioDao;
 import co.ufps.edu.dao.VisitaDao;
+import co.ufps.edu.dto.Actividad;
 import co.ufps.edu.dto.Contenido;
 import co.ufps.edu.dto.Galeria;
 import co.ufps.edu.dto.Login;
@@ -43,8 +44,6 @@ public class AdminController {
   @Autowired
   private SessionManager sessionManager;
   
-  @Autowired
-  private JavaMailSenderImpl javaMailService;
 
   private JwtUtil jwtUtil;
   private LoginDao loginDao;
@@ -207,8 +206,8 @@ public class AdminController {
   @GetMapping("/logout")
   private String getLogOut(String token, HttpServletRequest request) {
     request.getSession().invalidate();
-    String codigo = jwtUtil.parseToken(token);
-    sessionManager.eliminarSesion("SESSION:" + codigo);
+    String correo = jwtUtil.parseToken(token);
+    sessionManager.eliminarSesion("SESSION:" + correo);
     return "Administrador/Login"; // Nombre del archivo jsp
   }
 
@@ -303,7 +302,20 @@ public class AdminController {
     return "galerias"; // Nombre del archivo jsp
   }
 
+  /**
+   * Método que obtiene la pagina de todas las galerias.
+   *
+   * @param model Objeto para enviar información a los archivos .JSP
+   * @return La pagina con la información de las galerias cargada.
+   */
+  @GetMapping(value = "/servicios/actividades")
+  public String obtenerActividades(Model model) {
 
+    List<Actividad> galerias = actividadDao.getActividades();
+    cargarModelo(model);
+    model.addAttribute("actividadCom", galerias);
+    return "actividades"; // Nombre del archivo jsp
+  }
   @GetMapping("/generarInforme")
   private String generarInforme() {
     return "xlsView"; // Nombre del archivo jsp
@@ -367,7 +379,7 @@ public class AdminController {
         model.addAttribute("result","Contraseña recuparada con éxito");
         return "Administrador/Login";
       }else {
-        model.addAttribute("wrong","El correo no esta registrado en el sistema. Contacte al administrador.");
+        model.addAttribute("wrong",mensaje);
         return "Administrador/Recordar";
       }
     }

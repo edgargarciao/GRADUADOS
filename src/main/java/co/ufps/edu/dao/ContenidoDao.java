@@ -20,6 +20,7 @@ import co.ufps.edu.bd.SpringDbMgr;
 import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.dto.Archivo;
 import co.ufps.edu.dto.Contenido;
+import co.ufps.edu.dto.Noticia;
 import co.ufps.edu.dto.ResultDB;
 import co.ufps.edu.dto.TipoContenido;
 import co.ufps.edu.util.ImagenUtil;
@@ -127,9 +128,11 @@ public class ContenidoDao {
       result = springDbMgr.executeDml(query, map);
     } catch (Exception e) {
       e.printStackTrace();
+      
     }
     // Si hubieron filas afectadas es por que si hubo registro, en caso contrario muestra el mensaje
     // de error.
+    System.out.println("registro.....");
     return (result == 1) ? "Registro exitoso"
         : "Error al registrar el contenido. Contacte al administrador del sistema.";
   }
@@ -140,8 +143,10 @@ public class ContenidoDao {
     String tabla = (tipoAsociacion.equalsIgnoreCase(Constantes.ACTIVIDAD)) ? "proximaactividad"
         : tipoAsociacion;
     tabla = tabla.toLowerCase();
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("tipo", tipoAsociacion.toLowerCase());
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM " + tabla + " WHERE ID NOT IN (SELECT asociacion FROM contenido)");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM " + tabla + " WHERE ID NOT IN (SELECT asociacion FROM contenido WHERE upper(tipoasociacion) = :tipo)",map);
 
     while (sqlRowSet.next()) {
       asociaciones.put(sqlRowSet.getInt("id"), sqlRowSet.getString("nombre"));
@@ -335,5 +340,20 @@ public class ContenidoDao {
     return (result == 1) ? "Eliminacion exitosa"
         : "Error al eliminar el contenido. Contacte al administrador del sistema.";
   }
+
+  public boolean tieneContenido(long id, String tipoAsociacion) {
+    
+    String tabla = (tipoAsociacion.equalsIgnoreCase(Constantes.ACTIVIDAD)) ? "proximaactividad"
+        : tipoAsociacion;
+    tabla = tabla.toLowerCase();
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("tipo", tipoAsociacion.toLowerCase());
+    map.addValue("id", id);
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery("SELECT id FROM contenido WHERE asociacion = :id AND upper(tipoasociacion) = :tipo",map);
+
+    return (sqlRowSet.next());
+  }
+  
 
 }

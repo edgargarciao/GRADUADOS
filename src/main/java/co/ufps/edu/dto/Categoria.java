@@ -79,5 +79,9 @@ public class Categoria {
   public void setContenido(String contenido) {
     this.contenido = contenido;
   }
+  
+  public boolean haySubCategorias() {
+    return this.subcategorias.size()>0;
+  }
 
 }

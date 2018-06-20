@@ -39,18 +39,7 @@
 						</div>    
                 </div>
                	<!-- Area en donde se encuentra la foto del usuario y la barra de opciones -->
-				<div class="col-sm-5">
-	            	<div class="user-area dropdown float-right">
-	                	<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    	<img class="user-avatar rounded-circle" src="resources/images/admin.jpg" alt="User Avatar">
-						</a>
-						<div class="user-menu dropdown-menu">
-	                    	<a class="nav-link" href="#"><i class="fa fa- user"></i>Mi perfil</a>                                  
-	                        <a class="nav-link" href="#"><i class="fa fa -cog"></i>Configuración de la cuenta</a>
-	                        <a class="nav-link" href="${contextPath}/logout"><i class="fa fa-power -off"></i>Salir</a>
-						</div>
-					</div>                        
-				</div>
+				<%@ include file="../General/Configuracion.jsp"%>
             </div>
 
         </header><!-- /header -->
@@ -82,7 +71,7 @@
                         		<form:form id="formActividad" action="editarActividad" method="post" modelAttribute="actividad" enctype="multipart/form-data">
                             		
                             		<form:hidden id="id" path="id" class="form-control" aria-invalid="false" required = "true" value="${actividad.id}"/>
-                            		<form:hidden id="im1Base64image" path="imBase64image" class="form-control"  aria-invalid="false" value="Lleno"/>
+                            		
                             		                            		
                             		<!-- Campo para digitar el nombre -->
                                 	<div class="form-group">
@@ -114,17 +103,7 @@
 										</div>
 										<!--/ Fin de fecha final -->
 		                            </div>	           
-			                        </br>                                	
-                                	 <!-- Campo para digitar la imagen 1 -->
-                                	<div id ="divim1" class="form-group btn btn-primary btn-sm">
-                                    	<label for="text-input" class=" form-control-label">Imagen 1</label>
-                                		<form:input type="file" path="Imagen" id="Imagen1" name="Imagen1" onchange="revisarArchivos('1')"/>
-                                	</div>
-                                	</br>
-                                	<div id = "divimagen1" class="form-group">
-                                		<img id = "img1" src="${actividad.imBase64image}" height="200" alt="Imagen">
-                                	</div>
-                                	</br>
+
                                 	                                        		                                                               	                                	                              	                                	
                                 	<!-- Boton para actualizar los datos -->
                                 	<button type="submit" class="btn btn-success">Actualizar</button>                                 
@@ -145,41 +124,5 @@
 	<!-- Carga de los archivos Javascript -->
 	<%@ include file = "../General/scripts.jsp" %>
 	
-	<!-- <script src="resources/assets/js/archivos.js"></script>  -->
-	<script type="text/javascript">
-	function revisarArchivos(id){
-		var el = document.getElementById("Imagen"+id).files;
-		if(el!=null && el.length==0){
-			document.getElementById("divim"+id).setAttribute('class', 'btn btn-danger btn-sm');
-			previewFile(id);
-		}else{
-			document.getElementById("divim"+id).setAttribute('class', 'btn btn-primary btn-sm');
-			previewFile(id);
-		}
-	}
-	
-	/*
-	* Metodo que permite pintar una imagen recien 
-	*/
-	function previewFile(id) {
-		  var preview = document.getElementById('img'+id);
-		  var file    = document.getElementById('Imagen'+id).files[0];
-		  var reader  = new FileReader();
-
-		  reader.onloadend = function () {
-		    preview.src = reader.result;
-		    document.getElementById('im'+id+'Base64image').value = "Lleno";
-		  }
-
-		  if (file) {
-		    reader.readAsDataURL(file);
-		  } else {
-			  			  
-		    preview.src = "";
-		    document.getElementById('im'+id+'Base64image').value = "";
-		  }
-		}	
-	</script>
-
-</body>
+	</body>
 </html>

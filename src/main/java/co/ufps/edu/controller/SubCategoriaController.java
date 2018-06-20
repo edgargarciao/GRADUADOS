@@ -1,13 +1,16 @@
 package co.ufps.edu.controller;
 
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.dao.CategoriaDao;
+import co.ufps.edu.dao.ContenidoDao;
 import co.ufps.edu.dao.SubCategoriaDao;
 import co.ufps.edu.dto.SubCategoria;
 
@@ -27,7 +30,9 @@ public class SubCategoriaController {
 
   private SubCategoriaDao subCategoriaDao;
   private CategoriaDao categoriaDao;
-
+  
+  @Autowired
+  private ContenidoDao contenidoDao;
   /**
    * Constructor de la clase en donde se inicializan las variables
    */
@@ -317,18 +322,21 @@ public class SubCategoriaController {
   @PostMapping(value = "/borrarSubCategoria")
   public String borrarSubCategoria(@ModelAttribute("subcategoria") SubCategoria subcategoria,
       Model model) {
-
-    String mensaje = subCategoriaDao.eliminarSubCategoria(subcategoria);
-    cambiarOrdenDeSubCategorias(subcategoria);
-    if (mensaje.equals("Eliminacion exitosa")) {
-      model.addAttribute("result", "Subcategoria eliminada con éxito.");
-      model.addAttribute("subcategorias", subCategoriaDao.getSubCategorias());
-      return "Administrador/SubCategoria/SubCategorias"; // Nombre del archivo jsp
-    } else {
-      model.addAttribute("wrong", mensaje);
-      return "Administrador/Categoria/EliminarCategoria";
+    if(!contenidoDao.tieneContenido(subcategoria.getId(),Constantes.SUBCATEGORIA)) {
+      String mensaje = subCategoriaDao.eliminarSubCategoria(subcategoria);
+      cambiarOrdenDeSubCategorias(subcategoria);
+      if (mensaje.equals("Eliminacion exitosa")) {
+        model.addAttribute("result", "Subcategoria eliminada con éxito.");
+        model.addAttribute("subcategorias", subCategoriaDao.getSubCategorias());
+        return "Administrador/SubCategoria/SubCategorias"; // Nombre del archivo jsp
+      } else {
+        model.addAttribute("wrong", mensaje);
+        return "Administrador/SubCategoria/EliminarSubCategoria";
+      }
+    }else {
+      model.addAttribute("wrong", "No es posible eliminar la subcategoria debido a que tiene un contenido registrado.");
+      return "Administrador/SubCategoria/EliminarSubCategoria";
     }
-
   }
 
 
@@ -345,28 +353,6 @@ public class SubCategoriaController {
       long idSubCategoria = subCategoriaDao.getIdSubCategoriaPorOrden(subcategoria.getCategoria().getId(), i + 1);
       subCategoriaDao.cambiarOrdenDeSubCategoria(subcategoria.getCategoria().getId(),idSubCategoria, i);
     }
-  }
-  
-  /**
-   * Método que obtiene la pagina de actualizar categoria dado un ID.
-   * 
-   * @param idCategoria Identificador de la categoria
-   * @param model Objeto para enviar información a los archivos .JSP
-   * @return La pagina con la información de la categoria cargada.
-   */
-  @GetMapping(value = "/servicios/subcategoria")
-  public String obtenerContenido(@RequestParam("id") long idSubCategoria, Model model) {
-    // Consulto que el Id sea mayor a 0.
-    if (idSubCategoria <= 0) {
-      return "index";
-    }
-    SubCategoria subcategoria = subCategoriaDao.obtenerContenidoSubCategoriaPorId(idSubCategoria);
-    
-    
-    model.addAttribute("categorias", categoriaDao.getCategoriasConSubcategorias());
-    model.addAttribute("titulo",(subcategoria.getContenido() == null)?"":subcategoria.getContenido().getNombre());
-    model.addAttribute("codigo",(subcategoria.getContenido() == null)?"":subcategoria.getContenido().getContenido());
-    return "contenido"; // Nombre del archivo jsp
   }
 
 }

@@ -1,3 +1,7 @@
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div id="menu-principal" class="header-v6 header-white-transparent header-sticky" style="position: relative;">
 			
 	<%@ include file="../General/TopPanel.jsp"%>
@@ -28,9 +32,25 @@
 		<div class="containermenu">
 			<ul class="nav navbar-nav" style="float: left;">
 				<c:forEach var="categoria" items="${categorias}">
-					<li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">${categoria.nombre}</a>
-							<ul class="dropdown-menu">
+					<c:choose>
+						<c:when test="${fn:length(categoria.subcategorias) gt 0}">
+							<li class="dropdown">
+						</c:when>
+						<c:otherwise>
+							<li class="nodropdown">
+						</c:otherwise>
+					</c:choose>		
+
+					
+						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+							${categoria.nombre}
+						</a>
+								                	    <!-- Si hubo un registro exitoso muestra el mensaje-->
+							<c:if test="${fn:length(categoria.subcategorias) gt 0}">
+								<ul class="dropdown-menu">
+							</c:if>
+						
+							
 								<c:forEach var="subcategoria" items="${categoria.subcategorias}">
 									<li>
 										<c:choose>
@@ -57,8 +77,15 @@
 									</c:choose>		
 								</li>
 							</c:forEach>
-						</ul>
-					</li>
+						
+						<c:if test="${fn:length(categoria.subcategorias) gt 0}">
+							</ul>
+							
+						</c:if>
+						
+						
+					</li>	
+				
 				</c:forEach>			         
 			</ul>
 		</div>

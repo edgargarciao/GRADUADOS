@@ -5,6 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -27,13 +28,39 @@
 			
 			<c:forEach var="noticia" items="${noticias}">
 				<li>
-					<a href="${contextPath}/servicios/componente?id=${noticia.id}&componente=noticia">
-					<img
-					src="${noticia.im1Base64image}" alt="">
-					</a>
-					<span	style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">
-						${noticia.descripcion}
-					</span>
+					<c:choose>
+						<c:when test="${not empty noticia.contenido}">
+							<c:choose>
+								<c:when test="${noticia.contenido.tipoContenido.id == 2}">
+									<a href="${noticia.contenido.contenido}">
+										<img src="${noticia.im1Base64image}" alt="">
+											<span	style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">											
+												${noticia.descripcion}												
+											</span>
+										</a>
+																											
+								</c:when>
+								<c:otherwise>
+									<a href="${contextPath}/servicios/componente?id=${noticia.id}&componente=noticia">
+										<img src="${noticia.im1Base64image}" alt="">
+											<span	style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">											
+													${noticia.descripcion}													
+											</span>
+										</a>									
+								</c:otherwise>		
+							</c:choose>		
+												    
+						</c:when>
+					<c:otherwise>
+					
+						<a>
+							<img src="${noticia.im1Base64image}" alt="">
+							<span	style="font-family: inherit; font-size: 0.95em; font-weight: normal; color: #111; cursor: auto;">
+								${noticia.descripcion}
+							</span>
+						</a>	
+					</c:otherwise>
+				</c:choose>
 				</li>
 			</c:forEach>
 
@@ -69,9 +96,30 @@
 												class="block-grid-v2-info rounded-bottom  bloques_eventos">
 												<h5>
 													<b>
-														<a href="${contextPath}/servicios/componente?id=${novedad.id}&componente=novedad">
-															${novedad.nombre}													
-														</a>
+													
+														<c:choose>
+															<c:when test="${not empty novedad.contenido}">
+																<c:choose>
+																	<c:when test="${novedad.contenido.tipoContenido.id == 2}">									
+																		<a href="${novedad.contenido.contenido}">
+																			${novedad.nombre}													
+																		</a>
+																	</c:when>
+																	<c:otherwise>
+																		<a href="${contextPath}/servicios/componente?id=${novedad.id}&componente=novedad">
+																			${novedad.nombre}													
+																		</a>
+																	</c:otherwise>		
+																</c:choose>		
+																					    
+															</c:when>
+															<c:otherwise>
+																<a>
+																	${novedad.nombre}													
+																</a>
+															</c:otherwise>
+														</c:choose>													
+
 													</b>
 												</h5>											
 											</div>
@@ -104,21 +152,65 @@
 					
 					<c:forEach var="actividad" items="${actividades}">																					
 						<div class="col-sm-3">
-							<a href="${contextPath}/servicios/componente?id=${actividad.id}&componente=proximaactividad">
-								<div class="service-block-v1 md-margin-bottom-50" style="background: #fff; border-top: 5px solid #f1c40f;">									
-									<i class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark" style="background: #fff;"></i>
-									<h5 class="title-v3-bg text-uppercase">
-										Actividad: ${actividad.nombre}
-										<b></b>
-									</h5>
-									
-									<p>Lugar: ${actividad.lugar}</p>
-									<p>Fecha: ${actividad.fechaInicial}</p>
-								</div>
-							</a>
+							
+							<c:choose>
+								<c:when test="${not empty actividad.contenido}">
+									<c:choose>
+										<c:when test="${actividad.contenido.tipoContenido.id == 2}">									
+											<a href="${actividad.contenido.contenido}">
+												<div class="service-block-v1 md-margin-bottom-50" style="background: #fff; border-top: 5px solid #f1c40f;">									
+													<i class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark" style="background: #fff;"></i>
+													<h5 class="title-v3-bg text-uppercase">
+														Actividad: ${actividad.nombre}
+														<b></b>
+													</h5>
+													
+													<p>Lugar: ${actividad.lugar}</p>
+													<p>Fecha: ${actividad.fechaEnFormato}</p>
+												</div>
+											</a>
+										</c:when>
+										<c:otherwise>
+
+											<a href="${contextPath}/servicios/componente?id=${actividad.id}&componente=proximaactividad">
+												<div class="service-block-v1 md-margin-bottom-50" style="background: #fff; border-top: 5px solid #f1c40f;">									
+													<i class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark" style="background: #fff;"></i>
+													<h5 class="title-v3-bg text-uppercase">
+														Actividad: ${actividad.nombre}
+														<b></b>
+													</h5>
+													
+													<p>Lugar: ${actividad.lugar}</p>
+													<p>Fecha: ${actividad.fechaEnFormato}</p>
+												</div>
+											</a>
+										</c:otherwise>		
+									</c:choose>																							    
+								</c:when>
+							<c:otherwise>
+								<a>
+									<div class="service-block-v1 md-margin-bottom-50" style="background: #fff; border-top: 5px solid #f1c40f;">									
+										<i class="icon-custom icon-lg rounded-x icon-color-yellow icon-line fa fa-bookmark" style="background: #fff;"></i>
+											<h5 class="title-v3-bg text-uppercase">
+												Actividad: ${actividad.nombre}
+												<b></b>
+											</h5>
+											<p>Lugar: ${actividad.lugar}</p>
+											<p>Fecha: ${actividad.fechaInicial}</p>
+									</div>
+								</a>
+							</c:otherwise>
+						</c:choose>		
+
 						</div>
 					</c:forEach>					
 				</div>
+				<a 	href="${contextPath}/servicios/actividades" class="btn-u btn-u-sm pull-right tooltips"
+					data-toggle="tooltip" data-placement="left"
+						data-original-title="Ver m&aacute;s novedades">Ver m&aacute;s
+						<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+				</a>
+				
 			</div>
 		</div>
 		<!-- FIN DESTACADOS -->

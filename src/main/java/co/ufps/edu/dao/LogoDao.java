@@ -63,7 +63,7 @@ public class LogoDao {
     return logo;
   }
 
-  @Async
+
   public String insertarLogo(Logo logo) {
 
     // Agrego los datos del registro (nombreColumna/Valor)
@@ -95,7 +95,6 @@ public class LogoDao {
         : "Error al registrar el logo. Contacte al administrador del sistema.";
   }
 
-  @Async
   public String actualizarLogo(Logo logo) {
     // Agrego los datos del registro (nombreColumna/Valor)
     System.out.println("Inicio");

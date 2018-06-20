@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.dao.ActividadDao;
+import co.ufps.edu.dao.ContenidoDao;
 import co.ufps.edu.dto.Actividad;
 
 /**
@@ -26,6 +28,9 @@ public class ActividadController {
   @Autowired
   private ActividadDao actividadDao;
 
+  @Autowired
+  private ContenidoDao contenidoDao;
+  
   /**
    * Método que retorna una pagina con todas los contenidos en el sistema.
    * 
@@ -69,17 +74,22 @@ public class ActividadController {
 
     // Consulta si tiene todos los campos llenos
     if (actividad.isValidoParaRegistrar()) {
-      String mensaje = "Registro exitoso";
-      actividadDao.registrarActividad(actividad);
-      if (mensaje.equals("Registro exitoso")) {
-        model.addAttribute("result", "Actividad registrada con éxito.");
-        model.addAttribute("actividades", actividadDao.getActividades());
-        return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
-      } else {
-        model.addAttribute("wrong", mensaje);
+      if(!actividad.HaySolapamiento()) {
+        String mensaje = actividadDao.registrarActividad(actividad);
+        ;
+        if (mensaje.equals("Registro exitoso")) {
+          model.addAttribute("result", "Actividad registrada con éxito.");
+          model.addAttribute("actividades", actividadDao.getActividades());
+          return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
+        } else {
+          model.addAttribute("wrong", mensaje);
+          return "Administrador/Actividad/RegistrarActividad"; // Nombre del archivo jsp
+        }
+      }else {
+        model.addAttribute("wrong", "Las fechas no pueden solaparse.");
         return "Administrador/Actividad/RegistrarActividad"; // Nombre del archivo jsp
       }
-      //
+        //
     } else {
       model.addAttribute("wrong", "Debes llenar todos los campos.");
       return "Administrador/Actividad/RegistrarActividad"; // Nombre del archivo jsp
@@ -117,25 +127,24 @@ public class ActividadController {
 
     // Consulta si tiene todos los campos llenos
     if (actividad.isValidoParaActualizar()) {
-      String mensaje = "Actualizacion exitosa";
-      actividadDao.editarActividad(actividad);
-      if (mensaje.equals("Actualizacion exitosa")) {
-        model.addAttribute("result", "Actividad actualizada con éxito.");
-        model.addAttribute("actividades", actividadDao.getActividades());
-        return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
-      } else {
-        model.addAttribute("wrong", mensaje);
-        Actividad Acti = actividadDao.obtenerActividadPorId(actividad.getId());
-        Actividad ac = (Actividad) model.asMap().get("actividad");
-        ac.setImBase64image(Acti.getImBase64image());
-        return "Administrador/Actividad/ActualizarActividad";
+      if(!actividad.HaySolapamiento()) {  
+        String mensaje = actividadDao.editarActividad(actividad);
+        
+        if (mensaje.equals("Actualizacion exitosa")) {
+          model.addAttribute("result", "Actividad actualizada con éxito.");
+          model.addAttribute("actividades", actividadDao.getActividades());
+          return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
+        } else {
+          model.addAttribute("wrong", mensaje);
+          return "Administrador/Actividad/ActualizarActividad";
+        }
+      }else{
+        model.addAttribute("wrong", "Las fechas no pueden solaparse.");
+        return "Administrador/Actividad/RegistrarActividad"; // Nombre del archivo jsp
       }
       //
     } else {
       model.addAttribute("wrong", "Debes llenar todos los campos.");
-      Actividad Acti = actividadDao.obtenerActividadPorId(actividad.getId());
-      Actividad ac = (Actividad) model.asMap().get("actividad");
-      ac.setImBase64image(Acti.getImBase64image());
       return "Administrador/Actividad/ActualizarActividad";
     }
   }    
@@ -168,17 +177,20 @@ public class ActividadController {
    */
   @PostMapping(value = "/borrarActividad")
   public String borrarActividad(@ModelAttribute("actividad") Actividad actividad, Model model) {
-
-    String mensaje = actividadDao.eliminarActividad(actividad);
-    if (mensaje.equals("Eliminacion exitosa")) {
-      model.addAttribute("result", "Actividad eliminada con éxito.");
-      model.addAttribute("actividades", actividadDao.getActividades());
-      return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
-    } else {
-      model.addAttribute("wrong", mensaje);
+    if(!contenidoDao.tieneContenido(actividad.getId(),Constantes.ACTIVIDAD)) {
+      String mensaje = actividadDao.eliminarActividad(actividad);
+      if (mensaje.equals("Eliminacion exitosa")) {
+        model.addAttribute("result", "Actividad eliminada con éxito.");
+        model.addAttribute("actividades", actividadDao.getActividades());
+        return "Administrador/Actividad/Actividades"; // Nombre del archivo jsp
+      } else {
+        model.addAttribute("wrong", mensaje);
+        return "Administrador/Actividad/EliminarActividad";
+      }
+    }else {
+      model.addAttribute("wrong", "No es posible eliminar la actividad debido a que tiene un contenido registrado.");
       return "Administrador/Actividad/EliminarActividad";
     }
-
   }
   
 }

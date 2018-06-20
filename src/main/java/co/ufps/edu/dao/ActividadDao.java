@@ -1,19 +1,17 @@
 package co.ufps.edu.dao;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.commons.io.Charsets;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.support.SqlLobValue;
-import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import co.ufps.edu.bd.SpringDbMgr;
+import co.ufps.edu.constantes.Constantes;
 import co.ufps.edu.dto.Actividad;
-import co.ufps.edu.util.ImagenUtil;
+import co.ufps.edu.dto.Contenido;
+import co.ufps.edu.dto.TipoContenido;
 
 /**
  * Clase que permite acceder a la capa de datos en el entorno de actividades.
@@ -24,11 +22,9 @@ import co.ufps.edu.util.ImagenUtil;
 public class ActividadDao {
 
   private SpringDbMgr springDbMgr;
-  private ImagenUtil imagenUtil;
 
   public ActividadDao() {
     springDbMgr = new SpringDbMgr();
-    imagenUtil = new ImagenUtil();
   }
 
   /**
@@ -59,7 +55,7 @@ public class ActividadDao {
     List<Actividad> actividades = new LinkedList<>();
 
     // Consulta para realizar en base de datos
-    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM proximaactividad ORDER BY id DESC ");
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery(" SELECT * FROM proximaactividad ORDER BY fechaInicial DESC ");
 
     // Recorre cada registro obtenido de base de datos
     while (sqlRowSet.next()) {
@@ -71,6 +67,7 @@ public class ActividadDao {
       actividad.setLugar(sqlRowSet.getString("lugar"));
       actividad.setFechaInicial(sqlRowSet.getDate("fechaInicial"));
       actividad.setFechaFinal(sqlRowSet.getDate("fechaFinal"));
+      actividad.crearFechaFormato();
 
       // Guarda el registro para ser retornado
       actividades.add(actividad);
@@ -80,7 +77,6 @@ public class ActividadDao {
     return actividades;
   }
 
-  @Async
   public String registrarActividad(Actividad actividad) {
     // Agrego los datos del registro (nombreColumna/Valor)
 
@@ -89,18 +85,10 @@ public class ActividadDao {
     map.addValue("lugar", actividad.getLugar());
     map.addValue("fechaInicial", actividad.getFechaInicial());
     map.addValue("fechaFinal", actividad.getFechaFinal());
-    try {
-      map.addValue("imagen",
-          new SqlLobValue(new ByteArrayInputStream(actividad.getImagen().getBytes()),
-              actividad.getImagen().getBytes().length, new DefaultLobHandler()),
-          Types.BLOB);
-    } catch (IOException e) {
-      new Exception();
-    }
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "INSERT INTO proximaactividad(nombre,lugar,fechaInicial,fechaFinal,imagen) VALUES(:nombre,:lugar,:fechaInicial,:fechaFinal,:imagen)";
+        "INSERT INTO proximaactividad(nombre,lugar,fechaInicial,fechaFinal) VALUES(:nombre,:lugar,:fechaInicial,:fechaFinal)";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -138,15 +126,13 @@ public class ActividadDao {
       actividad.setLugar(sqlRowSet.getString("lugar"));
       actividad.setFechaInicial(sqlRowSet.getDate("fechaInicial"));
       actividad.setFechaFinal(sqlRowSet.getDate("fechaFinal"));
-      
-      Object imagenBlob = sqlRowSet.getObject("imagen");
-      actividad.setImBase64image(imagenUtil.convertirImagen((byte[]) imagenBlob));      
+      actividad.crearFechaFormato();
     }
     // Retorna la actividad desde base de datos
     return actividad;
   }
   
-  @Async
+
   public String editarActividad(Actividad actividad) {
 
     // Agrego los datos del registro (nombreColumna/Valor)
@@ -156,24 +142,11 @@ public class ActividadDao {
     map.addValue("lugar", actividad.getLugar());
     map.addValue("fechaInicial", actividad.getFechaInicial());
     map.addValue("fechaFinal", actividad.getFechaFinal());
-    String sqlImagen = "";
-    if (actividad.getImagen().getSize() > 0) {
-      try {
-        map.addValue("imagen",
-            new SqlLobValue(new ByteArrayInputStream(actividad.getImagen().getBytes()),
-                actividad.getImagen().getBytes().length, new DefaultLobHandler()),
-            Types.BLOB);
-        sqlImagen = ", imagen = :imagen";
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        new Exception();
-      }
-    }
+
 
     // Armar la sentencia de actualización debase de datos
     String query =
-        "UPDATE proximaactividad SET nombre = :nombre, lugar = :lugar, fechaInicial = :fechaInicial, fechaFinal = :fechaFinal  "
-            + sqlImagen + " WHERE id = :id";
+        "UPDATE proximaactividad SET nombre = :nombre, lugar = :lugar, fechaInicial = :fechaInicial, fechaFinal = :fechaFinal  WHERE id = :id";
 
     // Ejecutar la sentencia
     int result = 0;
@@ -228,10 +201,9 @@ public class ActividadDao {
       actividad.setLugar(sqlRowSet.getString("lugar"));
       actividad.setFechaInicial(sqlRowSet.getDate("fechaInicial"));
       actividad.setFechaFinal(sqlRowSet.getDate("fechaFinal"));
+      actividad.crearFechaFormato();
+      cargarContenido(actividad);
       
-      Object imagen1Blob = sqlRowSet.getObject("imagen");
-      actividad.setImBase64image(imagenUtil.convertirImagen((byte[]) imagen1Blob));   
-
       // Guarda el registro para ser retornado
       actividades.add(actividad);
     }
@@ -240,5 +212,41 @@ public class ActividadDao {
     return actividades;
  
   }
+
+  private void cargarContenido(Actividad actividad) {
+
+    MapSqlParameterSource map = new MapSqlParameterSource();
+    map.addValue("id", actividad.getId());
+    map.addValue("tipo", Constantes.ACTIVIDAD);
+    // Consulta para realizar en base de datos
+    SqlRowSet sqlRowSet = springDbMgr.executeQuery( " SELECT    contenido.id                    idContenido,            "
+                                                  + "           contenido.contenido             contenido,              "
+                                                  + "           contenido.TipoContenido_id      tipoContenido          "                                                  
+                                                  + "   FROM    proximaactividad                                            "
+                                                  + "INNER JOIN contenido  ON contenido.asociacion = proximaactividad.id "
+                                                  + "WHERE proximaactividad.id = :id "
+                                                  + "AND   contenido.tipoasociacion = :tipo",map);
+
+    // Recorre cada registro obtenido de base de datos
+    while (sqlRowSet.next()) {
+      // Objeto en el que sera guardada la informacion del registro
+
+      // Objeto en el que sera guardada la informacion del registro
+      Contenido contenido = new Contenido();
+      
+      contenido.setId(sqlRowSet.getLong("idContenido"));      
+      byte []a = (byte[]) sqlRowSet.getObject("contenido");
+      String res = new String(a,Charsets.UTF_8);
+      contenido.setContenido(res);      
+
+      TipoContenido tipoContenido = new TipoContenido();
+      tipoContenido.setId(sqlRowSet.getLong("tipoContenido"));
+            
+      contenido.setTipoContenido(tipoContenido);
+      
+      // Guarda el registro para ser retornado
+      actividad.setContenido(contenido);
+    }
+  }  
   
 }

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -42,21 +43,23 @@ import co.ufps.edu.dao.TipoContenidoDao;
 public class WebConfig extends WebMvcConfigurerAdapter {
 
   @Bean
-  public JavaMailSenderImpl javaMailService() {
-    JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-    javaMailSender.setHost("smtp.gmail.com");
-    javaMailSender.setPort(587);
-    javaMailSender.setProtocol("smtp");
-    javaMailSender.setUsername("edgar.yesid.garcia.ortiz@gmail.com");
-    javaMailSender.setPassword("94100209440");
-    Properties mailProperties = new Properties();
-    mailProperties.put("mail.smtp.auth", "true");
-    mailProperties.put("mail.smtp.starttls.enable", "starttls");
-    mailProperties.put("mail.smtp.debug", "true");
-    javaMailSender.setJavaMailProperties(mailProperties);
-    return javaMailSender;
+  public JavaMailSender getJavaMailSender() {
+      JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+      mailSender.setHost("smtp.gmail.com");
+      mailSender.setPort(587);
+       
+      mailSender.setUsername("edgar.yesid.garcia.ortiz@gmail.com");
+      mailSender.setPassword("94100209440");
+       
+      Properties props = mailSender.getJavaMailProperties();
+      props.put("mail.transport.protocol", "smtp");
+      props.put("mail.smtp.auth", "true");
+      props.put("mail.smtp.starttls.enable", "true");
+      props.put("mail.debug", "true");
+       
+      return mailSender;
   }
-
+  
   @Bean
   public LogoDao getLogoDao() {
     return new LogoDao();
@@ -141,20 +144,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   public StandardServletMultipartResolver resolvermu() {
     return new StandardServletMultipartResolver();
   }
-
-  @Bean
-  public FilterRegistrationBean<CharacterEncodingFilter> filterRegistrationBean() {
-    CharacterEncodingFilter filter = new CharacterEncodingFilter();
-    filter.setEncoding("ISO-8859-15");
-    filter.setForceEncoding(true);
-
-    FilterRegistrationBean<CharacterEncodingFilter> registrationBean =
-        new FilterRegistrationBean<CharacterEncodingFilter>();
-    registrationBean.setFilter(filter);
-    registrationBean.addUrlPatterns("/*");
-    return registrationBean;
-  }
-
 
 }
 

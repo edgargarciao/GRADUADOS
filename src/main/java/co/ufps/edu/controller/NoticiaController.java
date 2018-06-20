@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import co.ufps.edu.constantes.Constantes;
+import co.ufps.edu.dao.ContenidoDao;
 import co.ufps.edu.dao.NoticiaDao;
 import co.ufps.edu.dto.Noticia;
 import co.ufps.edu.dto.SubCategoria;
@@ -28,6 +30,8 @@ public class NoticiaController {
   @Autowired
   private NoticiaDao noticiaDao;
 
+  @Autowired
+  private ContenidoDao contenidoDao;
 
   /**
    * Método que retorna una pagina con todas las noticias en el sistema.
@@ -221,7 +225,6 @@ public class NoticiaController {
         Noticia noti = noticiaDao.obtenerNoticiaPorId(noticia.getId());
         Noticia no = (Noticia) model.asMap().get("noticia");
         no.setIm1Base64image(noti.getIm1Base64image());
-        no.setIm2Base64image(noti.getIm2Base64image());
         return "Administrador/Noticia/ActualizarNoticia";
       }
       //
@@ -230,7 +233,6 @@ public class NoticiaController {
       Noticia noti = noticiaDao.obtenerNoticiaPorId(noticia.getId());
       Noticia no = (Noticia) model.asMap().get("noticia");
       no.setIm1Base64image(noti.getIm1Base64image());
-      no.setIm2Base64image(noti.getIm2Base64image());
       return "Administrador/Noticia/ActualizarNoticia";
     }
   }  
@@ -264,15 +266,19 @@ public class NoticiaController {
    */
   @PostMapping(value = "/borrarNoticia")
   public String borrarnoticia(@ModelAttribute("noticia") Noticia noticia, Model model) {
-
-    String mensaje = noticiaDao.eliminarNoticia(noticia);
-    cambiarOrdenDeNoticias(noticia);
-    if (mensaje.equals("Eliminacion exitosa")) {
-      model.addAttribute("result", "Noticia eliminada con éxito.");
-      model.addAttribute("noticias", noticiaDao.getNoticias());
-      return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
-    } else {
-      model.addAttribute("wrong", mensaje);
+    if(!contenidoDao.tieneContenido(noticia.getId(),Constantes.NOTICIA)) {
+      String mensaje = noticiaDao.eliminarNoticia(noticia);
+      cambiarOrdenDeNoticias(noticia);
+      if (mensaje.equals("Eliminacion exitosa")) {
+        model.addAttribute("result", "Noticia eliminada con éxito.");
+        model.addAttribute("noticias", noticiaDao.getNoticias());
+        return "Administrador/Noticia/Noticias"; // Nombre del archivo jsp
+      } else {
+        model.addAttribute("wrong", mensaje);
+        return "Administrador/Noticia/EliminarNoticia";
+      }
+    }else {
+      model.addAttribute("wrong", "No es posible eliminar la noticia debido a que tiene un contenido registrado.");
       return "Administrador/Noticia/EliminarNoticia";
     }
 

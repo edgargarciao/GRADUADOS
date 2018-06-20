@@ -96,7 +96,7 @@ public class SpringDbMgr {
 
       return sqlRowSet;
     } catch (Exception e) {
-
+      e.printStackTrace();
     }
 
     return null;
@@ -120,7 +120,7 @@ public class SpringDbMgr {
 
       return affectedRows;
     } catch (Exception e) {
-
+      e.printStackTrace();
     }
 
     return -1;

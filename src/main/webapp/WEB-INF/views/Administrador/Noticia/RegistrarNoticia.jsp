@@ -39,18 +39,7 @@
 						</div>    
                 </div>
                	<!-- Area en donde se encuentra la foto del usuario y la barra de opciones -->
-				<div class="col-sm-5">
-	            	<div class="user-area dropdown float-right">
-	                	<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    	<img class="user-avatar rounded-circle" src="resources/images/admin.jpg" alt="User Avatar">
-						</a>
-						<div class="user-menu dropdown-menu">
-	                    	<a class="nav-link" href="#"><i class="fa fa- user"></i>Mi perfil</a>                                  
-	                        <a class="nav-link" href="#"><i class="fa fa -cog"></i>Configuración de la cuenta</a>
-	                        <a class="nav-link" href="${contextPath}/logout"><i class="fa fa-power -off"></i>Salir</a>
-						</div>
-					</div>                        
-				</div>
+				<%@ include file="../General/Configuracion.jsp"%>
             </div>
 
         </header><!-- /header -->
@@ -88,7 +77,7 @@
                                 	<!-- Campo para digitar la descripción -->
                                 	<div class="form-group">
                                         <label for="textarea-input" class=" form-control-label">Descripción</label>
-                                		<form:textarea id="descripcion" maxlength="180" name="descripcion" class="form-control" path="descripcion" rows="2" cols="130" required = "true" placeholder="Egresado xx obtuvo premio por inventar yy..." /> 
+                                		<form:textarea id="descripcion" maxlength="160" name="descripcion" class="form-control" path="descripcion" rows="2" cols="130" required = "true" placeholder="Egresado xx obtuvo premio por inventar yy..." /> 
                                 	</div>   
 
                             		<!-- Campo para digitar la fecha -->
@@ -99,7 +88,7 @@
                                 	
                                 	 <!-- Campo para digitar la imagen 1 -->
                                 	<div id ="divim1" class="form-group btn btn-danger btn-sm">
-                                    	<label for="text-input" class=" form-control-label">Imagen 1</label>
+                                    	<label for="text-input" class=" form-control-label">Imagen (Pref. 1950x550) </label>
                                 		<form:input type="file" path="Imagen1" id="Imagen1" name="Imagen1" accept="images/*" onchange="revisarArchivos('1')" required = "true"/>
                                 	</div>
                                 	</br>
@@ -107,17 +96,7 @@
                                 		<img id = "img1" src="" height="200" alt="Imagen">
                                 	</div>
                                 	</br>
-                                	                                	
-                                	 <!-- Campo para digitar la imagen 2 -->
-                                	<div id ="divim2" class="form-group btn btn-danger btn-sm">
-                                    	<label for="text-input" class=" form-control-label">Imagen 2</label>
-                                		<form:input type="file" path="Imagen2" id="Imagen2" name="Imagen2" accept="images/*" onchange="revisarArchivos('2')" required = "true"/>
-                                	</div>                                		                                                               	                                	                              	
-                                	</br>
-                                	<div id = "divimagen2" class="form-group">
-                                		<img id = "img2" src="" height="200" alt="Imagen">
-                                	</div>
-                                	</br>                                	
+                                	                                	                              	
                                 	
                                 	<!-- Boton para registrar los datos -->
                                 	<button type="submit" class="btn btn-success">Registrar</button>                                 

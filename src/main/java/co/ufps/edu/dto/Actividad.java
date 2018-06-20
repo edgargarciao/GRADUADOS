@@ -11,9 +11,9 @@ public class Actividad {
   private String lugar;
   private Date fechaInicial;
   private Date fechaFinal;
-  private MultipartFile imagen;
-  private String imBase64image;
-
+  private Contenido contenido;
+  private String fechaEnFormato;
+  
   public long getId() {
     return id;
   }
@@ -58,21 +58,6 @@ public class Actividad {
     this.fechaFinal = fechaFinal;
   }
 
-  public MultipartFile getImagen() {
-    return imagen;
-  }
-
-  public void setImagen(MultipartFile imagen) {
-    this.imagen = imagen;
-  }
-
-  public String getImBase64image() {
-    return imBase64image;
-  }
-
-  public void setImBase64image(String imBase64image) {
-    this.imBase64image = imBase64image;
-  }
 
   @Override
   public String toString() {
@@ -81,7 +66,41 @@ public class Actividad {
   }
   
   public boolean isValidoParaActualizar() {
-    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.lugar) && !StringUtils.isEmpty(fechaInicial.toString()) && !StringUtils.isEmpty(fechaFinal.toString()) && !StringUtils.isEmpty(imBase64image));
+    return (!StringUtils.isEmpty(this.nombre) && !StringUtils.isEmpty(this.lugar) && !StringUtils.isEmpty(fechaInicial.toString()) && !StringUtils.isEmpty(fechaFinal.toString())) ;
+  }
+
+  public Contenido getContenido() {
+    return contenido;
+  }
+
+  public void setContenido(Contenido contenido) {
+    this.contenido = contenido;
+  }
+
+  public String getFechaEnFormato() {
+    return fechaEnFormato;
+  }
+
+  public void setFechaEnFormato(String fechaEnFormato) {
+    this.fechaEnFormato = fechaEnFormato;
+  }
+
+  public void crearFechaFormato() {
+    if(fechaInicial.getTime() == fechaFinal.getTime()) {
+      fechaEnFormato = fechaInicial.toString();
+    }else {
+      fechaEnFormato = "Desde "+fechaInicial.toString()+" Hasta "+fechaFinal.toString(); 
+    }
+    
+  }
+  
+  public static void main(String[] args) {
+    Date d = new Date(118,11,02);
+    System.out.println(d.toString());
+  }
+
+  public boolean HaySolapamiento() {
+    return (fechaInicial.getTime() > fechaFinal.getTime());
   }
 
 }

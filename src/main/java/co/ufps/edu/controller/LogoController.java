@@ -71,8 +71,8 @@ public class LogoController {
         }
       }else {
         
-        String mensaje = "Actualizacion exitosa";
-        logoDao.actualizarLogo(logo);
+        String mensaje =logoDao.actualizarLogo(logo);
+        
         if (mensaje.equals("Actualizacion exitosa")) {
           model.addAttribute("result", "Logo actualizado con éxito.");
         } else {
@@ -83,12 +83,4 @@ public class LogoController {
       return index(model);
 
   }
-
-  
-  public void actualizarLogo(Logo logo) {
-    // TODO Auto-generated method stub
-   
-    
-  }  
-
 }
